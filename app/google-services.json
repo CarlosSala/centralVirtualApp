@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "154190863418",
+    "firebase_url": "https://macscanner-808a3.firebaseio.com",
+    "project_id": "macscanner-808a3",
+    "storage_bucket": "macscanner-808a3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:154190863418:android:429b22b33d1c02456b6903",
+        "android_client_info": {
+          "package_name": "com.example.macscanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "154190863418-vtkj1059kjk72v42t8ss8s4460p7ojil.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDltvQpey9RUVTsmLXzygrNMiAj1xJJO8s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "154190863418-vtkj1059kjk72v42t8ss8s4460p7ojil.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
