@@ -1,9 +1,7 @@
 package com.example.macscanner;
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.provider.DocumentsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,13 +10,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -32,10 +33,37 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "InspiringQuote";
 
 
+
     private DocumentReference mDocRef = FirebaseFirestore.getInstance().collection("sampleData").document("inspiration");
 
     private Button button, button_firebase;
     private TextView textView;
+
+
+    private TextView mQuoteTextView;
+    private Button button_firebase2;
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mDocRef.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+
+                if (documentSnapshot.exists()){
+
+                    String quoteText =  documentSnapshot.getString(QUOTE_KEY);
+                    String authorText =  documentSnapshot.getString(AUTHOR_KEY);
+                    mQuoteTextView.setText("\"" + quoteText + "\" -- " + authorText);
+                    //InspiringQuote myQuote = documentSnapshot.toObject(InspiringQuote);
+
+            }else if (e != null){
+                Log.w(TAG, "Got an exeception", e);
+                }
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         button = findViewById(R.id.btn_scan);
         textView = findViewById(R.id.tv1);
 
+        mQuoteTextView = (TextView)findViewById(R.id.tv2);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +90,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 saveQuote(view);
+            }
+        });
+
+        button_firebase2 = findViewById(R.id.btn_firebase2);
+
+        button_firebase2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fetchQuote(view);
             }
         });
 
@@ -134,4 +172,24 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    public void fetchQuote(View view){
+
+        mDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()){
+
+                    String quoteText =  documentSnapshot.getString(QUOTE_KEY);
+                    String authorText =  documentSnapshot.getString(AUTHOR_KEY);
+                    mQuoteTextView.setText("\"" + quoteText + "\" -- " + authorText);
+                    //InspiringQuote myQuote = documentSnapshot.toObject(InspiringQuote);
+                }
+            }
+        });
+    }
+
+
+
+
 }
