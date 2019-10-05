@@ -5,5 +5,8 @@
 
     <string name="filed_user">Correo electrónico</string>
     <string name="filed_password">Contraseña</string>
+    <string name="login">Ingresar</string>
+    <string name="forgot_password">Olvidé mi contraseña</string>
+    <string name="register">Registrarse</string>
 
 </resources>

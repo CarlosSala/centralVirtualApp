@@ -13,23 +13,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".menu.addMac.addNumbers.addNumbersActivity"></activity>
+        <activity android:name=".menu.addMac.addMacActivity" />
+        <activity android:name=".menu.principalActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/LoginTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".CustomScannerActivity"
             android:screenOrientation="fullSensor"
             android:stateNotNeeded="true"
             android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
-        <activity android:name=".MainActivity">
-
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".QrActivity" />
     </application>
 

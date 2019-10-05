@@ -41,7 +41,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
-        app:errorEnabled="true">
+        app:errorEnabled="true"
+        android:theme="@style/LoginEditText"
+        >
 
         <EditText
             android:id="@+id/user_email"
@@ -50,7 +52,10 @@
             android:ems="10"
             android:hint="@string/filed_user"
             android:inputType="textEmailAddress"
-            android:singleLine="true" />
+            android:singleLine="true"
+
+
+            />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -67,6 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
+        android:theme="@style/LoginEditText"
         app:errorEnabled="true">
 
         <EditText
@@ -76,30 +82,33 @@
             android:ems="10"
             android:hint="@string/filed_password"
             android:inputType="textPassword"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColor="@color/white"
+            />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/btnmail"
+        android:id="@+id/btn_login"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/iniciar_sesi_n" />
+        android:text="@string/login"
+        />
 
     <Button
-        android:id="@+id/btnforget"
+        android:id="@+id/btn_forget"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:background="@android:color/transparent"
-        android:text="@string/olvid_su_contrase_a"
+        android:text="@string/forgot_password"
         android:textColor="@color/darkgrey" />
 
     <Button
-        android:id="@+id/btnregister"
+        android:id="@+id/btn_register"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:background="@android:color/transparent"
-        android:text="@string/registrarse"
+        android:text="@string/register"
         android:textColor="@color/darkgrey" />
 
 

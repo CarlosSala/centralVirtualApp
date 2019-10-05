@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context=".menu.addMac.addNumbers.addNumbersActivity"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+
+    >
+
+
+
+    <ScrollView
+        android:layout_height="250dp"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        >
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="16dp">
+
+        <TextView
+            android:id="@+id/tv_numberOne"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ingrese N° 1"></TextView>
+
+        <EditText
+            android:id="@+id/et_number_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="numero de 8 digitos"></EditText>
+
+        <TextView
+            android:id="@+id/tv_numberTwo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ingrese N° 2"></TextView>
+
+        <EditText
+            android:id="@+id/et_number_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></EditText>
+
+        <TextView
+            android:id="@+id/tv_numberThree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ingrese N° 3">
+
+        </TextView>
+
+        <EditText
+            android:id="@+id/et_number_three"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></EditText>
+
+        <TextView
+            android:id="@+id/tv_numberFour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ingrese N° 4">
+
+        </TextView>
+
+        <EditText
+            android:id="@+id/et_number_four"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></EditText>
+
+        <TextView
+            android:id="@+id/tv_numberFive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ingrese N° 5"></TextView>
+
+        <EditText
+            android:id="@+id/et_number_five"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></EditText>
+
+        <TextView
+            android:id="@+id/tv_numberSix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ingrese N° 6"></TextView>
+
+
+        <EditText
+            android:id="@+id/et_number_six"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></EditText>
+
+        <TextView
+            android:id="@+id/tv_numberSeven"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ingrese N° 7"></TextView>
+
+        <EditText
+            android:id="@+id/et_number_seven"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></EditText>
+
+        <TextView
+            android:id="@+id/tv_numberEight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ingrese N° 8">
+
+        </TextView>
+
+        <EditText
+            android:id="@+id/et_number_eight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></EditText>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
