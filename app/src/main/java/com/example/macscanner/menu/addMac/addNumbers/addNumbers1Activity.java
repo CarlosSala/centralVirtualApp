@@ -86,6 +86,8 @@ public class addNumbers1Activity extends AppCompatActivity {
                 SharedPreferences preferencias = getSharedPreferences( "datos", Context.MODE_PRIVATE);
                 SharedPreferences.Editor obj_editor = preferencias.edit();
                 obj_editor.putString("mac_scanned1", result.getContents());
+                obj_editor.commit();
+
               /*  Intent intent = new Intent(this, QrActivity.class);
                 intent.putExtra("codeScanned", result.getContents());
                 startActivity(intent);*/
