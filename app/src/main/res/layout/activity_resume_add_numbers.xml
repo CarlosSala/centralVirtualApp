@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".menu.addMac.addNumbers.addNumbers1Activity">
+
+    <TextView
+        android:id="@+id/tv_indicator_mac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:text="Dirección MAC Base 2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_indicator_mac">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="16dp">
+
+            <TextView
+                android:id="@+id/tv_numberOne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="999999999999"></TextView>
+
+
+
+            <TextView
+                android:id="@+id/tv_numberTwo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="888888888888"></TextView>
+
+
+
+            <TextView
+                android:id="@+id/tv_numberThree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="777777777777">
+
+            </TextView>
+
+
+
+            <TextView
+                android:id="@+id/tv_numberFour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="666666666666">
+
+            </TextView>
+
+
+
+            <TextView
+                android:id="@+id/tv_numberFive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="333333333333"></TextView>
+
+
+
+            <TextView
+                android:id="@+id/tv_numberSix"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="111111111111"></TextView>
+
+
+            <TextView
+                android:id="@+id/tv_numberSeven"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="222222222222"></TextView>
+
+
+            <TextView
+                android:id="@+id/tv_numberEight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="666666666666">
+
+            </TextView>
+
+
+            <Button
+                android:id="@+id/btn_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="Continuar" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

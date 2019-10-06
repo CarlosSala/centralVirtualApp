@@ -1,7 +1,7 @@
 package com.example.macscanner.menu.addMac;
 
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.macscanner.menu.addMac.addNumbers.addNumbersActivity;
+import com.example.macscanner.menu.addMac.addNumbers.addNumbers1Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,7 +24,7 @@ public class addMacActivity extends AppCompatActivity {
         btn_enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(addMacActivity.this, addNumbersActivity.class);
+                Intent intent = new Intent(addMacActivity.this, addNumbers1Activity.class);
                 startActivity(intent);
             }
         });
