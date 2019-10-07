@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "InspiringQuote";
 
 
-
     private DocumentReference mDocRef = FirebaseFirestore.getInstance().collection("sampleData").document("inspiration");
 
     private Button button, button_firebase;

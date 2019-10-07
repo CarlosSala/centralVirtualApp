@@ -25,7 +25,6 @@ public class principalActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(principalActivity.this, addMacActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
 

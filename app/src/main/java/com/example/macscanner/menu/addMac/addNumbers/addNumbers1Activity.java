@@ -45,9 +45,10 @@ public class addNumbers1Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Guardar(view);
-                Intent intent = new Intent(addNumbers1Activity.this, addNumbers2Activity.class);
+                Intent intent = new Intent(view.getContext(), addNumbers2Activity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-                finish();
+
             }
         });
 
@@ -102,7 +103,7 @@ public class addNumbers1Activity extends AppCompatActivity {
         IntentIntegrator integrator = new IntentIntegrator(this);
 
         integrator.setBeepEnabled(true);
-        integrator.setDesiredBarcodeFormats(IntentIntegrator.EAN_13);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.CODE_128);
         integrator.setPrompt("");
         integrator.setCameraId(0);  // Use a specific camera of the device
         integrator.setBarcodeImageEnabled(true);
@@ -124,6 +125,6 @@ public class addNumbers1Activity extends AppCompatActivity {
         obj_editor.putString("et_number_seven", et7.getText().toString());
         obj_editor.putString("et_number_eight", et8.getText().toString());
         obj_editor.commit();
-        finish();
+
     }
 }
