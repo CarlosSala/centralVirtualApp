@@ -6,4 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".menu.addMac.addNumbers.shareQrActivity">
 
+
+    <ImageView
+        android:id="@+id/imgv"
+        android:layout_width="279dp"
+        android:layout_height="165dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.568"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="76dp"
+
+        android:text="compartir"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgv"></Button>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

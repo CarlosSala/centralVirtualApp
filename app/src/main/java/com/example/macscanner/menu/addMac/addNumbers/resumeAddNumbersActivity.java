@@ -1,18 +1,31 @@
 package com.example.macscanner.menu.addMac.addNumbers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.macscanner.QrActivity;
 import com.example.macscanner.R;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class resumeAddNumbersActivity extends AppCompatActivity {
 
     private TextView tv1, tv2, tv3, tv4, tv5, tv6, tv7, tv8,
-    tv9, tv10, tv11, tv12, tv13, tv14, tv15, tv16, tv_mac1, tv_mac2;
+            tv9, tv10, tv11, tv12, tv13, tv14, tv15, tv16, tv_mac1, tv_mac2;
+    private Button btn_next;
+    private ArrayList<String> list = new ArrayList<String>();
+    private String acumulacion = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,25 +52,65 @@ public class resumeAddNumbersActivity extends AppCompatActivity {
         tv16 = findViewById(R.id.tv_numberSixteen);
 
         SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
-        tv_mac1.setText(preferences.getString("mac_scanned1", "valor mac1"));
-        tv_mac2.setText(preferences.getString("mac_scanned2", "valor mac2"));
-        tv1.setText(preferences.getString("et_number_one", ""));
-        tv2.setText(preferences.getString("et_number_two", ""));
-        tv3.setText(preferences.getString("et_number_three", ""));
-        tv4.setText(preferences.getString("et_number_four", ""));
-        tv5.setText(preferences.getString("et_number_five", ""));
-        tv6.setText(preferences.getString("et_number_six", ""));
-        tv7.setText(preferences.getString("et_number_seven", ""));
-        tv8.setText(preferences.getString("et_number_eight", ""));
-        tv9.setText(preferences.getString("et_number_nine", ""));
-        tv10.setText(preferences.getString("et_number_ten", ""));
-        tv11.setText(preferences.getString("et_number_eleven", ""));
-        tv12.setText(preferences.getString("et_number_twelve", ""));
-        tv13.setText(preferences.getString("et_number_thirteen", ""));
-        tv14.setText(preferences.getString("et_number_fourteen", ""));
-        tv15.setText(preferences.getString("et_number_fifteen", ""));
-        tv16.setText(preferences.getString("et_number_sixteen", ""));
+        list.add(0, preferences.getString("mac_scanned1", "valor mac1"));
+        list.add(1, preferences.getString("mac_scanned2", "valor mac2"));
+        list.add(2, preferences.getString("et_number_one", ""));
+        list.add(3, preferences.getString("et_number_two", ""));
+        list.add(4, preferences.getString("et_number_three", ""));
+        list.add(5, preferences.getString("et_number_four", ""));
+        list.add(6, preferences.getString("et_number_five", ""));
+        list.add(7, preferences.getString("et_number_six", ""));
+        list.add(8, preferences.getString("et_number_seven", ""));
+        list.add(9, preferences.getString("et_number_eight", ""));
+        list.add(10, preferences.getString("et_number_nine", ""));
+        list.add(11, preferences.getString("et_number_ten", ""));
+        list.add(12, preferences.getString("et_number_eleven", ""));
+        list.add(13, preferences.getString("et_number_twelve", ""));
+        list.add(14, preferences.getString("et_number_thirteen", ""));
+        list.add(15, preferences.getString("et_number_fourteen", ""));
+        list.add(16, preferences.getString("et_number_fifteen", ""));
+        list.add(17, preferences.getString("et_number_sixteen", ""));
 
+        tv_mac1.setText(list.get(0));
+        tv_mac2.setText(list.get(1));
+        tv1.setText(list.get(2));
+        tv2.setText(list.get(3));
+        tv3.setText(list.get(4));
+        tv4.setText(list.get(5));
+        tv5.setText(list.get(6));
+        tv6.setText(list.get(7));
+        tv7.setText(list.get(8));
+        tv8.setText(list.get(9));
+        tv9.setText(list.get(10));
+        tv10.setText(list.get(11));
+        tv11.setText(list.get(12));
+        tv12.setText(list.get(13));
+        tv13.setText(list.get(14));
+        tv14.setText(list.get(15));
+        tv15.setText(list.get(16));
+        tv16.setText(list.get(17));
+
+        btn_next = findViewById(R.id.btn_next);
+        btn_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                //Iterator iterator = list.iterator();
+                for (int i = 0; i < list.size(); i ++) {
+
+                    if (list.get(i).length() > 0) {
+                        acumulacion += list.get(i) + ";";
+
+                    }
+
+
+                }
+                Intent intent = new Intent(resumeAddNumbersActivity.this, shareQrActivity.class);
+                intent.putExtra("data", acumulacion);
+                startActivity(intent);
+            }
+        });
     }
 
 
