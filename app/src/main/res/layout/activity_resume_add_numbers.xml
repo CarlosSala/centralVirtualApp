@@ -1,263 +1,325 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    tools:context=".menu.addMac.addNumbers.addNumbers1Activity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"
-        tools:context=".menu.addMac.addNumbers.addNumbers1Activity">
+        android:fillViewport="true"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-94dp">
 
-        <TextView
-            android:id="@+id/tv_resumen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Resumen"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/btn_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:text="Generar código QR"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="40dp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberEight" />
-
-        <TextView
-            android:id="@+id/tv_label_client_rut"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:text="Rut cliente"
-            app:layout_constraintBottom_toTopOf="@+id/tv_label_community_id"
-            app:layout_constraintStart_toStartOf="@+id/tv_label_community_id"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_numberThree"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="777777777777"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberFour"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberFour"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberTwo" />
-
-        <TextView
-            android:id="@+id/tv_numberTwo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="848484848484"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberThree"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberThree"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberOne" />
-
-        <TextView
-            android:id="@+id/tv_numberSix"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="111111111111"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberSeven"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberSeven"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberFive" />
-
-        <TextView
-            android:id="@+id/tv_indicator_mac1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Dirección MAC Base 1"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberOne"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberOne"
-            app:layout_constraintTop_toBottomOf="@+id/tv_mac1" />
-
-        <TextView
-            android:id="@+id/tv_numberOne"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="999999999999"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberTwo"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberTwo"
-            app:layout_constraintTop_toBottomOf="@+id/tv_indicator_mac1" />
-
-        <TextView
-            android:id="@+id/tv_numberSeven"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="222222222222"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberEight"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberEight"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberSix" />
-
-        <TextView
-            android:id="@+id/tv_mac1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Dirección MAC Base 1"
-            app:layout_constraintBottom_toTopOf="@+id/tv_indicator_mac1"
-            app:layout_constraintEnd_toStartOf="@+id/tv_mac2"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/tv_indicator_mac1"
-            app:layout_constraintTop_toBottomOf="@+id/tv_label_community_id" />
-
-        <TextView
-            android:id="@+id/tv_numberEight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:hint="666666666666"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberSeven" />
-
-        <TextView
-            android:id="@+id/tv_numberFour"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="666666666666"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberFive"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberFive"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberThree" />
-
-        <TextView
-            android:id="@+id/tv_label_community_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Id de la comunidad"
-            app:layout_constraintBottom_toTopOf="@+id/tv_mac1"
-            app:layout_constraintStart_toStartOf="@+id/tv_mac1"
-            app:layout_constraintTop_toBottomOf="@+id/tv_label_client_rut" />
-
-        <TextView
-            android:id="@+id/tv_numberFive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="333333333333"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberSix"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberSix"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberFour" />
-
-        <TextView
-            android:id="@+id/tv_client_rut"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:hint="Rut cliente"
-            app:layout_constraintBottom_toTopOf="@+id/tv_community_id"
-            app:layout_constraintStart_toStartOf="@+id/tv_community_id"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_numberTen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="848484848484"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberEleven"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberEleven"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberNine" />
-
-        <TextView
-            android:id="@+id/tv_numberEleven"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="777777777777"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberTwelve"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberTwelve"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberTen" />
-
-        <TextView
-            android:id="@+id/tv_numberFourteen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="111111111111"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberSixteen"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberSixteen"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberThirteen" />
-
-        <TextView
-            android:id="@+id/tv_mac2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Dirección MAC Base 2"
-            app:layout_constraintBottom_toTopOf="@+id/tv_indicator_mac2"
-            app:layout_constraintStart_toStartOf="@+id/tv_indicator_mac2"
-            app:layout_constraintTop_toBottomOf="@+id/tv_community_id" />
-
-        <TextView
-            android:id="@+id/tv_numberSixteen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="666666666666"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberFifteen"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberFifteen"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberFourteen" />
-
-        <TextView
-            android:id="@+id/tv_indicator_mac2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:hint="Dirección MAC Base 2"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberNine"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberNine"
-            app:layout_constraintTop_toBottomOf="@+id/tv_mac2" />
-
-        <TextView
-            android:id="@+id/tv_numberNine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="999999999999"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberTen"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberTen"
-            app:layout_constraintTop_toBottomOf="@+id/tv_indicator_mac2" />
-
-        <TextView
-            android:id="@+id/tv_numberFifteen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="80dp"
-            android:hint="222222222222"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberSixteen" />
-
-        <TextView
-            android:id="@+id/tv_numberTwelve"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="666666666666"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberThirteen"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberThirteen"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberEleven" />
-
-        <TextView
-            android:id="@+id/tv_numberThirteen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="333333333333"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberFourteen"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberFourteen"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberTwelve" />
-
-        <TextView
-            android:id="@+id/tv_community_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Id de la comunidad"
-            app:layout_constraintBottom_toTopOf="@+id/tv_mac2"
-            app:layout_constraintStart_toStartOf="@+id/tv_mac2"
-            app:layout_constraintTop_toBottomOf="@+id/tv_client_rut" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
-</ScrollView>
+            <TextView
+                android:id="@+id/tv_resumen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Resumen"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.468"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_label_numSolicitud"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Numero de solicitud"
+                app:layout_constraintBottom_toTopOf="@+id/tv_label_client_rut"
+                app:layout_constraintStart_toStartOf="@+id/tv_label_client_rut"
+                app:layout_constraintTop_toBottomOf="@+id/tv_resumen" />
+
+            <TextView
+                android:id="@+id/tv_numberEight"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="8dp"
+                android:hint="666666666666"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_numberSeven" />
+
+            <TextView
+                android:id="@+id/tv_numberFour"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="666666666666"
+                app:layout_constraintBottom_toTopOf="@+id/tv_numberFive"
+                app:layout_constraintStart_toStartOf="@+id/tv_numberFive"
+                app:layout_constraintTop_toBottomOf="@+id/tv_numberThree" />
+
+            <TextView
+                android:id="@+id/tv_label_community_id"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Id de la comunidad"
+                app:layout_constraintBottom_toTopOf="@+id/tv_mac1"
+                app:layout_constraintStart_toStartOf="@+id/tv_mac1"
+                app:layout_constraintTop_toBottomOf="@+id/tv_label_client_rut" />
+
+            <TextView
+                android:id="@+id/tv_numberTwo"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="848484848484"
+                app:layout_constraintBottom_toTopOf="@+id/tv_numberThree"
+                app:layout_constraintStart_toStartOf="@+id/tv_numberThree"
+                app:layout_constraintTop_toBottomOf="@+id/tv_numberOne" />
+
+            <TextView
+                android:id="@+id/tv_numberSeven"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="222222222222"
+                app:layout_constraintBottom_toTopOf="@+id/tv_numberEight"
+                app:layout_constraintStart_toStartOf="@+id/tv_numberEight"
+                app:layout_constraintTop_toBottomOf="@+id/tv_numberSix" />
+
+            <TextView
+                android:id="@+id/tv_numberSix"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="111111111111"
+                app:layout_constraintBottom_toTopOf="@+id/tv_numberSeven"
+                app:layout_constraintStart_toStartOf="@+id/tv_numberSeven"
+                app:layout_constraintTop_toBottomOf="@+id/tv_numberFive" />
+
+            <TextView
+                android:id="@+id/tv_numberFive"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="333333333333"
+                app:layout_constraintBottom_toTopOf="@+id/tv_numberSix"
+                app:layout_constraintStart_toStartOf="@+id/tv_numberSix"
+                app:layout_constraintTop_toBottomOf="@+id/tv_numberFour" />
+
+            <TextView
+                android:id="@+id/tv_numberOne"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="999999999999"
+                app:layout_constraintBottom_toTopOf="@+id/tv_numberTwo"
+                app:layout_constraintStart_toStartOf="@+id/tv_numberTwo"
+                app:layout_constraintTop_toBottomOf="@+id/tv_indicator_mac1" />
+
+            <TextView
+                android:id="@+id/tv_mac1"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Dirección MAC Base 1"
+                app:layout_constraintBottom_toTopOf="@+id/tv_indicator_mac1"
+                app:layout_constraintStart_toStartOf="@+id/tv_indicator_mac1"
+                app:layout_constraintTop_toBottomOf="@+id/tv_label_community_id" />
+
+            <TextView
+                android:id="@+id/tv_numberThree"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="777777777777"
+                app:layout_constraintBottom_toTopOf="@+id/tv_numberFour"
+                app:layout_constraintStart_toStartOf="@+id/tv_numberFour"
+                app:layout_constraintTop_toBottomOf="@+id/tv_numberTwo" />
+
+            <TextView
+                android:id="@+id/tv_indicator_mac1"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="001122334455"
+                app:layout_constraintBottom_toTopOf="@+id/tv_numberOne"
+                app:layout_constraintStart_toStartOf="@+id/tv_numberOne"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mac1" />
+
+            <TextView
+                android:id="@+id/tv_label_client_rut"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Rut cliente"
+                app:layout_constraintBottom_toTopOf="@+id/tv_label_community_id"
+                app:layout_constraintStart_toStartOf="@+id/tv_label_community_id"
+                app:layout_constraintTop_toBottomOf="@+id/tv_label_numSolicitud" />
+
+            <TextView
+                android:id="@+id/tv_numSolicitud"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Numero de solicitud"
+                app:layout_constraintBottom_toTopOf="@+id/tv_client_rut"
+                app:layout_constraintStart_toEndOf="@+id/tv_label_numSolicitud"
+                app:layout_constraintStart_toStartOf="@+id/tv_client_rut"
+                app:layout_constraintTop_toBottomOf="@+id/tv_resumen" />
+
+            <Button
+                android:id="@+id/btn_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="48dp"
+                android:text="Generar código QR"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_numberEight" />
+
+            <TextView
+                android:id="@+id/tv_client_rut"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Rut cliente"
+                app:layout_constraintBottom_toTopOf="@+id/tv_community_id"
+                app:layout_constraintStart_toEndOf="@+id/tv_label_client_rut"
+                app:layout_constraintStart_toStartOf="@+id/tv_community_id"
+                app:layout_constraintTop_toBottomOf="@+id/tv_numSolicitud" />
+
+            <TextView
+                android:id="@+id/tv_numberTen"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="848484848484"
+                app:layout_constraintBottom_toTopOf="@+id/tv_numberEleven"
+                app:layout_constraintStart_toEndOf="@+id/tv_numberTwo"
+                app:layout_constraintStart_toStartOf="@+id/tv_numberEleven"
+                app:layout_constraintTop_toBottomOf="@+id/tv_numberNine" />
+
+            <TextView
+                android:id="@+id/tv_numberEleven"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="777777777777"
+                app:layout_constraintBottom_toTopOf="@+id/tv_numberTwelve"
+                app:layout_constraintStart_toEndOf="@+id/tv_numberThree"
+                app:layout_constraintStart_toStartOf="@+id/tv_numberTwelve"
+                app:layout_constraintTop_toBottomOf="@+id/tv_numberTen" />
+
+            <TextView
+                android:id="@+id/tv_numberFourteen"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="111111111111"
+                app:layout_constraintBottom_toTopOf="@+id/tv_numberSixteen"
+                app:layout_constraintStart_toEndOf="@+id/tv_numberSix"
+                app:layout_constraintStart_toStartOf="@+id/tv_numberSixteen"
+                app:layout_constraintTop_toBottomOf="@+id/tv_numberThirteen" />
+
+            <TextView
+                android:id="@+id/tv_mac2"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Dirección MAC Base 2"
+                app:layout_constraintBottom_toTopOf="@+id/tv_indicator_mac2"
+                app:layout_constraintStart_toEndOf="@+id/tv_mac1"
+                app:layout_constraintStart_toStartOf="@+id/tv_indicator_mac2"
+                app:layout_constraintTop_toBottomOf="@+id/tv_community_id" />
+
+            <TextView
+                android:id="@+id/tv_numberSixteen"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="666666666666"
+                app:layout_constraintBottom_toTopOf="@+id/tv_numberFifteen"
+                app:layout_constraintStart_toEndOf="@+id/tv_numberSeven"
+                app:layout_constraintStart_toStartOf="@+id/tv_numberFifteen"
+                app:layout_constraintTop_toBottomOf="@+id/tv_numberFourteen" />
+
+            <TextView
+                android:id="@+id/tv_indicator_mac2"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="001122334455"
+                app:layout_constraintBottom_toTopOf="@+id/tv_numberNine"
+                app:layout_constraintStart_toEndOf="@+id/tv_indicator_mac1"
+                app:layout_constraintStart_toStartOf="@+id/tv_numberNine"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mac2" />
+
+            <TextView
+                android:id="@+id/tv_numberNine"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="999999999999"
+                app:layout_constraintBottom_toTopOf="@+id/tv_numberTen"
+                app:layout_constraintStart_toEndOf="@+id/tv_numberOne"
+                app:layout_constraintStart_toStartOf="@+id/tv_numberTen"
+                app:layout_constraintTop_toBottomOf="@+id/tv_indicator_mac2" />
+
+            <TextView
+                android:id="@+id/tv_numberFifteen"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="222222222222"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_numberEight"
+                app:layout_constraintTop_toBottomOf="@+id/tv_numberSixteen" />
+
+            <TextView
+                android:id="@+id/tv_numberTwelve"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="666666666666"
+                app:layout_constraintBottom_toTopOf="@+id/tv_numberThirteen"
+                app:layout_constraintStart_toEndOf="@+id/tv_numberFour"
+                app:layout_constraintStart_toStartOf="@+id/tv_numberThirteen"
+                app:layout_constraintTop_toBottomOf="@+id/tv_numberEleven" />
+
+            <TextView
+                android:id="@+id/tv_numberThirteen"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="333333333333"
+                app:layout_constraintBottom_toTopOf="@+id/tv_numberFourteen"
+                app:layout_constraintStart_toEndOf="@+id/tv_numberFive"
+                app:layout_constraintStart_toStartOf="@+id/tv_numberFourteen"
+                app:layout_constraintTop_toBottomOf="@+id/tv_numberTwelve" />
+
+            <TextView
+                android:id="@+id/tv_community_id"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Id de la comunidad"
+                app:layout_constraintBottom_toTopOf="@+id/tv_mac2"
+                app:layout_constraintStart_toEndOf="@+id/tv_label_community_id"
+                app:layout_constraintStart_toStartOf="@+id/tv_mac2"
+                app:layout_constraintTop_toBottomOf="@+id/tv_client_rut" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
