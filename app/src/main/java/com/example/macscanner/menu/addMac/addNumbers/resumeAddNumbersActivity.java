@@ -22,7 +22,8 @@ import java.util.Map;
 public class resumeAddNumbersActivity extends AppCompatActivity {
 
     private TextView tv1, tv2, tv3, tv4, tv5, tv6, tv7, tv8,
-            tv9, tv10, tv11, tv12, tv13, tv14, tv15, tv16, tv_mac1, tv_mac2;
+            tv9, tv10, tv11, tv12, tv13, tv14, tv15, tv16, tv_mac1, tv_mac2, tv_id_community, tv_client_rut;
+
     private Button btn_next;
     private ArrayList<String> list = new ArrayList<String>();
     private String acumulacion = "";
@@ -50,6 +51,8 @@ public class resumeAddNumbersActivity extends AppCompatActivity {
         tv14 = findViewById(R.id.tv_numberFourteen);
         tv15 = findViewById(R.id.tv_numberFifteen);
         tv16 = findViewById(R.id.tv_numberSixteen);
+        tv_id_community = findViewById(R.id.tv_community_id);
+        tv_client_rut = findViewById(R.id.tv_client_rut);
 
         SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
         list.add(0, preferences.getString("mac_scanned1", "valor mac1"));
@@ -70,6 +73,8 @@ public class resumeAddNumbersActivity extends AppCompatActivity {
         list.add(15, preferences.getString("et_number_fourteen", ""));
         list.add(16, preferences.getString("et_number_fifteen", ""));
         list.add(17, preferences.getString("et_number_sixteen", ""));
+        list.add(18, preferences.getString("et_community_id", ""));
+        list.add(19, preferences.getString("et_client_rut", ""));
 
         tv_mac1.setText(list.get(0));
         tv_mac2.setText(list.get(1));
@@ -89,6 +94,8 @@ public class resumeAddNumbersActivity extends AppCompatActivity {
         tv14.setText(list.get(15));
         tv15.setText(list.get(16));
         tv16.setText(list.get(17));
+        tv_id_community.setText(list.get(18));
+        tv_client_rut.setText(list.get(19));
 
         btn_next = findViewById(R.id.btn_next);
         btn_next.setOnClickListener(new View.OnClickListener() {
@@ -113,5 +120,5 @@ public class resumeAddNumbersActivity extends AppCompatActivity {
         });
     }
 
-
+//numerosolicitud,rutcliente,idcomunidad,macbase1,numeroasociados,macbase2,numeroasoiados,
 }

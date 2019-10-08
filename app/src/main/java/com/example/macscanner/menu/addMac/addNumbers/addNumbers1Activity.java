@@ -52,14 +52,14 @@ public class addNumbers1Activity extends AppCompatActivity {
             }
         });
 
-        et1 = (EditText)findViewById(R.id.et_number_one);
-        et2 = (EditText)findViewById(R.id.et_number_two);
-        et3 = (EditText)findViewById(R.id.et_number_three);
-        et4 = (EditText)findViewById(R.id.et_number_four);
-        et5 = (EditText)findViewById(R.id.et_number_five);
-        et6 = (EditText)findViewById(R.id.et_number_six);
-        et7 = (EditText)findViewById(R.id.et_number_seven);
-        et8 = (EditText)findViewById(R.id.et_number_eight);
+        et1 = findViewById(R.id.et_number_one);
+        et2 = findViewById(R.id.et_number_two);
+        et3 = findViewById(R.id.et_number_three);
+        et4 = findViewById(R.id.et_number_four);
+        et5 = findViewById(R.id.et_number_five);
+        et6 = findViewById(R.id.et_number_six);
+        et7 = findViewById(R.id.et_number_seven);
+        et8 = findViewById(R.id.et_number_eight);
 
         SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
         et1.setText(preferences.getString("et_number_one", ""));
