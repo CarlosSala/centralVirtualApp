@@ -1,10 +1,13 @@
 package com.example.macscanner.menu.addMac.addNumbers;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.LinearLayoutCompat;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,16 +20,24 @@ import com.example.macscanner.R;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.util.regex.Pattern;
+
 public class addNumbers2Activity extends AppCompatActivity {
 
     private TextView tv_mac;
     private Button btn_scan_mac, btn_next;
     private EditText et1, et2, et3, et4, et5, et6, et7, et8;
 
+    private LinearLayoutCompat linearLayout;
+    private boolean isAllFill;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_numbers2);
+
+        linearLayout = findViewById(R.id.ly_addNumbers2);
 
         tv_mac = findViewById(R.id.tv_mac);
 
@@ -43,22 +54,28 @@ public class addNumbers2Activity extends AppCompatActivity {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Guardar(view);
-                Intent intent = new Intent(addNumbers2Activity.this, resumeAddNumbersActivity.class);
-              //  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
 
+
+                Validate_data();
+
+                if (isAllFill) {
+
+                    Guardar(view);
+                    Intent intent = new Intent(view.getContext(), resumeAddNumbersActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
             }
         });
 
-        et1 = (EditText)findViewById(R.id.et_number_one);
-        et2 = (EditText)findViewById(R.id.et_number_two);
-        et3 = (EditText)findViewById(R.id.et_number_three);
-        et4 = (EditText)findViewById(R.id.et_number_four);
-        et5 = (EditText)findViewById(R.id.et_number_five);
-        et6 = (EditText)findViewById(R.id.et_number_six);
-        et7 = (EditText)findViewById(R.id.et_number_seven);
-        et8 = (EditText)findViewById(R.id.et_number_eight);
+        et1 = findViewById(R.id.et_number_one);
+        et2 = findViewById(R.id.et_number_two);
+        et3 = findViewById(R.id.et_number_three);
+        et4 = findViewById(R.id.et_number_four);
+        et5 = findViewById(R.id.et_number_five);
+        et6 = findViewById(R.id.et_number_six);
+        et7 = findViewById(R.id.et_number_seven);
+        et8 = findViewById(R.id.et_number_eight);
 
         SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
         et1.setText(preferences.getString("et_number_nine", ""));
@@ -69,6 +86,46 @@ public class addNumbers2Activity extends AppCompatActivity {
         et6.setText(preferences.getString("et_number_fourteen", ""));
         et7.setText(preferences.getString("et_number_fifteen", ""));
         et8.setText(preferences.getString("et_number_sixteen", ""));
+        tv_mac.setText(preferences.getString("mac_scanned2", ""));
+    }
+
+
+    private void Validate_data() {
+
+        // layout con los EditText
+
+        // Obtiene el numero de EditText que contiene el layout
+        int count = linearLayout.getChildCount();
+
+        // Recorres todos los editText y si hay alguno vacio cambias el valor de la
+        // variable isAllFill a false, lo que indica que aun hay editText vacios.
+
+        Pattern patron = Pattern.compile("\\A[0-9]{9}\\Z");
+
+        isAllFill = true;
+
+        for (int i = 1; i < count - 1; i += 2) {
+
+            // En cada iteración obtienes uno de los editText que se encuentran el
+            // layout.
+            AppCompatEditText editText = (AppCompatEditText) linearLayout.getChildAt(i);
+
+            // Compruebas su el editText esta vacio.
+            // if (editText.getText().toString().isEmpty()) {
+
+            if (patron.matcher(editText.getText().toString()).matches() ||
+                    editText.getText().toString().isEmpty()) {
+
+                editText.setTextColor(Color.WHITE);
+
+            } else {
+
+                editText.setTextColor(Color.RED);
+                isAllFill = false;
+            }
+                /*isAllFill = false;
+                break;*/
+        }
     }
 
 

@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:hint="rut cliente"
+            android:hint="rut cliente (12345678-9)"
             app:layout_constraintTop_toBottomOf="@id/til_client_rut" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
-            android:hint="id comunidad"
+            android:hint="id comunidad (ej. movistar_cloudpbx)"
             android:inputType="text"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="0dp">

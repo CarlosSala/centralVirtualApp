@@ -6,15 +6,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.macscanner.R;
+import com.example.macscanner.RutValidator;
 import com.example.macscanner.menu.addMac.addNumbers.addNumbers1Activity;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -32,10 +31,15 @@ public class addMacActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_mac);
 
         til_client_rut = findViewById(R.id.til_client_rut);
-        til_community_id = findViewById(R.id.til_community_id);
-
         et_client_rut = findViewById(R.id.et_client_rut);
+        til_community_id = findViewById(R.id.til_community_id);
         et_community_id = findViewById(R.id.et_community_id);
+
+
+        SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
+        et_client_rut.setText(preferences.getString("et_client_rut", ""));
+        et_community_id.setText(preferences.getString("et_community_id", ""));
+
 
         et_client_rut.addTextChangedListener(new TextWatcher() {
             @Override
@@ -71,19 +75,41 @@ public class addMacActivity extends AppCompatActivity {
             }
         });
 
+
         btn_enter = findViewById(R.id.btn_enter);
         btn_enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //  Guardar(view);
-                validarDatos();
-               /* Intent intent = new Intent(addMacActivity.this, addNumbers1Activity.class);
-                startActivity(intent);*/
+
+                if (Validate_data()) {
+
+                    Save_data();
+                    Intent intent = new Intent(addMacActivity.this, addNumbers1Activity.class);
+                    startActivity(intent);
+
+                }
             }
         });
     }
 
-    private boolean client_rut_validate(String rut) {
+
+    private boolean Validate_data() {
+
+        String community_id = til_community_id.getEditText().getText().toString();
+        String rut_client = til_client_rut.getEditText().getText().toString();
+
+        boolean rut_state = client_rut_validate(rut_client);
+        boolean id_state = community_id_validate(community_id);
+
+        if (rut_state && id_state) {
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /*private boolean client_rut_validate(String rut) {
         Pattern patron = Pattern.compile("\\A[a-no-zA-NO-Z0-9]{12}\\Z");
         if (!patron.matcher(rut).matches() || rut.length() > 30) {
             til_client_rut.setError("Rut inválido");
@@ -93,11 +119,25 @@ public class addMacActivity extends AppCompatActivity {
         }
         return true;
     }
+*/
+
+    private boolean client_rut_validate(String rut) {
+
+        boolean rut_state = RutValidator.validarRut(rut);
+
+        if (!rut_state) {
+            til_client_rut.setError("Rut invalido");
+            return false;
+        } else {
+            til_client_rut.setError(null);
+        }
+        return true;
+    }
 
     private boolean community_id_validate(String id) {
-        Pattern patron = Pattern.compile("\\A[a-no-zA-NO-Z0-9]{5,30}\\Z");
+        Pattern patron = Pattern.compile("\\A[\\w]{1,19}(_cloudpbx)\\Z");
         if (!patron.matcher(id).matches() || id.length() > 30) {
-            til_community_id.setError("community id inválido");
+            til_community_id.setError("Community id inválido");
             return false;
         } else {
             til_community_id.setError(null);
@@ -105,25 +145,12 @@ public class addMacActivity extends AppCompatActivity {
         return true;
     }
 
-    private void validarDatos() {
-        String rut_client = til_client_rut.getEditText().getText().toString();
-        String community_id = til_community_id.getEditText().getText().toString();
 
-        boolean a = client_rut_validate(rut_client);
-        boolean b = community_id_validate(community_id);
-
-        if (a && b) {
-            // OK, se pasa a la siguiente acción
-            Toast.makeText(this, "Se guarda el registro", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public void Guardar(View view) {
+    public void Save_data() {
         SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
         SharedPreferences.Editor obj_editor = preferencias.edit();
         obj_editor.putString("et_client_rut", et_client_rut.getText().toString());
         obj_editor.putString("et_community_id", et_community_id.getText().toString());
         obj_editor.commit();
-
     }
 }

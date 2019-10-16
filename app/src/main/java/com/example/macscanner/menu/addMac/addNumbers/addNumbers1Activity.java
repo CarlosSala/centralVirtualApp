@@ -1,14 +1,20 @@
 package com.example.macscanner.menu.addMac.addNumbers;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.constraintlayout.solver.widgets.WidgetContainer;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,17 +23,23 @@ import com.example.macscanner.R;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.util.regex.Pattern;
+
 public class addNumbers1Activity extends AppCompatActivity {
 
     private Button btn_scan_mac, btn_next;
     private TextView tv_mac;
     private EditText et1, et2, et3, et4, et5, et6, et7, et8;
 
+    private LinearLayoutCompat linearLayout;
+    private boolean isAllFill;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_numbers1);
 
+        linearLayout = findViewById(R.id.ly_addNumbers1);
 
         tv_mac = findViewById(R.id.tv_mac);
 
@@ -44,10 +56,17 @@ public class addNumbers1Activity extends AppCompatActivity {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Guardar(view);
-                Intent intent = new Intent(view.getContext(), addNumbers2Activity.class);
+
+                Validate_data();
+
+                if (isAllFill) {
+
+                    Guardar(view);
+                    Intent intent = new Intent(view.getContext(), addNumbers2Activity.class);
 //                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                    startActivity(intent);
+                }
+
 
             }
         });
@@ -70,7 +89,72 @@ public class addNumbers1Activity extends AppCompatActivity {
         et6.setText(preferences.getString("et_number_six", ""));
         et7.setText(preferences.getString("et_number_seven", ""));
         et8.setText(preferences.getString("et_number_eight", ""));
+        tv_mac.setText(preferences.getString("mac_scanned1", ""));
+
     }
+
+
+    private void Validate_data() {
+
+        // layout con los EditText
+
+        // Obtiene el numero de EditText que contiene el layout
+        int count = linearLayout.getChildCount();
+
+        // Recorres todos los editText y si hay alguno vacio cambias el valor de la
+        // variable isAllFill a false, lo que indica que aun hay editText vacios.
+
+        Pattern patron = Pattern.compile("\\A[0-9]{9}\\Z");
+
+        isAllFill = true;
+
+        for (int i = 1; i < count - 1; i += 2) {
+
+            // En cada iteración obtienes uno de los editText que se encuentran el
+            // layout.
+            AppCompatEditText editText = (AppCompatEditText) linearLayout.getChildAt(i);
+
+            // Compruebas su el editText esta vacio.
+            // if (editText.getText().toString().isEmpty()) {
+
+            if (patron.matcher(editText.getText().toString()).matches() ||
+                    editText.getText().toString().isEmpty()) {
+
+                editText.setTextColor(Color.WHITE);
+
+            } else {
+
+                editText.setTextColor(Color.RED);
+                isAllFill = false;
+            }
+                /*isAllFill = false;
+                break;*/
+        }
+    }
+
+    /*    if(isAllFill)
+
+    {
+        Log.i("MainActivity", "onCreate -> else -> Todos los EditText estan llenos.");
+    } else
+
+    {
+        Log.i("MainActivity", "onCreate -> if -> Hay EditText vacios.");
+    }
+*/
+
+
+/*   private boolean community_id_validate(String id) {
+        Pattern patron = Pattern.compile("\\A[\\w]{1,19}(_cloudpbx)\\Z");
+        if (!patron.matcher(id).matches() || id.length() > 30) {
+            til_community_id.setError("Community id inválido");
+            return false;
+        } else {
+            til_community_id.setError(null);
+        }
+        return true;
+    }*/
+
 
     // Get the results:
     @Override
@@ -84,7 +168,7 @@ public class addNumbers1Activity extends AppCompatActivity {
 
                 tv_mac.setText(result.getContents());
 
-                SharedPreferences preferencias = getSharedPreferences( "datos", Context.MODE_PRIVATE);
+                SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
                 SharedPreferences.Editor obj_editor = preferencias.edit();
                 obj_editor.putString("mac_scanned1", result.getContents());
                 obj_editor.commit();
@@ -113,8 +197,8 @@ public class addNumbers1Activity extends AppCompatActivity {
         integrator.initiateScan();
     }
 
-    public void Guardar(View view){
-        SharedPreferences preferencias = getSharedPreferences( "datos", Context.MODE_PRIVATE);
+    public void Guardar(View view) {
+        SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
         SharedPreferences.Editor obj_editor = preferencias.edit();
         obj_editor.putString("et_number_one", et1.getText().toString());
         obj_editor.putString("et_number_two", et2.getText().toString());
@@ -127,4 +211,5 @@ public class addNumbers1Activity extends AppCompatActivity {
         obj_editor.commit();
 
     }
+
 }
