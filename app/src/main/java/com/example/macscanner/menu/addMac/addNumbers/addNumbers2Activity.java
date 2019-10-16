@@ -133,23 +133,27 @@ public class addNumbers2Activity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        Pattern patron = Pattern.compile("\\A[a-fA-F0-9]{12}\\Z");
+
         if (result != null) {
             if (result.getContents() == null) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+
+                Toast.makeText(this, "Cancelado", Toast.LENGTH_LONG).show();
+
+            } else if (patron.matcher(result.getContents()).matches()) {
 
                 tv_mac.setText(result.getContents());
 
-                SharedPreferences preferencias = getSharedPreferences( "datos", Context.MODE_PRIVATE);
+                SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
                 SharedPreferences.Editor obj_editor = preferencias.edit();
                 obj_editor.putString("mac_scanned2", result.getContents());
                 obj_editor.commit();
 
+                Toast.makeText(this, "Código escaneado: " + result.getContents(), Toast.LENGTH_LONG).show();
 
-              /*  Intent intent = new Intent(this, QrActivity.class);
-                intent.putExtra("codeScanned", result.getContents());
-                startActivity(intent);*/
+            } else {
+
+                Toast.makeText(this, "Código escaneado: "+  result.getContents() +", no cumple con el formato requerido", Toast.LENGTH_LONG).show();
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

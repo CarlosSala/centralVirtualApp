@@ -160,11 +160,15 @@ public class addNumbers1Activity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+
+        Pattern patron = Pattern.compile("\\A[a-fA-F0-9]{12}\\Z");
+
         if (result != null) {
             if (result.getContents() == null) {
+
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+
+            } else if (patron.matcher(result.getContents()).matches()) {
 
                 tv_mac.setText(result.getContents());
 
@@ -173,10 +177,29 @@ public class addNumbers1Activity extends AppCompatActivity {
                 obj_editor.putString("mac_scanned1", result.getContents());
                 obj_editor.commit();
 
+                Toast.makeText(this, "Código escaneado: " + result.getContents(), Toast.LENGTH_LONG).show();
+
+            } else {
+
+                Toast.makeText(this, "Código escaneado: "+  result.getContents() +", no cumple con el formato requerido", Toast.LENGTH_LONG).show();
+            }
+
+
+
+          /*      if ( || id.length() > 30) {
+                    til_community_id.setError("Community id inválido");
+                    return false;
+                } else {
+                    til_community_id.setError(null);
+                }
+                return true;
+*/
+
+
+
               /*  Intent intent = new Intent(this, QrActivity.class);
                 intent.putExtra("codeScanned", result.getContents());
                 startActivity(intent);*/
-            }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }

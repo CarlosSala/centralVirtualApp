@@ -110,9 +110,9 @@ public class resumeAddNumbersActivity extends AppCompatActivity {
                 //Iterator iterator = list.iterator();
                 for (int i = 0; i < list.size(); i++) {
 
-                    if (list.get(i) != "") {
+                   // if (list.get(i) != "") {
                         acumulacion += list.get(i) + ";";
-                    }
+                   // }
                 }
                 Intent intent = new Intent(resumeAddNumbersActivity.this, shareQrActivity.class);
                 intent.putExtra("data", acumulacion);
