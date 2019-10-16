@@ -18,7 +18,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.example.macscanner.QrActivity;
 import com.example.macscanner.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;

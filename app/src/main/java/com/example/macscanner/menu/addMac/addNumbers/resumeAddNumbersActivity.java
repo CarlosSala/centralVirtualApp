@@ -10,14 +10,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.macscanner.QrActivity;
 import com.example.macscanner.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 public class resumeAddNumbersActivity extends AppCompatActivity {
 
@@ -28,7 +23,7 @@ public class resumeAddNumbersActivity extends AppCompatActivity {
 
     private Button btn_next;
     private ArrayList<String> list = new ArrayList<String>();
-    private String acumulacion = "";
+    private String acumulacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +52,6 @@ public class resumeAddNumbersActivity extends AppCompatActivity {
         tv_id_community = findViewById(R.id.tv_community_id);
         tv_client_rut = findViewById(R.id.tv_client_rut);
 
-
-        NumSolicitud = (int) (Math.random()* 1000000000) + 1;
-
-        SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
-        SharedPreferences.Editor obj_editor = preferencias.edit();
-        obj_editor.putInt("NumSolicitud", NumSolicitud);
-        obj_editor.commit();
 
         //numerosolicitud,rutcliente,idcomunidad,macbase1,numeroasociados,macbase2,numeroasoiados,
 
@@ -117,6 +105,7 @@ public class resumeAddNumbersActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                acumulacion = "";
 
                 //Iterator iterator = list.iterator();
                 for (int i = 0; i < list.size(); i++) {
@@ -128,6 +117,7 @@ public class resumeAddNumbersActivity extends AppCompatActivity {
                 Intent intent = new Intent(resumeAddNumbersActivity.this, shareQrActivity.class);
                 intent.putExtra("data", acumulacion);
                 startActivity(intent);
+                //finish();
             }
         });
     }

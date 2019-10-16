@@ -222,9 +222,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:hint="111111111111"
-                app:layout_constraintBottom_toTopOf="@+id/tv_numberSixteen"
+                app:layout_constraintBottom_toTopOf="@+id/tv_numberFifteen"
                 app:layout_constraintStart_toEndOf="@+id/tv_numberSix"
-                app:layout_constraintStart_toStartOf="@+id/tv_numberSixteen"
+                app:layout_constraintStart_toStartOf="@+id/tv_numberFifteen"
                 app:layout_constraintTop_toBottomOf="@+id/tv_numberThirteen" />
 
             <TextView
@@ -244,10 +244,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:hint="666666666666"
-                app:layout_constraintBottom_toTopOf="@+id/tv_numberFifteen"
-                app:layout_constraintStart_toEndOf="@+id/tv_numberSeven"
-                app:layout_constraintStart_toStartOf="@+id/tv_numberFifteen"
-                app:layout_constraintTop_toBottomOf="@+id/tv_numberFourteen" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_numberEight"
+                app:layout_constraintTop_toBottomOf="@+id/tv_numberFifteen" />
 
             <TextView
                 android:id="@+id/tv_indicator_mac2"
@@ -277,9 +276,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:hint="222222222222"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tv_numberEight"
-                app:layout_constraintTop_toBottomOf="@+id/tv_numberSixteen" />
+                app:layout_constraintBottom_toTopOf="@+id/tv_numberSixteen"
+                app:layout_constraintStart_toStartOf="@+id/tv_numberSixteen"
+                app:layout_constraintStart_toEndOf="@+id/tv_numberSeven"
+                app:layout_constraintTop_toBottomOf="@+id/tv_numberFourteen" />
 
             <TextView
                 android:id="@+id/tv_numberTwelve"

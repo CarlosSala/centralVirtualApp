@@ -18,7 +18,8 @@
         <activity
             android:name=".menu.addMac.addNumbers.shareQrActivity"
             android:parentActivityName=".menu.addMac.addNumbers.resumeAddNumbersActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            />
 
         <activity
             android:name=".menu.addMac.addNumbers.resumeAddNumbersActivity"
@@ -47,6 +48,7 @@
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/LoginTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,14 +62,6 @@
             android:stateNotNeeded="true"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
-        <activity
-            android:name=".MainActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".QrActivity"
-            android:screenOrientation="portrait" />
 
     </application>
 

@@ -21,6 +21,9 @@ import java.util.regex.Pattern;
 
 public class addMacActivity extends AppCompatActivity {
 
+
+    private int NumSolicitud;
+
     private TextInputLayout til_client_rut, til_community_id;
     private EditText et_client_rut, et_community_id;
     private Button btn_enter;
@@ -83,6 +86,7 @@ public class addMacActivity extends AppCompatActivity {
 
                 if (Validate_data()) {
 
+                    solicitud();
                     Save_data();
                     Intent intent = new Intent(addMacActivity.this, addNumbers1Activity.class);
                     startActivity(intent);
@@ -151,6 +155,16 @@ public class addMacActivity extends AppCompatActivity {
         SharedPreferences.Editor obj_editor = preferencias.edit();
         obj_editor.putString("et_client_rut", et_client_rut.getText().toString());
         obj_editor.putString("et_community_id", et_community_id.getText().toString());
+        obj_editor.commit();
+    }
+
+    public void solicitud(){
+
+        NumSolicitud = (int) (Math.random()* 1000000000) + 1;
+
+        SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
+        SharedPreferences.Editor obj_editor = preferencias.edit();
+        obj_editor.putInt("NumSolicitud", NumSolicitud);
         obj_editor.commit();
     }
 }

@@ -8,9 +8,6 @@
     android:background="@android:color/holo_blue_light"
     tools:context=".LoginActivity">
 
-
-
-
 <LinearLayout
     android:id="@+id/area_nombre"
     android:layout_width="match_parent"
@@ -28,55 +25,42 @@
         android:layout_margin="20dp"
         android:src="@drawable/ic_movistarlogo"></ImageView>
 
-    <ImageView
-        android:id="@+id/user_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:src="@drawable/ic_correo"
-        />
+
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/user_field"
+        android:id="@+id/til_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
         app:errorEnabled="true"
         android:theme="@style/LoginEditText"
         >
 
-        <EditText
-            android:id="@+id/user_email"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/filed_user"
             android:inputType="textEmailAddress"
             android:singleLine="true"
-
-
+            android:drawableStart="@drawable/mail"
             />
+
+
+
+
     </com.google.android.material.textfield.TextInputLayout>
 
 
-    <ImageView
-        android:id="@+id/password_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_below="@+id/user_img"
-        android:src="@drawable/ic_cliente" />
-
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password_field"
+        android:id="@+id/til_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
         android:theme="@style/LoginEditText"
         app:errorEnabled="true">
 
-        <EditText
-            android:id="@+id/user_password"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -84,6 +68,7 @@
             android:inputType="textPassword"
             android:singleLine="true"
             android:textColor="@color/white"
+            android:drawableStart="@drawable/password"
             />
     </com.google.android.material.textfield.TextInputLayout>
 
