@@ -21,8 +21,9 @@ import java.util.regex.Pattern;
 
 public class addMacActivity extends AppCompatActivity {
 
-
     private int NumSolicitud;
+    private boolean client_rut;
+    private boolean community_id;
 
     private TextInputLayout til_client_rut, til_community_id;
     private EditText et_client_rut, et_community_id;
@@ -39,6 +40,12 @@ public class addMacActivity extends AppCompatActivity {
         et_community_id = findViewById(R.id.et_community_id);
 
 
+        SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
+        SharedPreferences.Editor obj_editor = preferencias.edit();
+        obj_editor.putString("et_client_rut", "");
+        obj_editor.putString("et_community_id", "");
+        obj_editor.commit();
+
         SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
         et_client_rut.setText(preferences.getString("et_client_rut", ""));
         et_community_id.setText(preferences.getString("et_community_id", ""));
@@ -53,6 +60,8 @@ public class addMacActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 til_client_rut.setError(null);
+                Client_rut_validate();
+                Enable_btn();
             }
 
             @Override
@@ -70,6 +79,8 @@ public class addMacActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 til_community_id.setError(null);
+                Community_id_validate();
+                Enable_btn();
             }
 
             @Override
@@ -78,77 +89,53 @@ public class addMacActivity extends AppCompatActivity {
             }
         });
 
-
         btn_enter = findViewById(R.id.btn_enter);
+        btn_enter.setEnabled(false);
         btn_enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (Validate_data()) {
-
-                    solicitud();
-                    Save_data();
-                    Intent intent = new Intent(addMacActivity.this, addNumbers1Activity.class);
-                    startActivity(intent);
-
-                }
+                Num_request();
+                Save_data();
+                Intent intent = new Intent(addMacActivity.this, addNumbers1Activity.class);
+                startActivity(intent);
             }
         });
     }
 
+    private void Enable_btn() {
 
-    private boolean Validate_data() {
+        if (client_rut && community_id) {
+            btn_enter.setEnabled(true);
+        } else {
+            btn_enter.setEnabled(false);
+        }
+    }
 
-        String community_id = til_community_id.getEditText().getText().toString();
+    private void Client_rut_validate() {
+
         String rut_client = til_client_rut.getEditText().getText().toString();
+        client_rut = RutValidator.validarRut(rut_client);
 
-        boolean rut_state = client_rut_validate(rut_client);
-        boolean id_state = community_id_validate(community_id);
-
-        if (rut_state && id_state) {
-
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /*private boolean client_rut_validate(String rut) {
-        Pattern patron = Pattern.compile("\\A[a-no-zA-NO-Z0-9]{12}\\Z");
-        if (!patron.matcher(rut).matches() || rut.length() > 30) {
+        if (!client_rut) {
             til_client_rut.setError("Rut inválido");
-            return false;
         } else {
             til_client_rut.setError(null);
         }
-        return true;
-    }
-*/
-
-    private boolean client_rut_validate(String rut) {
-
-        boolean rut_state = RutValidator.validarRut(rut);
-
-        if (!rut_state) {
-            til_client_rut.setError("Rut invalido");
-            return false;
-        } else {
-            til_client_rut.setError(null);
-        }
-        return true;
     }
 
-    private boolean community_id_validate(String id) {
+    private void Community_id_validate() {
+
+        String id = til_community_id.getEditText().getText().toString();
+
         Pattern patron = Pattern.compile("\\A[\\w]{1,19}(_cloudpbx)\\Z");
-        if (!patron.matcher(id).matches() || id.length() > 30) {
-            til_community_id.setError("Community id inválido");
-            return false;
+        if (!patron.matcher(id).matches()) {
+            til_community_id.setError("'Community id' inválido");
+            community_id = false;
         } else {
             til_community_id.setError(null);
+            community_id = true;
         }
-        return true;
     }
-
 
     public void Save_data() {
         SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
@@ -158,9 +145,9 @@ public class addMacActivity extends AppCompatActivity {
         obj_editor.commit();
     }
 
-    public void solicitud(){
+    public void Num_request() {
 
-        NumSolicitud = (int) (Math.random()* 1000000000) + 1;
+        NumSolicitud = (int) (Math.random() * 1000000000) + 1;
 
         SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
         SharedPreferences.Editor obj_editor = preferencias.edit();
