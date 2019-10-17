@@ -29,11 +29,13 @@
         <activity
             android:name=".menu.addMac.addNumbers.addNumbers2Activity"
             android:parentActivityName=".menu.addMac.addNumbers.addNumbers1Activity"
+            android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait"/>
 
         <activity
             android:name=".menu.addMac.addNumbers.addNumbers1Activity"
             android:parentActivityName=".menu.addMac.addMacActivity"
+            android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait"/>
 
         <activity

@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 public class resumeAddNumbersActivity extends AppCompatActivity {
 
-    private int NumSolicitud;
     private TextView tv1, tv2, tv3, tv4, tv5, tv6, tv7, tv8,
             tv9, tv10, tv11, tv12, tv13, tv14, tv15, tv16, tv_mac1, tv_mac2,
             tv_id_community, tv_client_rut, tv_num_solicitud;
@@ -110,9 +109,9 @@ public class resumeAddNumbersActivity extends AppCompatActivity {
                 //Iterator iterator = list.iterator();
                 for (int i = 0; i < list.size(); i++) {
 
-                   // if (list.get(i) != "") {
-                        acumulacion += list.get(i) + ";";
-                   // }
+                    // if (list.get(i) != "") {
+                    acumulacion += list.get(i) + ";";
+                    // }
                 }
                 Intent intent = new Intent(resumeAddNumbersActivity.this, shareQrActivity.class);
                 intent.putExtra("data", acumulacion);

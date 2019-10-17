@@ -18,7 +18,7 @@ public class principalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
 
-        btn_add_mac = (Button)findViewById(R.id.btn_add_mac);
+        btn_add_mac = findViewById(R.id.btn_add_mac);
 
         btn_add_mac.setOnClickListener(new View.OnClickListener() {
             @Override

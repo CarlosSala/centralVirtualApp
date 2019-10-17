@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.macscanner.R;
+import com.example.macscanner.menu.addMac.addMacActivity;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -29,17 +31,19 @@ import java.io.ByteArrayOutputStream;
 
 public class shareQrActivity extends AppCompatActivity {
 
-    private Button button;
+    private Button btn_share, btn_restart;
     private ImageView imageView;
     private String data;
     private Bitmap bitmap;
 
     private final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_qr);
-        button = findViewById(R.id.btn);
+        btn_share = findViewById(R.id.btn_share);
+        btn_restart = findViewById(R.id.btn_restart);
         imageView = findViewById(R.id.imgv);
 
         data = getIntent().getExtras().getString("data", "QR");
@@ -60,9 +64,7 @@ public class shareQrActivity extends AppCompatActivity {
             }
         }
 
-
-
-        button.setOnClickListener(new View.OnClickListener() {
+        btn_share.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
@@ -102,7 +104,18 @@ public class shareQrActivity extends AppCompatActivity {
             }
         });
 
+        btn_restart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                Delete_data();
+
+                Intent intent = new Intent(shareQrActivity.this, addMacActivity.class);
+                //intent.putExtra("data", acumulacion);
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 
@@ -128,5 +141,32 @@ public class shareQrActivity extends AppCompatActivity {
         //shareIntent.setType("image/*");
 
         startActivity(Intent.createChooser(shareIntent, "send"));
+    }
+
+
+    public void Delete_data(){
+        SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
+        SharedPreferences.Editor obj_editor = preferencias.edit();
+        obj_editor.putString("et_client_rut", "");
+        obj_editor.putString("et_community_id", "");
+        obj_editor.putString("mac_scanned1", "");
+        obj_editor.putString("mac_scanned2", "");
+        obj_editor.putString("et_number_one", "");
+        obj_editor.putString("et_number_two", "");
+        obj_editor.putString("et_number_three", "");
+        obj_editor.putString("et_number_four", "");
+        obj_editor.putString("et_number_five", "");
+        obj_editor.putString("et_number_six", "");
+        obj_editor.putString("et_number_seven", "");
+        obj_editor.putString("et_number_eight", "");
+        obj_editor.putString("et_number_nine", "");
+        obj_editor.putString("et_number_ten", "");
+        obj_editor.putString("et_number_eleven", "");
+        obj_editor.putString("et_number_twelve", "");
+        obj_editor.putString("et_number_thirteen", "");
+        obj_editor.putString("et_number_fourteen", "");
+        obj_editor.putString("et_number_fifteen", "");
+        obj_editor.putString("et_number_sixteen", "");
+        obj_editor.commit();
     }
 }
