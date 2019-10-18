@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -27,17 +28,29 @@ public class LoginActivity extends AppCompatActivity {
         et_email.clearFocus();
         et_password.clearFocus();
 
+        et_email.setText("correo@prueba.cl");
+        et_password.setText("1234");
+
         btn_login = findViewById(R.id.btn_login);
-
-
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, principalActivity.class);
-                startActivity(intent);
-                finish();
+                Login();
             }
         });
 
+    }
+
+
+    private void Login (){
+
+        if(et_email.getText().toString().equals("correo@prueba.cl") &&
+                et_password.getText().toString().equals("1234")){
+            Intent intent = new Intent(LoginActivity.this, principalActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            Toast.makeText(this, "Error datos de usuario", Toast.LENGTH_SHORT).show();
+        }
     }
 }

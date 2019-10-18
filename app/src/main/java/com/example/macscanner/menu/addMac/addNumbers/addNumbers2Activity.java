@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,12 +26,13 @@ import java.util.regex.Pattern;
 
 public class addNumbers2Activity extends AppCompatActivity {
 
-    private TextView tv_mac;
     private Button btn_scan_mac, btn_next;
+    private TextView tv_mac;
     private EditText et1, et2, et3, et4, et5, et6, et7, et8;
-
     private LinearLayoutCompat linearLayout;
-    private boolean isAllFill;
+
+    private int et_vacios;
+    private int et_validos;
 
 
     @Override
@@ -49,22 +52,17 @@ public class addNumbers2Activity extends AppCompatActivity {
             }
         });
 
-
         btn_next = findViewById(R.id.btn_next);
+        btn_next.setEnabled(false);
+
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
-                Validate_data();
-
-                if (isAllFill) {
-
-                    Guardar(view);
-                    Intent intent = new Intent(view.getContext(), resumeAddNumbersActivity.class);
+                Guardar(view);
+                Intent intent = new Intent(view.getContext(), resumeAddNumbersActivity.class);
 //                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                }
+                startActivity(intent);
             }
         });
 
@@ -77,6 +75,143 @@ public class addNumbers2Activity extends AppCompatActivity {
         et7 = findViewById(R.id.et_number_seven);
         et8 = findViewById(R.id.et_number_eight);
 
+        et1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Validate_data(et1);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        et2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Validate_data(et2);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        et3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Validate_data(et3);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        et4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Validate_data(et4);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        et5.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Validate_data(et5);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        et6.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Validate_data(et6);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        et7.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Validate_data(et7);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
+        et8.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Validate_data(et8);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
         et1.setText(preferences.getString("et_number_nine", ""));
         et2.setText(preferences.getString("et_number_ten", ""));
@@ -87,44 +222,62 @@ public class addNumbers2Activity extends AppCompatActivity {
         et7.setText(preferences.getString("et_number_fifteen", ""));
         et8.setText(preferences.getString("et_number_sixteen", ""));
         tv_mac.setText(preferences.getString("mac_scanned2", ""));
+
+        Enable_btn();
     }
 
 
-    private void Validate_data() {
-
-        // layout con los EditText
-
-        // Obtiene el numero de EditText que contiene el layout
-        int count = linearLayout.getChildCount();
-
-        // Recorres todos los editText y si hay alguno vacio cambias el valor de la
-        // variable isAllFill a false, lo que indica que aun hay editText vacios.
+    private void Validate_data(EditText num_editText) {
 
         Pattern patron = Pattern.compile("\\A[0-9]{9}\\Z");
 
-        isAllFill = true;
+        if (patron.matcher(num_editText.getText().toString()).matches()) {
+
+            num_editText.setTextColor(Color.WHITE);
+            Enable_btn();
+
+        } else if (num_editText.getText().toString().isEmpty()) {
+            Enable_btn();
+
+        } else {
+            num_editText.setTextColor(Color.RED);
+            Enable_btn();
+        }
+    }
+
+
+    private void Enable_btn() {
+
+        Validate_EditText();
+
+        if ((et_validos + et_vacios) == 8 && et_vacios < 8 && !tv_mac.getText().toString().isEmpty()) {
+            btn_next.setEnabled(true);
+        } else
+            btn_next.setEnabled(false);
+    }
+
+    private void Validate_EditText() {
+
+        et_vacios = 0;
+        et_validos = 0;
+
+        Pattern patron = Pattern.compile("\\A[0-9]{9}\\Z");
+
+        // Obtiene el numero de elementos que contiene el layout
+        int count = linearLayout.getChildCount();
 
         for (int i = 1; i < count - 1; i += 2) {
 
-            // En cada iteración obtienes uno de los editText que se encuentran el
-            // layout.
+            // En cada iteración obtienes uno de los editText que se encuentran el layout
             AppCompatEditText editText = (AppCompatEditText) linearLayout.getChildAt(i);
 
-            // Compruebas su el editText esta vacio.
-            // if (editText.getText().toString().isEmpty()) {
+            if (patron.matcher(editText.getText().toString()).matches()) {
+                et_validos += 1;
 
-            if (patron.matcher(editText.getText().toString()).matches() ||
-                    editText.getText().toString().isEmpty()) {
+            } else if (editText.getText().toString().isEmpty()) {
+                et_vacios += 1;
 
-                editText.setTextColor(Color.WHITE);
-
-            } else {
-
-                editText.setTextColor(Color.RED);
-                isAllFill = false;
             }
-                /*isAllFill = false;
-                break;*/
         }
     }
 
@@ -148,7 +301,7 @@ public class addNumbers2Activity extends AppCompatActivity {
                 SharedPreferences.Editor obj_editor = preferencias.edit();
                 obj_editor.putString("mac_scanned2", result.getContents());
                 obj_editor.commit();
-
+                Enable_btn();
                 Toast.makeText(this, "Código escaneado: " + result.getContents(), Toast.LENGTH_LONG).show();
 
             } else {

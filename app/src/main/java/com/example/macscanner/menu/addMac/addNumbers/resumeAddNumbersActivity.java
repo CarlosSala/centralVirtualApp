@@ -113,7 +113,7 @@ public class resumeAddNumbersActivity extends AppCompatActivity {
                     acumulacion += list.get(i) + ";";
                     // }
                 }
-                Intent intent = new Intent(resumeAddNumbersActivity.this, shareQrActivity.class);
+                Intent intent = new Intent(resumeAddNumbersActivity.this, sendDataActivity.class);
                 intent.putExtra("data", acumulacion);
                 startActivity(intent);
                 //finish();

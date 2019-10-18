@@ -3,18 +3,17 @@ package com.example.macscanner.menu.addMac.addNumbers;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.LinearLayoutCompat;
-import androidx.constraintlayout.solver.widgets.WidgetContainer;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,9 +29,10 @@ public class addNumbers1Activity extends AppCompatActivity {
     private Button btn_scan_mac, btn_next;
     private TextView tv_mac;
     private EditText et1, et2, et3, et4, et5, et6, et7, et8;
-
     private LinearLayoutCompat linearLayout;
-    private boolean isAllFill;
+
+    private int et_vacios;
+    private int et_validos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,6 @@ public class addNumbers1Activity extends AppCompatActivity {
 
         tv_mac = findViewById(R.id.tv_mac);
 
-
         btn_scan_mac = findViewById(R.id.btn_scan_mac);
         btn_scan_mac.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,21 +52,16 @@ public class addNumbers1Activity extends AppCompatActivity {
         });
 
         btn_next = findViewById(R.id.btn_next);
+        btn_next.setEnabled(false);
+
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Validate_data();
-
-                if (isAllFill) {
-
-                    Guardar(view);
-                    Intent intent = new Intent(view.getContext(), addNumbers2Activity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                }
-
-
+                Guardar(view);
+                Intent intent = new Intent(view.getContext(), addNumbers2Activity.class);
+                // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
 
@@ -80,6 +74,144 @@ public class addNumbers1Activity extends AppCompatActivity {
         et7 = findViewById(R.id.et_number_seven);
         et8 = findViewById(R.id.et_number_eight);
 
+        et1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Validate_data(et1);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        et2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Validate_data(et2);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        et3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Validate_data(et3);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        et4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Validate_data(et4);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        et5.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Validate_data(et5);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        et6.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Validate_data(et6);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        et7.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Validate_data(et7);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
+        et8.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Validate_data(et8);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
         SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
         et1.setText(preferences.getString("et_number_one", ""));
         et2.setText(preferences.getString("et_number_two", ""));
@@ -91,69 +223,71 @@ public class addNumbers1Activity extends AppCompatActivity {
         et8.setText(preferences.getString("et_number_eight", ""));
         tv_mac.setText(preferences.getString("mac_scanned1", ""));
 
+        Enable_btn();
     }
 
 
-    private void Validate_data() {
-
-        // layout con los EditText
-
-        // Obtiene el numero de EditText que contiene el layout
-        int count = linearLayout.getChildCount();
-
-        // Recorres todos los editText y si hay alguno vacio cambias el valor de la
-        // variable isAllFill a false, lo que indica que aun hay editText vacios.
+    private void Validate_data(EditText num_editText) {
 
         Pattern patron = Pattern.compile("\\A[0-9]{9}\\Z");
 
-        isAllFill = true;
+        if (patron.matcher(num_editText.getText().toString()).matches()) {
+
+            num_editText.setTextColor(Color.WHITE);
+            Enable_btn();
+
+        } else if (num_editText.getText().toString().isEmpty()) {
+            Enable_btn();
+
+        } else {
+            num_editText.setTextColor(Color.RED);
+            Enable_btn();
+        }
+    }
+
+    private void Enable_btn() {
+
+        Validate_EditText();
+
+        if ((et_validos + et_vacios) == 8 && et_vacios < 8 && !tv_mac.getText().toString().isEmpty()) {
+            btn_next.setEnabled(true);
+        } else
+            btn_next.setEnabled(false);
+    }
+
+    private void Validate_EditText() {
+
+        et_vacios = 0;
+        et_validos = 0;
+
+        Pattern patron = Pattern.compile("\\A[0-9]{9}\\Z");
+
+        // Obtiene el numero de elementos que contiene el layout
+        int count = linearLayout.getChildCount();
 
         for (int i = 1; i < count - 1; i += 2) {
 
-            // En cada iteración obtienes uno de los editText que se encuentran el
-            // layout.
+            // En cada iteración obtienes uno de los editText que se encuentran el layout
             AppCompatEditText editText = (AppCompatEditText) linearLayout.getChildAt(i);
 
-            // Compruebas su el editText esta vacio.
-            // if (editText.getText().toString().isEmpty()) {
+            if (patron.matcher(editText.getText().toString()).matches()) {
+                et_validos += 1;
 
-            if (patron.matcher(editText.getText().toString()).matches() ||
-                    editText.getText().toString().isEmpty()) {
+            } else if (editText.getText().toString().isEmpty()) {
+                et_vacios += 1;
 
-                editText.setTextColor(Color.WHITE);
-
-            } else {
-
-                editText.setTextColor(Color.RED);
-                isAllFill = false;
             }
-                /*isAllFill = false;
-                break;*/
         }
     }
 
-    /*    if(isAllFill)
 
-    {
-        Log.i("MainActivity", "onCreate -> else -> Todos los EditText estan llenos.");
-    } else
-
-    {
-        Log.i("MainActivity", "onCreate -> if -> Hay EditText vacios.");
-    }
-*/
-
-
-/*   private boolean community_id_validate(String id) {
-        Pattern patron = Pattern.compile("\\A[\\w]{1,19}(_cloudpbx)\\Z");
-        if (!patron.matcher(id).matches() || id.length() > 30) {
-            til_community_id.setError("Community id inválido");
-            return false;
+     /*   if (isAllFill) {
+            Log.i("MainActivity", "onCreate -> else -> Todos los EditText estan llenos.");
         } else {
-            til_community_id.setError(null);
-        }
-        return true;
-    }*/
+            Log.i("MainActivity", "onCreate -> if -> Hay EditText vacios.");
+        }*/
+
+
 
 
     // Get the results:
@@ -166,7 +300,7 @@ public class addNumbers1Activity extends AppCompatActivity {
         if (result != null) {
             if (result.getContents() == null) {
 
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Cancelado", Toast.LENGTH_LONG).show();
 
             } else if (patron.matcher(result.getContents()).matches()) {
 
@@ -176,30 +310,14 @@ public class addNumbers1Activity extends AppCompatActivity {
                 SharedPreferences.Editor obj_editor = preferencias.edit();
                 obj_editor.putString("mac_scanned1", result.getContents());
                 obj_editor.commit();
-
+                Enable_btn();
                 Toast.makeText(this, "Código escaneado: " + result.getContents(), Toast.LENGTH_LONG).show();
 
             } else {
 
-                Toast.makeText(this, "Código escaneado: "+  result.getContents() +", no cumple con el formato requerido", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Código escaneado: " + result.getContents() + ", no cumple con el formato requerido", Toast.LENGTH_LONG).show();
             }
 
-
-
-          /*      if ( || id.length() > 30) {
-                    til_community_id.setError("Community id inválido");
-                    return false;
-                } else {
-                    til_community_id.setError(null);
-                }
-                return true;
-*/
-
-
-
-              /*  Intent intent = new Intent(this, QrActivity.class);
-                intent.putExtra("codeScanned", result.getContents());
-                startActivity(intent);*/
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
@@ -232,7 +350,5 @@ public class addNumbers1Activity extends AppCompatActivity {
         obj_editor.putString("et_number_seven", et7.getText().toString());
         obj_editor.putString("et_number_eight", et8.getText().toString());
         obj_editor.commit();
-
     }
-
 }

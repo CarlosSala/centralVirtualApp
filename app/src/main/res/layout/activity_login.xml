@@ -44,10 +44,8 @@
             android:inputType="textEmailAddress"
             android:singleLine="true"
             android:drawableStart="@drawable/mail"
+            android:drawablePadding="5dp"
             />
-
-
-
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -69,6 +67,7 @@
             android:singleLine="true"
             android:textColor="@color/white"
             android:drawableStart="@drawable/password"
+            android:drawablePadding="5dp"
             />
     </com.google.android.material.textfield.TextInputLayout>
 
