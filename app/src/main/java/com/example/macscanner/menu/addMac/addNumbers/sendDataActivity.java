@@ -29,7 +29,11 @@ public class sendDataActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(sendDataActivity.this, shareQrActivity.class);
                 intent.putExtra("data", data);
+
                 Toast.makeText(sendDataActivity.this, "Se envió la información", Toast.LENGTH_LONG).show();
+/*
+                intent.addFlags(intent.FLAG_ACTIVITY_SINGLE_TOP);
+*/
                 startActivity(intent);
                 //finish();
             }

@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
+        android:textSize="22dp"
         android:text="Dirección MAC Base 2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -30,7 +31,7 @@
 
         <TextView
             android:id="@+id/tv_mac"
-            android:layout_width="200dp"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
             android:gravity="center"
             android:hint="Dirección MAC"></TextView>

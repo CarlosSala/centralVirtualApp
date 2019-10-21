@@ -40,11 +40,11 @@ public class addMacActivity extends AppCompatActivity {
         et_community_id = findViewById(R.id.et_community_id);
 
 
-        SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
+       /* SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
         SharedPreferences.Editor obj_editor = preferencias.edit();
         obj_editor.putString("et_client_rut", "");
         obj_editor.putString("et_community_id", "");
-        obj_editor.commit();
+        obj_editor.commit();*/
 
         SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
         et_client_rut.setText(preferences.getString("et_client_rut", ""));
@@ -100,6 +100,15 @@ public class addMacActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        if (et_community_id.getText().toString().isEmpty() && et_client_rut.getText().toString().isEmpty()){
+
+        } else {
+            Client_rut_validate();
+            Community_id_validate();
+            Enable_btn();
+        }
+
     }
 
     private void Enable_btn() {
