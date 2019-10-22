@@ -10,9 +10,11 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -35,7 +37,7 @@ public class shareQrActivity extends AppCompatActivity {
     private String data;
     private Bitmap bitmap;
 
-    private final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
+    private final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +70,34 @@ public class shareQrActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                // Here, thisActivity is the current activity
-                if (ContextCompat.checkSelfPermission(shareQrActivity.this,
-                        Manifest.permission.READ_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(shareQrActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    share();
+                    // Permission has already been granted
+                } else {
+
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(shareQrActivity.this,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        Toast.makeText(shareQrActivity.this, "Los permisos para acceder al almacenamiento externo son necesarios para guardar el codigo qr", Toast.LENGTH_SHORT).show();
+                    }
+
+                    // No explanation needed; request the permission
+                    ActivityCompat.requestPermissions(shareQrActivity.this,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+
+                    if (MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE == 0) {
+
+                    } else {
+                        share();
+                    }
+
+                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                    // app-defined int constant. The callback method gets the
+                    // result of the request.
+                }
+
+            /*    // Here, thisActivity is the current activity
+                if (ContextCompat.checkSelfPermission(shareQrActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
                     // Permission is not granted
                     // Should we show an explanation?
@@ -99,7 +125,7 @@ public class shareQrActivity extends AppCompatActivity {
                 } else {
                     share();
                     // Permission has already been granted
-                }
+                }*/
             }
         });
 
@@ -143,7 +169,7 @@ public class shareQrActivity extends AppCompatActivity {
     }
 
 
-    public void Delete_data(){
+    public void Delete_data() {
         SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
         SharedPreferences.Editor obj_editor = preferencias.edit();
         obj_editor.putString("et_client_rut", "");
@@ -167,5 +193,21 @@ public class shareQrActivity extends AppCompatActivity {
         obj_editor.putString("et_number_fifteen", "");
         obj_editor.putString("et_number_sixteen", "");
         obj_editor.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        Delete_data();
+
+        Intent intent = new Intent(shareQrActivity.this, addMacActivity.class);
+        //intent.putExtra("data", acumulacion);
+        startActivity(intent);
+        finish();
+        /*Log.d("CDA", "onBackPressed Called");
+        Intent setIntent = new Intent(Intent.ACTION_MAIN);
+        setIntent.addCategory(Intent.CATEGORY_HOME);
+        setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(setIntent);*/
     }
 }

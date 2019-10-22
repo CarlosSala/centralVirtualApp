@@ -93,7 +93,8 @@
         android:layout_height="30dp"
         android:background="@android:color/transparent"
         android:text="@string/register"
-        android:textColor="@color/darkgrey" />
+        android:textColor="@color/darkgrey"
+        android:layout_marginBottom="40dp"/>
 
 
 </LinearLayout>

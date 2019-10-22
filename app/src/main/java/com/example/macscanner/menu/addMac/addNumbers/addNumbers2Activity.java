@@ -31,9 +31,8 @@ public class addNumbers2Activity extends AppCompatActivity {
     private EditText et1, et2, et3, et4, et5, et6, et7, et8;
     private LinearLayoutCompat linearLayout;
 
-    private int et_vacios;
-    private int et_validos;
-
+    private int et_empty;
+    private int et_valid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +47,7 @@ public class addNumbers2Activity extends AppCompatActivity {
         btn_scan_mac.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                customScanner(view);
+                customScanner();
             }
         });
 
@@ -59,9 +58,8 @@ public class addNumbers2Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Guardar(view);
+                Save_data();
                 Intent intent = new Intent(view.getContext(), resumeAddNumbersActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
@@ -246,39 +244,34 @@ public class addNumbers2Activity extends AppCompatActivity {
     }
 
 
+    // method to enable or disabled button
     private void Enable_btn() {
 
-        Validate_EditText();
-
-        if ((et_validos + et_vacios) == 8 && et_vacios < 8 && !tv_mac.getText().toString().isEmpty()) {
-            btn_next.setEnabled(true);
-        } else
-            btn_next.setEnabled(false);
-    }
-
-    private void Validate_EditText() {
-
-        et_vacios = 0;
-        et_validos = 0;
+        et_empty = 0;
+        et_valid = 0;
 
         Pattern patron = Pattern.compile("\\A[0-9]{9}\\Z");
 
-        // Obtiene el numero de elementos que contiene el layout
+        // get the number of elements within the linearLayout
         int count = linearLayout.getChildCount();
 
         for (int i = 1; i < count - 1; i += 2) {
 
-            // En cada iteración obtienes uno de los editText que se encuentran el layout
+            // Each iteration gets the number of the editText within linearLayout
             AppCompatEditText editText = (AppCompatEditText) linearLayout.getChildAt(i);
 
             if (patron.matcher(editText.getText().toString()).matches()) {
-                et_validos += 1;
+                et_valid += 1;
 
             } else if (editText.getText().toString().isEmpty()) {
-                et_vacios += 1;
-
+                et_empty += 1;
             }
         }
+
+        if ((et_valid + et_empty) == 8 && et_empty < 8 && !tv_mac.getText().toString().isEmpty()) {
+            btn_next.setEnabled(true);
+        } else
+            btn_next.setEnabled(false);
     }
 
 
@@ -286,9 +279,11 @@ public class addNumbers2Activity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+
         Pattern patron = Pattern.compile("\\A[a-fA-F0-9]{12}\\Z");
 
         if (result != null) {
+
             if (result.getContents() == null) {
 
                 Toast.makeText(this, "Cancelado", Toast.LENGTH_LONG).show();
@@ -301,19 +296,19 @@ public class addNumbers2Activity extends AppCompatActivity {
                 SharedPreferences.Editor obj_editor = preferencias.edit();
                 obj_editor.putString("mac_scanned2", result.getContents());
                 obj_editor.commit();
-                Enable_btn();
                 Toast.makeText(this, "Código escaneado: " + result.getContents(), Toast.LENGTH_LONG).show();
+                Enable_btn();
 
             } else {
-
-                Toast.makeText(this, "Código escaneado: "+  result.getContents() +", no cumple con el formato requerido", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Código escaneado: " + result.getContents() + ", no cumple con el formato requerido", Toast.LENGTH_LONG).show();
             }
+
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
-    private void customScanner(View view) {
+    private void customScanner() {
 
         IntentIntegrator integrator = new IntentIntegrator(this);
 
@@ -324,12 +319,12 @@ public class addNumbers2Activity extends AppCompatActivity {
         integrator.setBarcodeImageEnabled(true);
         integrator.setCaptureActivity(CustomScannerActivity.class);
         integrator.setTimeout(20000);
-        integrator.addExtra("title", "MACs SCANNER");
+        integrator.addExtra("title", "MAC SCANNER");
         integrator.initiateScan();
     }
 
-    public void Guardar(View view){
-        SharedPreferences preferencias = getSharedPreferences( "datos", Context.MODE_PRIVATE);
+    public void Save_data() {
+        SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
         SharedPreferences.Editor obj_editor = preferencias.edit();
         obj_editor.putString("et_number_nine", et1.getText().toString());
         obj_editor.putString("et_number_ten", et2.getText().toString());
@@ -340,6 +335,5 @@ public class addNumbers2Activity extends AppCompatActivity {
         obj_editor.putString("et_number_fifteen", et7.getText().toString());
         obj_editor.putString("et_number_sixteen", et8.getText().toString());
         obj_editor.commit();
-
     }
 }

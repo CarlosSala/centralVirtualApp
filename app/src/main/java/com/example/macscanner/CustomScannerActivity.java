@@ -42,12 +42,12 @@ public class CustomScannerActivity extends AppCompatActivity implements Decorate
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         toolbar.setBackgroundColor(Color.rgb(45,45,45));
 
-        barcodeScannerView = (DecoratedBarcodeView) findViewById(R.id.zxing_barcode_scanner);
+        barcodeScannerView = findViewById(R.id.zxing_barcode_scanner);
         barcodeScannerView.setTorchListener(this);
 
-        switchFlashlightButton = (Button) findViewById(R.id.switch_flashlight);
+        switchFlashlightButton = findViewById(R.id.switch_flashlight);
 
-        viewfinderView = (ViewfinderView) findViewById(R.id.zxing_viewfinder_view);
+        viewfinderView = findViewById(R.id.zxing_viewfinder_view);
 
         Drawable img = this.getResources().getDrawable( R.drawable.ic_flash );
         img.setBounds( 0, 0, 60, 60 );

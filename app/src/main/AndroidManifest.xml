@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.macscanner">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
 
     <application
         android:allowBackup="true"
@@ -15,50 +16,58 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat">
 
-        <activity android:name=".menu.addMac.addNumbers.sendDataActivity"
-            android:parentActivityName=".menu.addMac.addNumbers.resumeAddNumbersActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".menu.addMac.addNumbers.shareQrActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".menu.addMac.addNumbers.resumeAddNumbersActivity"
-            android:parentActivityName=".menu.addMac.addNumbers.addNumbers2Activity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".menu.addMac.addNumbers.addNumbers2Activity"
-            android:parentActivityName=".menu.addMac.addNumbers.addNumbers1Activity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".menu.addMac.addNumbers.addNumbers1Activity"
-            android:parentActivityName=".menu.addMac.addMacActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".menu.addMac.addMacActivity"
-            android:parentActivityName=".menu.principalActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".menu.principalActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/LoginTheme"
             android:windowSoftInputMode="stateHidden">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".menu.principalActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".menu.addMac.addMacActivity"
+            android:parentActivityName=".menu.principalActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".menu.addMac.addNumbers.addNumbers1Activity"
+            android:parentActivityName=".menu.addMac.addMacActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
+            android:name=".menu.addMac.addNumbers.addNumbers2Activity"
+            android:parentActivityName=".menu.addMac.addNumbers.addNumbers1Activity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
+            android:name=".menu.addMac.addNumbers.resumeAddNumbersActivity"
+            android:parentActivityName=".menu.addMac.addNumbers.addNumbers2Activity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".menu.addMac.addNumbers.sendDataActivity"
+            android:parentActivityName=".menu.addMac.addNumbers.resumeAddNumbersActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".menu.addMac.addNumbers.shareQrActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".CustomScannerActivity"
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
     </application>
-
 </manifest>
