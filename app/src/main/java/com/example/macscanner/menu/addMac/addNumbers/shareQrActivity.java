@@ -1,21 +1,24 @@
 package com.example.macscanner.menu.addMac.addNumbers;
 
-
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -30,6 +33,8 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.io.ByteArrayOutputStream;
 
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
 public class shareQrActivity extends AppCompatActivity {
 
     private Button btn_share, btn_restart;
@@ -43,17 +48,17 @@ public class shareQrActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_qr);
+
         btn_share = findViewById(R.id.btn_share);
         btn_restart = findViewById(R.id.btn_restart);
         imageView = findViewById(R.id.imgv);
 
-        data = getIntent().getExtras().getString("data", "QR");
+        // get data from sendDataActivity
+        data = getIntent().getExtras().getString("data", "Qr");
 
         if (data != null) {
             MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-
             try {
-
                 BitMatrix bitMatrix = multiFormatWriter.encode(data, BarcodeFormat.QR_CODE, 500, 500);
                 BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
                 bitmap = barcodeEncoder.createBitmap(bitMatrix);
@@ -61,88 +66,111 @@ public class shareQrActivity extends AppCompatActivity {
 
             } catch (WriterException e) {
                 e.printStackTrace();
-
             }
         }
+
+        // Return to addMacActivity
+        btn_restart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Delete_data();
+                Intent intent = new Intent(shareQrActivity.this, addMacActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
 
         btn_share.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
 
-                if (ContextCompat.checkSelfPermission(shareQrActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    share();
-                    // Permission has already been granted
+                // check SDK
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                    // if SDF is lower to android M, the permissions are declared in manifest
+
+                }
+                // check if permission was already granted
+                if (ContextCompat.checkSelfPermission(shareQrActivity.this,
+                        WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    Share();
+
                 } else {
 
                     if (ActivityCompat.shouldShowRequestPermissionRationale(shareQrActivity.this,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                        Toast.makeText(shareQrActivity.this, "Los permisos para acceder al almacenamiento externo son necesarios para guardar el codigo qr", Toast.LENGTH_SHORT).show();
+                        Dialog();
+                        //Toast.makeText(shareQrActivity.this, "Los permisos para acceder al almacenamiento externo son necesarios para guardar el codigo qr", Toast.LENGTH_SHORT).show();
                     }
 
-                    // No explanation needed; request the permission
                     ActivityCompat.requestPermissions(shareQrActivity.this,
-                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                            MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+                            new String[]{WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
 
                     if (MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE == 0) {
 
                     } else {
-                        share();
+                        Share();
                     }
-
-                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                    // app-defined int constant. The callback method gets the
-                    // result of the request.
                 }
-
-            /*    // Here, thisActivity is the current activity
-                if (ContextCompat.checkSelfPermission(shareQrActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-
-                    // Permission is not granted
-                    // Should we show an explanation?
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(shareQrActivity.this,
-                            Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                        // Show an explanation to the user *asynchronously* -- don't block
-                        // this thread waiting for the user's response! After the user
-                        // sees the explanation, try again to request the permission.
-                    } else {
-                        // No explanation needed; request the permission
-                        ActivityCompat.requestPermissions(shareQrActivity.this,
-                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-
-                        if (MY_PERMISSIONS_REQUEST_READ_CONTACTS == 0) {
-
-                        } else {
-                            share();
-                        }
-
-                        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                        // app-defined int constant. The callback method gets the
-                        // result of the request.
-                    }
-                } else {
-                    share();
-                    // Permission has already been granted
-                }*/
             }
         });
-
-        btn_restart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Delete_data();
-
-                Intent intent = new Intent(shareQrActivity.this, addMacActivity.class);
-                //intent.putExtra("data", acumulacion);
-                startActivity(intent);
-                finish();
-            }
-        });
-
     }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 0) {
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+            } else {
+                Manual_permissions();
+            }
+        }
+    }
+
+    private void Manual_permissions() {
+
+        final CharSequence[] opciones = {"si", "no"};
+        final AlertDialog.Builder alertOpciones = new AlertDialog.Builder(shareQrActivity.this);
+        alertOpciones.setTitle("¿Desea configurar los permisos de forma manual?");
+        alertOpciones.setItems(opciones, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (opciones[i].equals("si")) {
+                    Intent intent = new Intent();
+                    intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    Uri uri = Uri.fromParts("package", getPackageName(), null);
+                    intent.setData(uri);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Los permisos no fueron aceptados", Toast.LENGTH_SHORT).show();
+                    dialogInterface.dismiss();
+                }
+            }
+        });
+        alertOpciones.show();
+    }
+
+
+    private void Dialog() {
+
+        AlertDialog.Builder dialogo = new AlertDialog.Builder(shareQrActivity.this);
+        dialogo.setTitle("Permisos Desactivados");
+        dialogo.setMessage("Debe aceptar los permisos para el correcto funcionamiento de la App");
+
+        dialogo.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ActivityCompat.requestPermissions(shareQrActivity.this, new String[]{WRITE_EXTERNAL_STORAGE}, 100);
+            }
+        });
+        dialogo.show();
+    }
+
 
     // method to get Uri from Bitmap
     public String getImageUri(Context inContext, Bitmap inImage) {
@@ -153,8 +181,8 @@ public class shareQrActivity extends AppCompatActivity {
         return path;
     }
 
-    //method to share image
-    public void share() {
+    //method to Share image
+    public void Share() {
 
         Uri imageUri = Uri.parse(getImageUri(shareQrActivity.this, bitmap));
         Intent shareIntent = new Intent();
@@ -164,7 +192,6 @@ public class shareQrActivity extends AppCompatActivity {
         shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
         shareIntent.setType("image/jpeg");
         //shareIntent.setType("image/*");
-
         startActivity(Intent.createChooser(shareIntent, "send"));
     }
 
@@ -201,7 +228,6 @@ public class shareQrActivity extends AppCompatActivity {
         Delete_data();
 
         Intent intent = new Intent(shareQrActivity.this, addMacActivity.class);
-        //intent.putExtra("data", acumulacion);
         startActivity(intent);
         finish();
         /*Log.d("CDA", "onBackPressed Called");

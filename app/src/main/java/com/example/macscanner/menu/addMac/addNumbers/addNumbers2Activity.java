@@ -268,10 +268,18 @@ public class addNumbers2Activity extends AppCompatActivity {
             }
         }
 
+
         if ((et_valid + et_empty) == 8 && et_empty < 8 && !tv_mac.getText().toString().isEmpty()) {
+
             btn_next.setEnabled(true);
-        } else
+
+        } else if (et_empty == 8 && tv_mac.getText().toString().isEmpty()) {
+
+            btn_next.setEnabled(true);
+
+        } else {
             btn_next.setEnabled(false);
+        }
     }
 
 
