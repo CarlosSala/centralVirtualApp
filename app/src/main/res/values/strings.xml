@@ -9,4 +9,13 @@
     <string name="forgot_password">Olvidé mi contraseña</string>
     <string name="register">Registrarse</string>
 
+    <string name="name">Nombre</string>
+    <string name="last_name">Apellido</string>
+    <string name="email">Correo electrónico</string>
+    <string name="password">Contraseña</string>
+    <string name="password_again">Contraseña</string>
+
+    <string name="atencion">Attention</string>
+    <string name="deseacerrarsesion">Do you want to close the session?</string>
+
 </resources>
