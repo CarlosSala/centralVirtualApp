@@ -7,7 +7,7 @@
         <!-- cursor y línea con foco-->
         <!--<item name="colorControlActivated">@color/teal</item>-->
         <!--<item name="android:textColor">@android:color/white</item>-->
-        <item name="colorControlActivated">#EC6838</item>
+        <item name="colorControlActivated">#BF360C</item>
 
         <!--<item name="colorAccent">@color/colorAccent</item>-->
         <!--<item name="android:textColorHint">@android:color/white</item>-->
@@ -25,7 +25,9 @@
         <item name="android:background">@android:color/holo_blue_light</item>
         <item name="colorControlNormal">@android:color/white</item>
         <item name="android:textColorHint">@android:color/white</item>
-        <item name="colorControlActivated">#BF360C</item>
+        <item name="colorControlActivated">@color/darkgrey</item>
+        <!--<item name="colorControlActivated">#BF360C</item>-->
+        <item name="colorError">#BF360C</item>
         <item name="android:textColor">@color/white</item>
 
 
