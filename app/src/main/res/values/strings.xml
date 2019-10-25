@@ -18,4 +18,5 @@
     <string name="atencion">Attention</string>
     <string name="deseacerrarsesion">Do you want to close the session?</string>
 
+    <string name="recover_password">Recuperar contraseña</string>
 </resources>

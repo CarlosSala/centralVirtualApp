@@ -29,6 +29,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -82,18 +83,14 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+
+
     }
 
 
     private void User_register() {
 
         showProgressBar(true);
-
-      /*  try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
 
         String email = et_email.getText().toString();
         String password = et_password.getText().toString();
@@ -103,9 +100,30 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(RegisterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
+
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                            user.sendEmailVerification()
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d(TAG, "Email sent.");
+                                            }
+                                        }
+                                    });
+
+                            Toast.makeText(RegisterActivity.this, "Registro exitoso", Toast.LENGTH_LONG).show();
 
                             showProgressBar(false);
+
+                            try {
+                                Thread.sleep(2000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            Toast.makeText(RegisterActivity.this, "Revise su email para verificar su correo", Toast.LENGTH_LONG).show();
 
                             Intent intent = new Intent(getApplication(), LoginActivity.class);
                             startActivity(intent);
@@ -121,7 +139,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }
 
 
-                        //registerUserData();
+                        registerUserData();
                     }
                 });
     }
@@ -251,4 +269,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         }
     }
+
+
 }
