@@ -1,13 +1,7 @@
 package com.example.macscanner;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,13 +11,18 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
@@ -37,19 +36,20 @@ import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class RegisterActivity extends AppCompatActivity {
-
-    private final static String TAG = "RegisterActivity";
 
     private TextInputEditText et_name, et_lastName, et_email, et_password, et_passwordAgain;
     private TextInputLayout til_name, til_lastName, til_email, til_password, til_passwordAgain;
     private Button btn_register;
 
+    private LinearLayout linearLayout;
+
     private ProgressBar progressBarRegister;
 
     private FirebaseAuth firebaseAuth;
+
+    private final static String TAG = "RegisterActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +57,8 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        linearLayout = findViewById(R.id.linearLayout_register);
 
         progressBarRegister = findViewById(R.id.progressBar);
         progressBarRegister.setVisibility(View.INVISIBLE);
@@ -101,6 +103,9 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
+                            Toast.makeText(RegisterActivity.this, "Registro exitoso", Toast.LENGTH_LONG).show();
+
+
                             FirebaseUser user = firebaseAuth.getCurrentUser();
 
                             user.sendEmailVerification()
@@ -113,31 +118,29 @@ public class RegisterActivity extends AppCompatActivity {
                                         }
                                     });
 
-                            Toast.makeText(RegisterActivity.this, "Registro exitoso", Toast.LENGTH_LONG).show();
-
                             showProgressBar(false);
 
-                            try {
-                                Thread.sleep(2000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                            Snackbar.make(linearLayout, "Se ha enviado un mensaje a su correo electrónico para verificar su cuenta", Snackbar.LENGTH_INDEFINITE)
+                                    .setAction("Volver", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            Intent intent = new Intent(getApplication(), LoginActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    })
+                                    .setActionTextColor(getResources().getColor(R.color.white))
+                                    .show();
 
-                            Toast.makeText(RegisterActivity.this, "Revise su email para verificar su correo", Toast.LENGTH_LONG).show();
-
-                            Intent intent = new Intent(getApplication(), LoginActivity.class);
-                            startActivity(intent);
-                            finish();
                         } else {
 
                             if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                                Toast.makeText(RegisterActivity.this, "El correo electrónico ya se encuentra regisrado", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "El correo electrónico se encuentra registrado en otra cuenta", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(RegisterActivity.this, "No se pudo realizar el registro", Toast.LENGTH_SHORT).show();
                             }
                             showProgressBar(false);
                         }
-
 
                         registerUserData();
                     }
@@ -155,31 +158,31 @@ public class RegisterActivity extends AppCompatActivity {
         String password2Error = null;
 
         if (TextUtils.isEmpty(et_name.getText())) {
-            nameError = "Este campo no puede estar vacio";
+            nameError = "Este campo no puede estar vacío";
             resp = false;
         }
 
         toggleTextInputLayoutError(til_name, nameError);
 
         if (TextUtils.isEmpty(et_lastName.getText())) {
-            lastnameError = "Este campo no puede estar vacio";
+            lastnameError = "Este campo no puede estar vacío";
             resp = false;
         }
         toggleTextInputLayoutError(til_lastName, lastnameError);
 
         if (TextUtils.isEmpty(et_email.getText())) {
-            mailError = "El campo email esta vacio";
+            mailError = "Este campo no puede estar vacío";
             resp = false;
         }
         if ((!Patterns.EMAIL_ADDRESS.matcher(et_email.getText()).matches()) && (!TextUtils.isEmpty(et_email.getText()))) {
-            mailError = "Introducir un correo valido";
+            mailError = "El correo no es válido";
             resp = false;
 
         }
         toggleTextInputLayoutError(til_email, mailError);
 
         if (TextUtils.isEmpty(et_password.getText())) {
-            password1Error = "Este campo no puede estar vacio";
+            password1Error = "Este campo no puede estar vacío";
             resp = false;
         }
         if ((et_password.length() < 6) && (!TextUtils.isEmpty(et_password.getText()))) {
@@ -190,15 +193,15 @@ public class RegisterActivity extends AppCompatActivity {
         toggleTextInputLayoutError(til_password, password1Error);
 
         if (TextUtils.isEmpty(et_passwordAgain.getText())) {
-            password2Error = "Este campo no puede estar vacio";
+            password2Error = "Este campo no puede estar vacío";
             resp = false;
         }
         if ((et_passwordAgain.length() < 6) && (!TextUtils.isEmpty(et_passwordAgain.getText()))) {
-            password2Error = "La contraseña debe tener 6 o mas caracteres ";
+            password2Error = "La contraseña debe tener 6 o mas caracteres";
             resp = false;
         }
         if (!et_passwordAgain.getText().toString().equals(et_password.getText().toString())) {
-            password2Error = "Las contraseñas no coinciden ";
+            password2Error = "Las contraseñas no coinciden";
             resp = false;
         }
 
@@ -271,4 +274,18 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
+    /*try {
+                                Thread.currentThread().sleep(10000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }*/
+
+   /*  final Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // Do something after 5s = 5000ms
+                                    buttons[inew][jnew].setBackgroundColor(Color.BLACK);
+                                }
+                            }, 5000);*/
 }

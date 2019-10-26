@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,11 +14,13 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,12 +35,18 @@ public class RecoverPasswordActivity extends AppCompatActivity {
     private TextInputLayout til_recover;
     private Button btn_recover;
 
+    private LinearLayout linearLayout;
+
     private ProgressBar progressBarRecover;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recovery_password);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        linearLayout = findViewById(R.id.linearLayout_recover);
 
         progressBarRecover = findViewById(R.id.progressBar);
         progressBarRecover.setVisibility(View.INVISIBLE);
@@ -53,18 +62,31 @@ public class RecoverPasswordActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 showProgressBar(true);
+
                 toggleTextInputLayoutError(til_recover, null);
 
                 if (validform()) {
-
-                    firebaseAuth = FirebaseAuth.getInstance();
 
                     firebaseAuth.sendPasswordResetEmail(et_recover.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "Email sent.");
-                                Toast.makeText(RecoverPasswordActivity.this, "Se ha enviado un correo a " + et_recover.getText().toString() + "para restablecer la contraseña", Toast.LENGTH_LONG).show();
+
+                                showProgressBar(false);
+
+                                Snackbar.make(linearLayout, "Se ha enviado un mensaje al correo electrónico proporcionado", Snackbar.LENGTH_INDEFINITE)
+                                        .setAction("Volver", new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                Intent intent = new Intent(RecoverPasswordActivity.this, LoginActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        })
+                                        .setActionTextColor(getResources().getColor(R.color.white))
+                                        .show();
+
                             } else {
 
                                 Log.d(TAG, "Email has not been sent.");
@@ -76,6 +98,7 @@ public class RecoverPasswordActivity extends AppCompatActivity {
 
                     });
                 }
+                showProgressBar(false);
             }
         });
     }
@@ -89,7 +112,7 @@ public class RecoverPasswordActivity extends AppCompatActivity {
             resp = false;
         }
         if ((!Patterns.EMAIL_ADDRESS.matcher(et_recover.getText()).matches()) && (!TextUtils.isEmpty(et_recover.getText()))) {
-            mailError = "Introducir un correo valido";
+            mailError = "Introducir un email valido";
             resp = false;
 
         }

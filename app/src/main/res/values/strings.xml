@@ -13,7 +13,7 @@
     <string name="last_name">Apellido</string>
     <string name="email">Correo electrónico</string>
     <string name="password">Contraseña</string>
-    <string name="password_again">Contraseña</string>
+    <string name="password_again">Repita contraseña</string>
 
     <string name="atencion">Attention</string>
     <string name="deseacerrarsesion">Do you want to close the session?</string>

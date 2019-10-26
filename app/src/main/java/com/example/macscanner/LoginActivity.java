@@ -128,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
                                     finish();
                                 } else {
 
-                                    Toast.makeText(LoginActivity.this, "Debe verivificar su correo", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(LoginActivity.this, "Debe verificar su correo", Toast.LENGTH_LONG).show();
 
                                     showProgressBar(false);
 
@@ -171,22 +171,22 @@ public class LoginActivity extends AppCompatActivity {
         String password1Error = null;
 
         if (TextUtils.isEmpty(et_email.getText())) {
-            mailError = "El campo email esta vacio";
+            mailError = "Este campo no puede estar vacío";
             resp = false;
         }
         if ((!Patterns.EMAIL_ADDRESS.matcher(et_email.getText()).matches()) && (!TextUtils.isEmpty(et_email.getText()))) {
-            mailError = "Introducir un correo valido";
+            mailError = "El correo no es válido";
             resp = false;
 
         }
         toggleTextInputLayoutError(til_email, mailError);
 
         if (TextUtils.isEmpty(et_password.getText())) {
-            password1Error = "Este campo no puede estar vacio";
+            password1Error = "Este campo no puede estar vacío";
             resp = false;
         }
         if ((et_password.length() < 6) && (!TextUtils.isEmpty(et_password.getText()))) {
-            password1Error = "La contraseña debe tener 6 o mas caracteres ";
+            password1Error = "La contraseña debe tener 6 o mas caracteres";
             resp = false;
         }
 
