@@ -27,7 +27,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class RecoverPasswordActivity extends AppCompatActivity {
 
-
     private static String TAG = "RecoverPasswordActivity";
 
     private FirebaseAuth firebaseAuth;
@@ -66,13 +65,12 @@ public class RecoverPasswordActivity extends AppCompatActivity {
 
                 if (validform()) {
 
-                    //firebaseAuth = FirebaseAuth.getInstance();
-
                     firebaseAuth.sendPasswordResetEmail(et_recover.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "Email sent.");
+
                                 showProgressBar(false);
 
                                 Snackbar.make(linearLayout, "Se ha enviado un mensaje al correo electrónico proporcionado", Snackbar.LENGTH_INDEFINITE)
@@ -113,31 +111,20 @@ public class RecoverPasswordActivity extends AppCompatActivity {
         String mailError = null;
 
         if (TextUtils.isEmpty(et_recover.getText())) {
-            mailError = "El campo email esta vacio";
+            mailError = "Este campo no puede estar vacío";
             resp = false;
         }
         if ((!Patterns.EMAIL_ADDRESS.matcher(et_recover.getText()).matches()) && (!TextUtils.isEmpty(et_recover.getText()))) {
-            mailError = "Introducir un email valido";
+            mailError = "El correo no es válido";
             resp = false;
         }
 
         toggleTextInputLayoutError(til_recover, mailError);
         clearFocus();
 
-
         return resp;
 
     }
-
-    /*
-            *Display/
-    hides TextInputLayout
-    error
-    @param
-    msg the
-    message,or null
-    to hide*/
-
 
     private static void toggleTextInputLayoutError(@NonNull TextInputLayout textInputLayout,
                                                    String msg) {
@@ -191,6 +178,5 @@ public class RecoverPasswordActivity extends AppCompatActivity {
         startActivity(intent);
         finish();*//*
     }*/
-
 
 }

@@ -1,7 +1,6 @@
 package com.example.macscanner;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -29,7 +28,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
@@ -42,9 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputEditText et_name, et_lastName, et_email, et_password, et_passwordAgain;
     private TextInputLayout til_name, til_lastName, til_email, til_password, til_passwordAgain;
     private Button btn_register;
-
     private LinearLayout linearLayout;
-
     private ProgressBar progressBarRegister;
 
     private FirebaseAuth firebaseAuth;
@@ -95,11 +91,14 @@ public class RegisterActivity extends AppCompatActivity {
         String email = et_email.getText().toString();
         String password = et_password.getText().toString();
 
+        //create user
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
+                            registerUserData();
 
                             Toast.makeText(RegisterActivity.this, "Registro exitoso", Toast.LENGTH_LONG).show();
 
@@ -114,6 +113,8 @@ public class RegisterActivity extends AppCompatActivity {
                                             }
                                         }
                                     });
+
+                            Clean_form();
 
                             showProgressBar(false);
 
@@ -143,8 +144,6 @@ public class RegisterActivity extends AppCompatActivity {
                             }
                             showProgressBar(false);
                         }
-
-                        //registerUserData();
                     }
                 });
     }
@@ -179,7 +178,6 @@ public class RegisterActivity extends AppCompatActivity {
         if ((!Patterns.EMAIL_ADDRESS.matcher(et_email.getText()).matches()) && (!TextUtils.isEmpty(et_email.getText()))) {
             mailError = "El correo no es válido";
             resp = false;
-
         }
         toggleTextInputLayoutError(til_email, mailError);
 
@@ -214,21 +212,20 @@ public class RegisterActivity extends AppCompatActivity {
         return resp;
     }
 
-
-    private static void toggleTextInputLayoutError(@NonNull TextInputLayout textInputLayout,
-                                                   String msg) {
-        textInputLayout.setError(msg);
+    private static void toggleTextInputLayoutError(@NonNull TextInputLayout til, String msg) {
+        til.setError(msg);
         if (msg == null) {
-            textInputLayout.setErrorEnabled(false);
+            til.setErrorEnabled(false);
         } else {
-            textInputLayout.setErrorEnabled(true);
+            til.setErrorEnabled(true);
         }
     }
 
-
+    // register additional user data
     private void registerUserData() {
 
-        DocumentReference mDocRef = FirebaseFirestore.getInstance().document("/users/" + et_email.getText().toString());
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         Map<String, Object> user = new HashMap<>();
 
         user.put("nombre", et_name.getText().toString());
@@ -236,20 +233,20 @@ public class RegisterActivity extends AppCompatActivity {
         user.put("email", et_email.getText().toString());
         user.put("timestampUser", FieldValue.serverTimestamp());
 
+        db.collection("users").document(et_email.getText().toString())
 
-        mDocRef.set(user, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                .set(user, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.d(TAG, "Device saved");
+                Log.d(TAG, "Additional data saved");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "Error device was not saved", e);
+                Log.w(TAG, "Error additional data was not saved", e);
             }
         });
     }
-
 
     private void clearFocus() {
         View view = this.getCurrentFocus();
@@ -296,4 +293,16 @@ public class RegisterActivity extends AppCompatActivity {
                                     buttons[inew][jnew].setBackgroundColor(Color.BLACK);
                                 }
                             }, 5000);*/
+
+    private void Clean_form() {
+
+        et_email.setText("");
+        et_lastName.setText("");
+        et_name.setText("");
+        et_password.setText("");
+        et_passwordAgain.setText("");
+
+    }
+
+
 }

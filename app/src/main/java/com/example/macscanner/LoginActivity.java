@@ -11,12 +11,18 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
@@ -28,6 +34,8 @@ import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private final static String TAG = "LoginActivity";
+
     private Button btn_login, btn_register, btn_recovery_password;
     private TextInputEditText et_email, et_password;
     private TextInputLayout til_email, til_password;
@@ -36,12 +44,16 @@ public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
 
+    private FirebaseFirestore firestoredb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        firestoredb = FirebaseFirestore.getInstance();
 
         progressBarLogin = findViewById(R.id.progressBar);
         progressBarLogin.setVisibility(View.INVISIBLE);
@@ -97,44 +109,56 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
 
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
                             if (user != null) {
-                                // Name, email address, and profile photo Url
-                                String name = user.getDisplayName();
+
                                 String email = user.getEmail();
-                                Uri photoUrl = user.getPhotoUrl();
 
                                 // Check if user's email is verified
                                 boolean emailVerified = user.isEmailVerified();
 
-
-                                // The user's ID, unique to the Firebase project. Do NOT use this value to
-                                // authenticate with your backend server, if you have one. Use
-                                // FirebaseUser.getIdToken() instead.
-                                String uid = user.getUid();
-
                                 if (emailVerified) {
 
-                                    Toast.makeText(LoginActivity.this, "Bienvenido", Toast.LENGTH_LONG).show();
+                                    DocumentReference docRef = firestoredb.collection("users").document(email);
+                                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            if (task.isSuccessful()) {
 
-                                    showProgressBar(false);
+                                                DocumentSnapshot document = task.getResult();
+                                                if (document.exists()) {
 
-                                    Intent intent = new Intent(LoginActivity.this, principalActivity.class);
-                                    startActivity(intent);
-                                    finish();
+                                                    showProgressBar(false);
+
+                                                    String name = document.getString("nombre");
+
+                                                    Toast.makeText(LoginActivity.this, "Bienvenido " + name, Toast.LENGTH_LONG).show();
+
+                                                    Intent intent = new Intent(LoginActivity.this, principalActivity.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                    //Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                                                } else {
+                                                    Log.d(TAG, "No such document");
+                                                }
+                                            } else {
+                                                Log.d(TAG, "get failed with ", task.getException());
+                                            }
+                                        }
+                                    });
+
                                 } else {
 
                                     Toast.makeText(LoginActivity.this, "Debe verificar su correo", Toast.LENGTH_LONG).show();
-
                                     showProgressBar(false);
                                 }
                             }
 
                         } else {
-                            Toast.makeText(LoginActivity.this, "No se pudo ingresar", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "No se pudo ingresar", Toast.LENGTH_LONG).show();
                             showProgressBar(false);
                         }
                     }
-
                 });
     }
 
@@ -164,7 +188,6 @@ public class LoginActivity extends AppCompatActivity {
         if ((!Patterns.EMAIL_ADDRESS.matcher(et_email.getText()).matches()) && (!TextUtils.isEmpty(et_email.getText()))) {
             mailError = "El correo no es válido";
             resp = false;
-
         }
         toggleTextInputLayoutError(til_email, mailError);
 
@@ -176,7 +199,6 @@ public class LoginActivity extends AppCompatActivity {
             password1Error = "La contraseña debe tener 6 o mas caracteres";
             resp = false;
         }
-
         toggleTextInputLayoutError(til_password, password1Error);
 
         clearFocus();
@@ -184,13 +206,13 @@ public class LoginActivity extends AppCompatActivity {
         return resp;
     }
 
-    private static void toggleTextInputLayoutError(@NonNull TextInputLayout textInputLayout,
+    private static void toggleTextInputLayoutError(@NonNull TextInputLayout til,
                                                    String msg) {
-        textInputLayout.setError(msg);
+        til.setError(msg);
         if (msg == null) {
-            textInputLayout.setErrorEnabled(false);
+            til.setErrorEnabled(false);
         } else {
-            textInputLayout.setErrorEnabled(true);
+            til.setErrorEnabled(true);
         }
     }
 
@@ -204,5 +226,15 @@ public class LoginActivity extends AppCompatActivity {
             view.clearFocus();
         }
     }
+
+    // Name, email address, and profile photo Url
+    //String name = user.getDisplayName();
+    //Uri photoUrl = user.getPhotoUrl();
+
+    // The user's ID, unique to the Firebase project. Do NOT use this value to
+    // authenticate with your backend server, if you have one. Use
+    // FirebaseUser.getIdToken() instead.
+    //String uid = user.getUid();
+
 }
 
