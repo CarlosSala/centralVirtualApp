@@ -58,7 +58,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
-                //User_register();
             }
         });
 
@@ -67,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, RecoverPasswordActivity.class);
+                //intent.addFlags()
                 startActivity(intent);
             }
         });
@@ -83,7 +83,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-
     private void Login() {
 
         showProgressBar(true);
@@ -91,15 +90,11 @@ public class LoginActivity extends AppCompatActivity {
         String email = et_email.getText().toString();
         String password = et_password.getText().toString();
 
-        //progressDialog.setMessage("Iniciando sesión");
-        //progressDialog.show();
-
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
 
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             if (user != null) {
@@ -131,23 +126,16 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.makeText(LoginActivity.this, "Debe verificar su correo", Toast.LENGTH_LONG).show();
 
                                     showProgressBar(false);
-
-
                                 }
-
-
                             }
-
 
                         } else {
                             Toast.makeText(LoginActivity.this, "No se pudo ingresar", Toast.LENGTH_SHORT).show();
                             showProgressBar(false);
-                            return;
                         }
                     }
 
                 });
-        //progressDialog.dismiss();
     }
 
     private void showProgressBar(boolean status) {
@@ -159,7 +147,6 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             progressBarLogin.setVisibility(View.INVISIBLE);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-
         }
     }
 
@@ -207,6 +194,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    //EditTExt Focus is cleaned
     private void clearFocus() {
         View view = this.getCurrentFocus();
         if (view != null && view instanceof EditText) {

@@ -85,8 +85,6 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
 
@@ -104,7 +102,6 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
 
                             Toast.makeText(RegisterActivity.this, "Registro exitoso", Toast.LENGTH_LONG).show();
-
 
                             FirebaseUser user = firebaseAuth.getCurrentUser();
 
@@ -124,9 +121,14 @@ public class RegisterActivity extends AppCompatActivity {
                                     .setAction("Volver", new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
-                                            Intent intent = new Intent(getApplication(), LoginActivity.class);
+
+                                            onBackPressed();
+
+                                            //onDestroy();
+
+                                            /*Intent intent = new Intent(getApplication(), LoginActivity.class);
                                             startActivity(intent);
-                                            finish();
+                                            finish();*/
                                         }
                                     })
                                     .setActionTextColor(getResources().getColor(R.color.white))
@@ -135,14 +137,14 @@ public class RegisterActivity extends AppCompatActivity {
                         } else {
 
                             if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                                Toast.makeText(RegisterActivity.this, "El correo electrónico se encuentra registrado en otra cuenta", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "El correo electrónico se encuentra registrado en otra cuenta", Toast.LENGTH_LONG).show();
                             } else {
-                                Toast.makeText(RegisterActivity.this, "No se pudo realizar el registro", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "No se pudo realizar el registro", Toast.LENGTH_LONG).show();
                             }
                             showProgressBar(false);
                         }
 
-                        registerUserData();
+                        //registerUserData();
                     }
                 });
     }
@@ -273,6 +275,12 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    //method back of the toolbar
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return false;
+    }
 
     /*try {
                                 Thread.currentThread().sleep(10000);

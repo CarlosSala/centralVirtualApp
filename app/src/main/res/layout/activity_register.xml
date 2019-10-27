@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -35,7 +34,6 @@
                 android:id="@+id/et_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:drawableStart="@drawable/ic_person_outline_white_24dp"
                 android:drawablePadding="5dp"
                 android:ems="10"
@@ -53,7 +51,6 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_lastName"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_person_outline_white_24dp"
@@ -74,7 +71,6 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_email"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/mail"
@@ -91,12 +87,12 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input_layout_password1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/darkgrey">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_password"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/password"
@@ -106,9 +102,7 @@
                 android:inputType="textPassword"
                 android:textColor="@color/white"
                 app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/white"
-
-                />
+                app:passwordToggleTint="@color/white" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -116,12 +110,13 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input_layout_password2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/darkgrey">
 
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_passwordAgain"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/password"
@@ -132,7 +127,6 @@
                 android:textColor="@color/white"
                 app:passwordToggleEnabled="true"
                 app:passwordToggleTint="@color/white" />
-
 
         </com.google.android.material.textfield.TextInputLayout>
 

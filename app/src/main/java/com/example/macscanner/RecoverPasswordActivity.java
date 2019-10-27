@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class RecoverPasswordActivity extends AppCompatActivity {
 
+
     private static String TAG = "RecoverPasswordActivity";
 
     private FirebaseAuth firebaseAuth;
@@ -48,7 +49,7 @@ public class RecoverPasswordActivity extends AppCompatActivity {
 
         linearLayout = findViewById(R.id.linearLayout_recover);
 
-        progressBarRecover = findViewById(R.id.progressBar);
+        progressBarRecover = findViewById(R.id.progressBar_recover);
         progressBarRecover.setVisibility(View.INVISIBLE);
 
         btn_recover = findViewById(R.id.btn_recover_password);
@@ -63,47 +64,51 @@ public class RecoverPasswordActivity extends AppCompatActivity {
 
                 showProgressBar(true);
 
-                toggleTextInputLayoutError(til_recover, null);
-
                 if (validform()) {
+
+                    //firebaseAuth = FirebaseAuth.getInstance();
 
                     firebaseAuth.sendPasswordResetEmail(et_recover.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "Email sent.");
-
                                 showProgressBar(false);
 
                                 Snackbar.make(linearLayout, "Se ha enviado un mensaje al correo electrónico proporcionado", Snackbar.LENGTH_INDEFINITE)
                                         .setAction("Volver", new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
-                                                Intent intent = new Intent(RecoverPasswordActivity.this, LoginActivity.class);
+
+                                                onBackPressed();
+
+                                                // onDestroy();
+
+                                              /*  Intent intent = new Intent(RecoverPasswordActivity.this, LoginActivity.class);
                                                 startActivity(intent);
-                                                finish();
+                                                finish();*/
                                             }
                                         })
                                         .setActionTextColor(getResources().getColor(R.color.white))
                                         .show();
-
                             } else {
 
                                 Log.d(TAG, "Email has not been sent.");
-                                Toast.makeText(RecoverPasswordActivity.this, task.getException().getLocalizedMessage().toString(), Toast.LENGTH_LONG).show();
+                                Snackbar.make(linearLayout, task.getException().getMessage().toString(), Snackbar.LENGTH_LONG).show();
+                                showProgressBar(false);
                             }
-                            showProgressBar(false);
+
                         }
-
-
                     });
+                } else {
+                    showProgressBar(false);
                 }
-                showProgressBar(false);
             }
         });
     }
 
     private boolean validform() {
+
         boolean resp = true;
         String mailError = null;
 
@@ -114,9 +119,7 @@ public class RecoverPasswordActivity extends AppCompatActivity {
         if ((!Patterns.EMAIL_ADDRESS.matcher(et_recover.getText()).matches()) && (!TextUtils.isEmpty(et_recover.getText()))) {
             mailError = "Introducir un email valido";
             resp = false;
-
         }
-
 
         toggleTextInputLayoutError(til_recover, mailError);
         clearFocus();
@@ -126,11 +129,16 @@ public class RecoverPasswordActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * Display/hides TextInputLayout error.
-     *
-     * @param msg the message, or null to hide
-     */
+    /*
+            *Display/
+    hides TextInputLayout
+    error
+    @param
+    msg the
+    message,or null
+    to hide*/
+
+
     private static void toggleTextInputLayoutError(@NonNull TextInputLayout textInputLayout,
                                                    String msg) {
         textInputLayout.setError(msg);
@@ -165,4 +173,24 @@ public class RecoverPasswordActivity extends AppCompatActivity {
 
         }
     }
+
+    //method back of the toolbar
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return false;
+    }
+
+
+   /* @Override
+    public void onBackPressed() {
+
+        Toast.makeText(this, "hola", Toast.LENGTH_SHORT).show();
+
+        *//* Intent intent = new Intent(RecoverPasswordActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();*//*
+    }*/
+
+
 }

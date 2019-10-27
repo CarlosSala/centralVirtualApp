@@ -344,4 +344,11 @@ public class addNumbers2Activity extends AppCompatActivity {
         obj_editor.putString("et_number_sixteen", et8.getText().toString());
         obj_editor.commit();
     }
+
+    //method back of the toolbar
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return false;
+    }
 }

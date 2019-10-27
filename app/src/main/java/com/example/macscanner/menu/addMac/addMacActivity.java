@@ -163,4 +163,11 @@ public class addMacActivity extends AppCompatActivity {
         obj_editor.putInt("NumSolicitud", NumSolicitud);
         obj_editor.commit();
     }
+
+    //method back of the toolbar
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return false;
+    }
 }

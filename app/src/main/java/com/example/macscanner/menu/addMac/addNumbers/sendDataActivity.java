@@ -39,4 +39,11 @@ public class sendDataActivity extends AppCompatActivity {
             }
         });
     }
+
+    //method back of the toolbar
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return false;
+    }
 }

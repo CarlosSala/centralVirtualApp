@@ -74,10 +74,7 @@ public class shareQrActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Delete_data();
-                Intent intent = new Intent(shareQrActivity.this, addMacActivity.class);
-                startActivity(intent);
-                finish();
+                onBackPressed();
             }
         });
 
@@ -228,6 +225,7 @@ public class shareQrActivity extends AppCompatActivity {
         Delete_data();
 
         Intent intent = new Intent(shareQrActivity.this, addMacActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
         /*Log.d("CDA", "onBackPressed Called");

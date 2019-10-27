@@ -121,4 +121,11 @@ public class resumeAddNumbersActivity extends AppCompatActivity {
         });
     }
 
+    //method back of the toolbar
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return false;
+    }
+
 }
