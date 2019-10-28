@@ -1,5 +1,19 @@
 package com.example.macscanner;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.util.Patterns;
+import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,23 +28,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
-import android.util.Patterns;
-import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -226,6 +223,31 @@ public class LoginActivity extends AppCompatActivity {
             view.clearFocus();
         }
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        //mAuth.addAuthStateListener(firebaseAuthListener);
+
+        if (firebaseAuth.getCurrentUser() != null) {
+            toStartActivity();
+        } else {
+
+
+        }
+    }
+
+    private void toStartActivity() {
+
+        Intent intent = new Intent(this, principalActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+
+    }
+
 
     // Name, email address, and profile photo Url
     //String name = user.getDisplayName();
