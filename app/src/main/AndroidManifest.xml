@@ -14,10 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Theme.AppCompat">
         <activity
             android:name=".menu.PrincipalActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
 
         <activity
             android:name=".RecoverPasswordActivity"
@@ -44,7 +45,7 @@
         </activity>
         <activity
             android:name=".menu.addMac.addMacActivity"
-            android:parentActivityName=".menu.principalActivity"
+            android:parentActivityName=".menu.PrincipalActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".menu.addMac.addNumbers.addNumbers1Activity"
