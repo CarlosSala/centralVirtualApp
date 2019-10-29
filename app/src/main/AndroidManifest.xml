@@ -14,7 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat">
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".menu.PrincipalActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".RecoverPasswordActivity"
             android:parentActivityName=".LoginActivity"
@@ -32,13 +36,12 @@
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
+
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".menu.principalActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".menu.addMac.addMacActivity"
             android:parentActivityName=".menu.principalActivity"
@@ -70,4 +73,5 @@
             android:stateNotNeeded="true"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
     </application>
+
 </manifest>

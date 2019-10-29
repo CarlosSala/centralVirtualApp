@@ -17,7 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.macscanner.menu.principalActivity;
+import com.example.macscanner.menu.PrincipalActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                                     Toast.makeText(LoginActivity.this, "Bienvenido " + name, Toast.LENGTH_LONG).show();
 
-                                                    Intent intent = new Intent(LoginActivity.this, principalActivity.class);
+                                                    Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
                                                     startActivity(intent);
                                                     finish();
                                                     //Log.d(TAG, "DocumentSnapshot data: " + document.getData());
@@ -241,7 +241,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void toStartActivity() {
 
-        Intent intent = new Intent(this, principalActivity.class);
+        Intent intent = new Intent(this, PrincipalActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
