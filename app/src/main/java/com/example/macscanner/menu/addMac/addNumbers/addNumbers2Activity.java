@@ -1,5 +1,6 @@
 package com.example.macscanner.menu.addMac.addNumbers;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.LinearLayoutCompat;
@@ -11,6 +12,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,12 +21,25 @@ import android.widget.Toast;
 
 import com.example.macscanner.CustomScannerActivity;
 import com.example.macscanner.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.util.regex.Pattern;
 
 public class addNumbers2Activity extends AppCompatActivity {
+
+    private final static String TAG = "addNumbers1Activity";
+
+    private FirebaseAuth firebaseAuth;
+
+    private FirebaseFirestore firestoredb;
 
     private Button btn_scan_mac, btn_next;
     private TextView tv_mac;
@@ -305,6 +320,10 @@ public class addNumbers2Activity extends AppCompatActivity {
                 obj_editor.putString("mac_scanned2", result.getContents());
                 obj_editor.commit();
                 Toast.makeText(this, "Código escaneado: " + result.getContents(), Toast.LENGTH_LONG).show();
+
+                // GetNumbers();
+                GetNumbersFirebase();
+
                 Enable_btn();
 
             } else {
@@ -343,6 +362,54 @@ public class addNumbers2Activity extends AppCompatActivity {
         obj_editor.putString("et_number_fifteen", et7.getText().toString());
         obj_editor.putString("et_number_sixteen", et8.getText().toString());
         obj_editor.commit();
+    }
+
+
+    private void GetNumbersFirebase() {
+
+        firestoredb = FirebaseFirestore.getInstance();
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user != null) {
+
+            DocumentReference docRef = firestoredb.collection("numbers").document("group2");
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+
+                            String num1 = document.getString("num1");
+                            String num2 = document.getString("num2");
+                            String num3 = document.getString("num3");
+                            String num4 = document.getString("num4");
+                            String num5 = document.getString("num5");
+                            String num6 = document.getString("num6");
+                            String num7 = document.getString("num7");
+                            String num8 = document.getString("num8");
+
+                            et1.setText(num1);
+                            et2.setText(num2);
+                            et3.setText(num3);
+                            et4.setText(num4);
+                            et5.setText(num5);
+                            et6.setText(num6);
+                            et7.setText(num7);
+                            et8.setText(num8);
+
+                            //Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        } else {
+                            Log.d(TAG, "No such document");
+                        }
+                    } else {
+                        Log.d(TAG, "get failed with ", task.getException());
+                    }
+                }
+            });
+        }
     }
 
     //method back of the toolbar

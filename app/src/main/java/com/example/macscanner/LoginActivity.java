@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -228,7 +229,20 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        // Check if user's email is verified
+
+        if (user != null) {
+
+            boolean emailVerified = user.isEmailVerified();
+
+            if (emailVerified) {
+
+                toStartActivity();
+            }
+        }
+     /*   firebaseAuth = FirebaseAuth.getInstance();
         //mAuth.addAuthStateListener(firebaseAuthListener);
 
         if (firebaseAuth.getCurrentUser() != null) {
@@ -236,7 +250,7 @@ public class LoginActivity extends AppCompatActivity {
         } else {
 
 
-        }
+        }*/
     }
 
     private void toStartActivity() {

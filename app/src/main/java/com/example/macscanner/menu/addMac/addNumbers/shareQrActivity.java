@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.view.View;
@@ -20,11 +22,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.macscanner.R;
 import com.example.macscanner.menu.addMac.addMacActivity;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -44,10 +48,16 @@ public class shareQrActivity extends AppCompatActivity {
 
     private final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 0;
 
+    ConstraintLayout constraintLayout;
+
+    Snackbar snackbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_qr);
+
+        constraintLayout = findViewById(R.id.constraint_layout_shareQr);
 
         btn_share = findViewById(R.id.btn_share);
         btn_restart = findViewById(R.id.btn_restart);
@@ -113,8 +123,37 @@ public class shareQrActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Do something after 5s = 5000ms
+                //buttons[inew][jnew].setBackgroundColor(Color.BLACK);
+
+               // Snackbar.make(constraintLayout, "La configuración se realizó correctamente", Snackbar.LENGTH_INDEFINITE).show();
+
+                Snackbar
+                        .make(constraintLayout, "La configuración se realizó correctamente", Snackbar.LENGTH_LONG)
+                        /*.setAction("OK", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                closeSnackBar();
+                            }
+                        })*/
+                        .show();
+            }
+        }, 5000);
+
+
+
     }
 
+/*    private void closeSnackBar(){
+        snackbar.dismiss();
+    }*/
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

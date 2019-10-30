@@ -9,6 +9,7 @@
     tools:context=".menu.addMac.addNumbers.shareQrActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout_shareQr"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
