@@ -1,11 +1,13 @@
 package com.example.macscanner.menu.addMac.addNumbers;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -21,6 +23,8 @@ import android.widget.Toast;
 
 import com.example.macscanner.CustomScannerActivity;
 import com.example.macscanner.R;
+import com.example.macscanner.menu.PrincipalActivity;
+import com.example.macscanner.menu.addMac.addMacActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -421,7 +425,46 @@ public class addNumbers1Activity extends AppCompatActivity {
     //method back of the toolbar
     @Override
     public boolean onSupportNavigateUp() {
-        onBackPressed();
+
+        // onBackPressed();
+        getOnBackPressedDispatcher().onBackPressed();
+
         return false;
     }
+
+
+    @Override
+    public void onBackPressed() {
+
+        AlertDialog();
+    }
+
+    private void AlertDialog() {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        alertDialogBuilder
+                .setTitle("Central Virtual")
+                .setMessage("Se descartarán los cambios, ¿Desea Salir?")
+                .setCancelable(false)
+                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        SharedPreferences settings = getSharedPreferences("datos", Context.MODE_PRIVATE);
+                        settings.edit().clear().commit();
+
+                        Intent intent = new Intent(addNumbers1Activity.this, PrincipalActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                })
+                .create().show();
+    }
+
 }

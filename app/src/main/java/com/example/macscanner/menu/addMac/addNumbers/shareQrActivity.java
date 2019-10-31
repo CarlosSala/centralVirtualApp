@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,7 +26,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.macscanner.R;
-import com.example.macscanner.menu.addMac.addMacActivity;
+import com.example.macscanner.menu.PrincipalActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -49,8 +48,6 @@ public class shareQrActivity extends AppCompatActivity {
     private final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 0;
 
     ConstraintLayout constraintLayout;
-
-    Snackbar snackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +71,9 @@ public class shareQrActivity extends AppCompatActivity {
                 bitmap = barcodeEncoder.createBitmap(bitMatrix);
                 imageView.setImageBitmap(bitmap);
 
+                SharedPreferences settings = getSharedPreferences("datos", Context.MODE_PRIVATE);
+                settings.edit().clear().commit();
+
             } catch (WriterException e) {
                 e.printStackTrace();
             }
@@ -84,7 +84,7 @@ public class shareQrActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                onBackPressed();
+                Home();
             }
         });
 
@@ -125,35 +125,33 @@ public class shareQrActivity extends AppCompatActivity {
         });
 
 
-
         final Handler handler = new Handler();
+
         handler.postDelayed(new Runnable() {
+
+           /* @Override
+            protected void finalize() throws Throwable {
+                super.finalize();
+
+            }*/
+
             @Override
             public void run() {
-                // Do something after 5s = 5000ms
-                //buttons[inew][jnew].setBackgroundColor(Color.BLACK);
-
-               // Snackbar.make(constraintLayout, "La configuración se realizó correctamente", Snackbar.LENGTH_INDEFINITE).show();
 
                 Snackbar
-                        .make(constraintLayout, "La configuración se realizó correctamente", Snackbar.LENGTH_LONG)
-                        /*.setAction("OK", new View.OnClickListener() {
+                        .make(constraintLayout, "La configuración se realizó correctamente", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("OK", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                closeSnackBar();
+                                //return;
                             }
-                        })*/
+                        })
                         .show();
             }
         }, 5000);
 
 
-
     }
-
-/*    private void closeSnackBar(){
-        snackbar.dismiss();
-    }*/
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -261,16 +259,63 @@ public class shareQrActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        Delete_data();
-
-        Intent intent = new Intent(shareQrActivity.this, addMacActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
+        AlertDialog();
         /*Log.d("CDA", "onBackPressed Called");
         Intent setIntent = new Intent(Intent.ACTION_MAIN);
         setIntent.addCategory(Intent.CATEGORY_HOME);
         setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(setIntent);*/
+    }
+
+/*    public void buttonPress(View v) {
+        switch (v.getId()) {
+            case R.id.btn_restart:
+
+                break;
+
+        }
+    }*/
+
+    private void AlertDialog() {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        alertDialogBuilder
+                .setTitle("Central Virtual")
+                .setMessage("¿Desea Salir de la aplicación?")
+                .setCancelable(false)
+                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        SharedPreferences settings = getSharedPreferences("datos", Context.MODE_PRIVATE);
+                        settings.edit().clear().commit();
+
+
+                        finishAffinity();
+                        //Process.killProcess( Process.myPid() );
+                        //finishAndRemoveTask();
+                        //onDestroy();
+                        //System.exit(0);
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                })
+                .create().show();
+    }
+
+
+    private void Home() {
+
+        SharedPreferences settings = getSharedPreferences("datos", Context.MODE_PRIVATE);
+        settings.edit().clear().commit();
+
+        Intent intent = new Intent(shareQrActivity.this, PrincipalActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+
     }
 }
