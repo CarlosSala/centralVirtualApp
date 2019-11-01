@@ -23,7 +23,7 @@
         android:layout_alignParentBottom="true"
         app:zxing_scanner_layout="@layout/zxing_barcode_scanner"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="24dp"></com.journeyapps.barcodescanner.DecoratedBarcodeView>
+        tools:layout_editor_absoluteY="24dp" />
 
     <Button
         android:id="@+id/switch_flashlight"

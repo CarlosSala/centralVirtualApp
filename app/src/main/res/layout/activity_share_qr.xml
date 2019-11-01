@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,14 +10,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_layout_shareQr"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/imgv"
             android:layout_width="279dp"
             android:layout_height="165dp"
             android:layout_marginTop="35dp"
-
+            android:contentDescription="@string/image_view_description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.568"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,10 +28,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
-            android:text="compartir"
+            android:text="@string/btn_share"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgv"/>
+            app:layout_constraintTop_toBottomOf="@+id/imgv" />
 
         <Button
             android:id="@+id/btn_restart"
@@ -41,7 +40,7 @@
             android:layout_marginTop="35dp"
             android:layout_marginBottom="35dp"
             android:gravity="center_horizontal"
-            android:text="volver al inicio"
+            android:text="@string/btn_home"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"

@@ -3,22 +3,77 @@
     <string name="turn_on_flashlight">Encender</string>
     <string name="turn_off_flashlight">Apagar</string>
 
+    <!-- login activity -->
+
     <string name="filed_user">Correo electrónico</string>
     <string name="filed_password">Contraseña</string>
     <string name="login">Ingresar</string>
     <string name="forgot_password">Olvidé mi contraseña</string>
     <string name="register">Registrarse</string>
 
+    <!-- register activity -->
+
     <string name="name">Nombre</string>
     <string name="last_name">Apellido</string>
     <string name="email">Correo electrónico</string>
     <string name="password">Contraseña</string>
     <string name="password_again">Repita contraseña</string>
+    <string name="btn_register">Registrarse</string>
 
-    <string name="atencion">Attention</string>
-    <string name="deseacerrarsesion">Do you want to close the session?</string>
+    <!-- recovery password activity -->
 
     <string name="recover_password">Recuperar contraseña</string>
+
+    <!-- principal activity -->
+
+    <string name="add_mac_and_numbers">Agregar MAC y números</string>
+    <string name="close_session">Cerrar Sesión</string>
+
+    <!-- add mac activity -->
+
+    <string name="rut_client">Rut cliente (123456789)</string>
+    <string name="id_community">Id comunidad (ej. movistar_cloudpbx)</string>
+    <string name="btn_save_and_continue">Guardar y continuar</string>
+
+    <!-- add numbers1 activity -->
+
+    <string name="title_add_numbers1">Dirección MAC Base Uno</string>
+    <string name="address_mac">Dirección MAC</string>
+    <string name="btn_scanner_mac">SCAN MAC</string>
+    <string name="set_number1">Ingrese N°1</string>
+    <string name="set_number2">Ingrese N°2</string>
+    <string name="set_number3">Ingrese N°3</string>
+    <string name="set_number4">Ingrese N°4</string>
+    <string name="set_number5">Ingrese N°5</string>
+    <string name="set_number6">Ingrese N°6</string>
+    <string name="set_number7">Ingrese N°7</string>
+    <string name="set_number8">Ingrese N°8</string>
+
+    <!-- add numbers2 activity -->
+    <string name="title_add_numbers2">Dirección MAC Base Dos</string>
+
+
+    <!-- resume activity -->
+    <string name="title_resumen">Resumen</string>
+    <string name="number_request">Número de solicitud</string>
+    <string name="empty">-</string>
+    <string name="id_community_resumen">Id de la comunidad</string>
+    <string name="address_mac1_resumen">MAC base uno</string>
+    <string name="address_mac2_resumen">MAC base dos</string>
+    <string name="client_rut">Rut cliente</string>
+    <string name="btn_send_config">Enviar para configurar</string>
+
+    <!-- send data activity -->
+    <string name="confirm_send_data">Todo listo para enviar la información</string>
+    <string name="btn_confirm_send_data">Confirme el envío</string>
+
+    <!-- share qr activity -->
+    <string name="btn_share">Compartir</string>
+    <string name="btn_home">Volver al Inicio</string>
+    <string name="image_view_description">Código QR</string>
+
+
+
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -29,14 +84,15 @@
 
     <string name="menu_home">Home</string>
     <string name="menu_about">Acerca de</string>
+    <string name="options">Opciones</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_tools">Tools</string>
     <string name="menu_close_session">Cerrar sesión</string>
     <string name="menu_send">Send</string>
 
 
-
-    //
+    <string name="atencion">Attention</string>
+    <string name="deseacerrarsesion">Do you want to close the session?</string>
     <string name="user_name">Nombre de usuario</string>
     <string name="user_email">Correo electrónico de usuario</string>
 </resources>

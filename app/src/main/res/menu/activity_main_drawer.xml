@@ -10,7 +10,7 @@
             android:title="@string/menu_about" />
     </group>
 
-    <item android:title="Opciones">
+    <item android:title="@string/options">
         <menu>
             <item
                 android:id="@+id/nav_close_session"

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,8 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Dirección MAC Base 1"
-        android:textSize="18dp"
+        android:text="@string/title_add_numbers1"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,14 +33,14 @@
             android:layout_width="150dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:hint="Dirección MAC"></TextView>
+            android:hint="@string/address_mac" />
 
 
         <Button
             android:id="@+id/btn_scan_mac"
             android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:text="Scanear MAC"></Button>
+            android:text="@string/btn_scanner_mac" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -67,112 +66,106 @@
                 android:id="@+id/tv_numberOne"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ingrese N° 1"></TextView>
+                android:text="@string/set_number1" />
 
             <EditText
                 android:id="@+id/et_number_one"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone"></EditText>
+                android:inputType="phone" />
 
             <TextView
                 android:id="@+id/tv_numberTwo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ingrese N° 2"></TextView>
+                android:text="@string/set_number2" />
 
             <EditText
                 android:id="@+id/et_number_two"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone"></EditText>
+                android:inputType="phone" />
 
             <TextView
                 android:id="@+id/tv_numberThree"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ingrese N° 3">
-
-            </TextView>
+                android:text="@string/set_number3" />
 
             <EditText
                 android:id="@+id/et_number_three"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone"></EditText>
+                android:inputType="phone" />
 
             <TextView
                 android:id="@+id/tv_numberFour"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ingrese N° 4">
-
-            </TextView>
+                android:text="@string/set_number4" />
 
             <EditText
                 android:id="@+id/et_number_four"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone"></EditText>
+                android:inputType="phone" />
 
             <TextView
                 android:id="@+id/tv_numberFive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ingrese N° 5"></TextView>
+                android:text="@string/set_number5" />
 
             <EditText
                 android:id="@+id/et_number_five"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone"></EditText>
+                android:inputType="phone" />
 
             <TextView
                 android:id="@+id/tv_numberSix"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ingrese N° 6"></TextView>
+                android:text="@string/set_number6" />
 
 
             <EditText
                 android:id="@+id/et_number_six"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone"></EditText>
+                android:inputType="phone" />
 
             <TextView
                 android:id="@+id/tv_numberSeven"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ingrese N° 7"></TextView>
+                android:text="@string/set_number7" />
 
             <EditText
                 android:id="@+id/et_number_seven"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone"></EditText>
+                android:inputType="phone" />
 
             <TextView
                 android:id="@+id/tv_numberEight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ingrese N° 8">
-
-            </TextView>
+                android:text="@string/set_number8" />
 
             <EditText
                 android:id="@+id/et_number_eight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone"></EditText>
+                android:inputType="phone" />
 
             <Button
                 android:id="@+id/btn_next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:layout_marginBottom="100dp"
-                android:text="Guardar y continuar" />
+                android:text="@string/btn_save_and_continue" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,65 +13,61 @@
         android:padding="10dp">
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_client_rut"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:errorEnabled="true"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="16dp">
-
-        <EditText
-            android:id="@+id/et_client_rut"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_client_rut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:hint="Rut cliente (12345678-9)"
-            android:maxLength="10"
-            android:inputType="text"
-            app:layout_constraintTop_toBottomOf="@id/til_client_rut" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_community_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:errorEnabled="true"
-        app:layout_constraintTop_toBottomOf="@id/til_client_rut"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="16dp">
-
-        <EditText
-            android:id="@+id/et_community_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:hint="Id comunidad (ej. movistar_cloudpbx)"
-            android:maxLength="28"
-            android:inputType="text"
+            android:layout_marginTop="20dp"
+            app:errorEnabled="true"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="0dp">
+            tools:layout_editor_absoluteX="16dp">
 
-        </EditText>
+            <EditText
+                android:id="@+id/et_client_rut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:hint="@string/rut_client"
+                android:inputType="text"
+                android:maxLength="10"
+                app:layout_constraintTop_toBottomOf="@id/til_client_rut" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_enter"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="Guardar y continuar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/til_community_id">
 
-    </com.google.android.material.button.MaterialButton>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_community_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true"
+            app:layout_constraintTop_toBottomOf="@id/til_client_rut"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_editor_absoluteX="16dp">
 
+            <EditText
+                android:id="@+id/et_community_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:hint="@string/id_community"
+                android:inputType="text"
+                android:maxLength="28"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="0dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_enter"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="@string/btn_save_and_continue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_community_id" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
