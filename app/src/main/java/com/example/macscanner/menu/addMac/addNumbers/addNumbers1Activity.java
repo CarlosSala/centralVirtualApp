@@ -5,6 +5,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,7 +25,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.macscanner.CustomScannerActivity;
+import com.example.macscanner.ItemTouchListenner;
+import com.example.macscanner.MainAdapter;
 import com.example.macscanner.R;
+import com.example.macscanner.SimpleItemTouchHelperCallback;
 import com.example.macscanner.menu.PrincipalActivity;
 import com.example.macscanner.menu.addMac.addMacActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,6 +41,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class addNumbers1Activity extends AppCompatActivity {
@@ -53,10 +61,14 @@ public class addNumbers1Activity extends AppCompatActivity {
     private int et_empty;
     private int et_valid;
 
+    private MainAdapter mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_numbers1);
+
+        initReyclerView();
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -85,7 +97,7 @@ public class addNumbers1Activity extends AppCompatActivity {
             }
         });
 
-        et1 = findViewById(R.id.et_number_one);
+       /* et1 = findViewById(R.id.et_number_one);
         et2 = findViewById(R.id.et_number_two);
         et3 = findViewById(R.id.et_number_three);
         et4 = findViewById(R.id.et_number_four);
@@ -240,9 +252,9 @@ public class addNumbers1Activity extends AppCompatActivity {
         et6.setText(preferences.getString("et_number_six", ""));
         et7.setText(preferences.getString("et_number_seven", ""));
         et8.setText(preferences.getString("et_number_eight", ""));
-        tv_mac.setText(preferences.getString("mac_scanned1", ""));
+        tv_mac.setText(preferences.getString("mac_scanned1", ""));*/
 
-        Enable_btn();
+      //  Enable_btn();
     }
 
 
@@ -375,52 +387,6 @@ public class addNumbers1Activity extends AppCompatActivity {
     }*/
 
 
-    private void GetNumbersFirebase() {
-
-        firestoredb = FirebaseFirestore.getInstance();
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (user != null) {
-
-            DocumentReference docRef = firestoredb.collection("numbers").document("group1");
-            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-
-                            String num1 = document.getString("num1");
-                            String num2 = document.getString("num2");
-                            String num3 = document.getString("num3");
-                            String num4 = document.getString("num4");
-                            String num5 = document.getString("num5");
-                            String num6 = document.getString("num6");
-                            String num7 = document.getString("num7");
-                            String num8 = document.getString("num8");
-
-                            et1.setText(num1);
-                            et2.setText(num2);
-                            et3.setText(num3);
-                            et4.setText(num4);
-                            et5.setText(num5);
-                            et6.setText(num6);
-                            et7.setText(num7);
-                            et8.setText(num8);
-
-                            //Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                        } else {
-                            Log.d(TAG, "No such document");
-                        }
-                    } else {
-                        Log.d(TAG, "get failed with ", task.getException());
-                    }
-                }
-            });
-        }
-    }
 
     //method back of the toolbar
     @Override
@@ -465,6 +431,56 @@ public class addNumbers1Activity extends AppCompatActivity {
                     }
                 })
                 .create().show();
+    }
+
+
+
+
+    private void initReyclerView() {
+
+        RecyclerView recyclerView = findViewById(R.id.recycler_sample);
+
+        mAdapter = new MainAdapter();
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        recyclerView.setAdapter(mAdapter);
+
+        mAdapter.addData(getData());
+
+        addItemTouchCallback(recyclerView);
+    }
+
+    private void addItemTouchCallback(RecyclerView recyclerView) {
+
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(new ItemTouchListenner() {
+            @Override
+            public void onMove(int oldPosition, int newPosition) {
+                mAdapter.onMove(oldPosition, newPosition);
+            }
+
+            @Override
+            public void swipe(int position, int direction) {
+                mAdapter.swipe(position, direction);
+            }
+        });
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    private void GetNumbersFirebase() {
+
+
+    }
+
+
+    private List getData() {
+        List<String> data = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+
+            data.add("Android " + i);
+        }
+        return data;
     }
 
 }

@@ -44,131 +44,28 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginTop="25dp"
-        android:orientation="vertical"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_sample"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout1">
+        app:layout_constraintTop_toBottomOf="@id/linearLayout1"
+        app:layout_constraintVertical_bias="0.141" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        app:layout_constraintTop_toBottomOf="@id/recycler_sample"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="100dp"
+        android:text="@string/btn_save_and_continue" />
 
-            android:id="@+id/ly_addNumbers1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="16dp">
-
-            <TextView
-                android:id="@+id/tv_numberOne"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/set_number1" />
-
-            <EditText
-                android:id="@+id/et_number_one"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="phone" />
-
-            <TextView
-                android:id="@+id/tv_numberTwo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/set_number2" />
-
-            <EditText
-                android:id="@+id/et_number_two"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="phone" />
-
-            <TextView
-                android:id="@+id/tv_numberThree"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/set_number3" />
-
-            <EditText
-                android:id="@+id/et_number_three"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="phone" />
-
-            <TextView
-                android:id="@+id/tv_numberFour"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/set_number4" />
-
-            <EditText
-                android:id="@+id/et_number_four"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="phone" />
-
-            <TextView
-                android:id="@+id/tv_numberFive"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/set_number5" />
-
-            <EditText
-                android:id="@+id/et_number_five"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="phone" />
-
-            <TextView
-                android:id="@+id/tv_numberSix"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/set_number6" />
-
-
-            <EditText
-                android:id="@+id/et_number_six"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="phone" />
-
-            <TextView
-                android:id="@+id/tv_numberSeven"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/set_number7" />
-
-            <EditText
-                android:id="@+id/et_number_seven"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="phone" />
-
-            <TextView
-                android:id="@+id/tv_numberEight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/set_number8" />
-
-            <EditText
-                android:id="@+id/et_number_eight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="phone" />
-
-            <Button
-                android:id="@+id/btn_next"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginBottom="100dp"
-                android:text="@string/btn_save_and_continue" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
