@@ -1,6 +1,7 @@
 package com.example.macscanner.menu;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -20,15 +21,23 @@ import com.example.macscanner.LoginActivity;
 import com.example.macscanner.R;
 import com.example.macscanner.menu.addMac.addMacActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.iid.FirebaseInstanceId;
 
-public class PrincipalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+import java.util.HashMap;
+import java.util.Map;
+
+public class PrincipalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private final static String TAG = "PrincipalActivity";
 
@@ -40,6 +49,9 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
 
     private Button btn_add_mac, btn_logout;
     private TextView tv_user_name, tv_user_email;
+
+    //private String serial = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? Build.getSerial():Build.SERIAL;
+    private DocumentReference mDocRef = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +73,6 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         navigationView.setNavigationItemSelectedListener(this);
 
 
-
         btn_add_mac = findViewById(R.id.btn_add_mac);
 
         btn_add_mac.setOnClickListener(new View.OnClickListener() {
@@ -81,11 +92,12 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
             }
         });
 
-        View header=navigationView.getHeaderView(0);
+        View header = navigationView.getHeaderView(0);
         tv_user_name = header.findViewById(R.id.tv_user_name);
         tv_user_email = header.findViewById(R.id.tv_user_email);
 
         GetUserData();
+        registerDevice();
     }
 
     private void GetUserData() {
@@ -98,7 +110,7 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
 
             String email = user.getEmail();
 
-            DocumentReference docRef = firestoredb.collection("users").document(email);
+            DocumentReference docRef = firestoredb.collection("users").document(email).collection("info").document("user_info");
             docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -153,12 +165,46 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         if (id == R.id.nav_about) {
 
 
-        } else if (id == R.id.nav_close_session){
+        } else if (id == R.id.nav_close_session) {
             Logout();
 
         }
 
         return false;
+    }
+
+
+    private void registerDevice() {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+        //String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+
+        Map<String, Object> device = new HashMap<>();
+
+        //  device.put("serial",serial );
+        device.put("manufacturer", Build.MANUFACTURER);
+        device.put("model", Build.MODEL);
+       // device.put("tokenFCM", refreshedToken);
+        device.put("timestampToken", FieldValue.serverTimestamp());
+
+
+        db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getEmail()).collection("info").document(Build.MODEL)
+
+                .set(device, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "Additional data saved");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "Error additional data was not saved", e);
+            }
+        });
+
+
     }
 }
 

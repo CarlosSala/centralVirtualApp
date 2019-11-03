@@ -63,23 +63,23 @@ public class resumeAddNumbersActivity extends AppCompatActivity {
         list.add(1, preferences.getString("et_client_rut", ""));
         list.add(2, preferences.getString("et_community_id", ""));
         list.add(3, preferences.getString("mac_scanned1", ""));
-        list.add(4, preferences.getString("et_number_one", ""));
-        list.add(5, preferences.getString("et_number_two", ""));
-        list.add(6, preferences.getString("et_number_three", ""));
-        list.add(7, preferences.getString("et_number_four", ""));
-        list.add(8, preferences.getString("et_number_five", ""));
-        list.add(9, preferences.getString("et_number_six", ""));
-        list.add(10, preferences.getString("et_number_seven", ""));
-        list.add(11, preferences.getString("et_number_eight", ""));
+        list.add(4, preferences.getString("et_number_0", ""));
+        list.add(5, preferences.getString("et_number_1", ""));
+        list.add(6, preferences.getString("et_number_2", ""));
+        list.add(7, preferences.getString("et_number_3", ""));
+        list.add(8, preferences.getString("et_number_4", ""));
+        list.add(9, preferences.getString("et_number_5", ""));
+        list.add(10, preferences.getString("et_number_6", ""));
+        list.add(11, preferences.getString("et_number_7", ""));
         list.add(12, preferences.getString("mac_scanned2", ""));
-        list.add(13, preferences.getString("et_number_nine", ""));
-        list.add(14, preferences.getString("et_number_ten", ""));
-        list.add(15, preferences.getString("et_number_eleven", ""));
-        list.add(16, preferences.getString("et_number_twelve", ""));
-        list.add(17, preferences.getString("et_number_thirteen", ""));
-        list.add(18, preferences.getString("et_number_fourteen", ""));
-        list.add(19, preferences.getString("et_number_fifteen", ""));
-        list.add(20, preferences.getString("et_number_sixteen", ""));
+        list.add(13, preferences.getString("et_number_8", ""));
+        list.add(14, preferences.getString("et_number_9", ""));
+        list.add(15, preferences.getString("et_number_10", ""));
+        list.add(16, preferences.getString("et_number_11", ""));
+        list.add(17, preferences.getString("et_number_12", ""));
+        list.add(18, preferences.getString("et_number_13", ""));
+        list.add(19, preferences.getString("et_number_14", ""));
+        list.add(20, preferences.getString("et_number_15", ""));
 
         tv_num_solicitud.setText(list.get(0));
         tv_mac1.setText(list.get(3));
@@ -120,7 +120,7 @@ public class resumeAddNumbersActivity extends AppCompatActivity {
                 Intent intent = new Intent(resumeAddNumbersActivity.this, sendDataActivity.class);
                 intent.putExtra("data", acumulacion);
                 startActivity(intent);
-                //finish();
+
             }
         });
     }

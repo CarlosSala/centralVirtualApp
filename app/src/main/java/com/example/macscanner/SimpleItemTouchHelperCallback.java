@@ -20,11 +20,12 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
         return super.isItemViewSwipeEnabled();
     }
 
+    // disable swipeFlag
     @Override
     public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
         int dragFlag = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
         int swipeFlag = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
-        return makeMovementFlags(dragFlag, swipeFlag);
+        return makeMovementFlags(dragFlag, 0);
     }
 
     @Override

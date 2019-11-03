@@ -3,7 +3,6 @@ package com.example.macscanner.menu.addMac.addNumbers;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,14 +12,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +25,6 @@ import com.example.macscanner.MainAdapter;
 import com.example.macscanner.R;
 import com.example.macscanner.SimpleItemTouchHelperCallback;
 import com.example.macscanner.menu.PrincipalActivity;
-import com.example.macscanner.menu.addMac.addMacActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,12 +49,8 @@ public class addNumbers1Activity extends AppCompatActivity {
 
     private Button btn_scan_mac, btn_next;
     private TextView tv_mac;
-    private EditText et1, et2, et3, et4, et5, et6, et7, et8;
-    private LinearLayoutCompat linearLayout;
 
-    private int et_empty;
-    private int et_valid;
-
+    private RecyclerView mRecyclerView;
     private MainAdapter mAdapter;
 
     @Override
@@ -68,15 +58,19 @@ public class addNumbers1Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_numbers1);
 
-        initReyclerView();
+        mRecyclerView = findViewById(R.id.recycler_sample1);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        mAdapter = new MainAdapter();
+        mRecyclerView.setAdapter(mAdapter);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        linearLayout = findViewById(R.id.ly_addNumbers1);
+        GetNumbersFirebase();
 
-        tv_mac = findViewById(R.id.tv_mac);
+        tv_mac = findViewById(R.id.tv_add_mac1);
 
-        btn_scan_mac = findViewById(R.id.btn_scan_mac);
+        btn_scan_mac = findViewById(R.id.btn_scan_mac1);
         btn_scan_mac.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,7 +78,7 @@ public class addNumbers1Activity extends AppCompatActivity {
             }
         });
 
-        btn_next = findViewById(R.id.btn_next);
+        btn_next = findViewById(R.id.btn_next1);
         btn_next.setEnabled(false);
 
         btn_next.setOnClickListener(new View.OnClickListener() {
@@ -92,215 +86,25 @@ public class addNumbers1Activity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Save_data();
+
                 Intent intent = new Intent(view.getContext(), addNumbers2Activity.class);
                 startActivity(intent);
             }
         });
 
-       /* et1 = findViewById(R.id.et_number_one);
-        et2 = findViewById(R.id.et_number_two);
-        et3 = findViewById(R.id.et_number_three);
-        et4 = findViewById(R.id.et_number_four);
-        et5 = findViewById(R.id.et_number_five);
-        et6 = findViewById(R.id.et_number_six);
-        et7 = findViewById(R.id.et_number_seven);
-        et8 = findViewById(R.id.et_number_eight);
-
-        et1.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                Validate_data(et1);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        et2.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                Validate_data(et2);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        et3.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                Validate_data(et3);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        et4.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                Validate_data(et4);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        et5.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                Validate_data(et5);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        et6.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                Validate_data(et6);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        et7.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                Validate_data(et7);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-
-        et8.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                Validate_data(et8);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
 
         SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
-        et1.setText(preferences.getString("et_number_one", ""));
-        et2.setText(preferences.getString("et_number_two", ""));
-        et3.setText(preferences.getString("et_number_three", ""));
-        et4.setText(preferences.getString("et_number_four", ""));
-        et5.setText(preferences.getString("et_number_five", ""));
-        et6.setText(preferences.getString("et_number_six", ""));
-        et7.setText(preferences.getString("et_number_seven", ""));
-        et8.setText(preferences.getString("et_number_eight", ""));
-        tv_mac.setText(preferences.getString("mac_scanned1", ""));*/
+        tv_mac.setText(preferences.getString("mac_scanned1", ""));
 
-      //  Enable_btn();
+
+        Enable_btn();
     }
 
-
-    private void Validate_data(EditText num_editText) {
-
-        Pattern patron = Pattern.compile("\\A[0-9]{9}\\Z");
-
-        if (patron.matcher(num_editText.getText().toString()).matches()) {
-
-            num_editText.setTextColor(Color.WHITE);
-            Enable_btn();
-
-        } else if (num_editText.getText().toString().isEmpty()) {
-            Enable_btn();
-
-        } else {
-            num_editText.setTextColor(Color.RED);
-            Enable_btn();
-        }
-    }
 
     // method to enable or disabled button
     private void Enable_btn() {
 
-        et_empty = 0;
-        et_valid = 0;
-
-        Pattern patron = Pattern.compile("\\A[0-9]{9}\\Z");
-
-        // get the number of elements within the linearLayout
-        int count = linearLayout.getChildCount();
-
-        for (int i = 1; i < count - 1; i += 2) {
-
-            // Each iteration gets the number of the editText within linearLayout
-            AppCompatEditText editText = (AppCompatEditText) linearLayout.getChildAt(i);
-
-            if (patron.matcher(editText.getText().toString()).matches()) {
-                et_valid += 1;
-
-            } else if (editText.getText().toString().isEmpty()) {
-                et_empty += 1;
-            }
-        }
-
-        if ((et_valid + et_empty) == 8 && et_empty < 8 && !tv_mac.getText().toString().isEmpty()) {
+        if (mAdapter.getItemCount() == 8 && !tv_mac.getText().toString().isEmpty()) {
             btn_next.setEnabled(true);
         } else
             btn_next.setEnabled(false);
@@ -328,10 +132,8 @@ public class addNumbers1Activity extends AppCompatActivity {
                 SharedPreferences.Editor obj_editor = preferencias.edit();
                 obj_editor.putString("mac_scanned1", result.getContents());
                 obj_editor.commit();
-                Toast.makeText(this, "Código escaneado: " + result.getContents(), Toast.LENGTH_LONG).show();
 
-                // GetNumbers();
-                GetNumbersFirebase();
+                Toast.makeText(this, "Código escaneado: " + result.getContents(), Toast.LENGTH_LONG).show();
 
                 Enable_btn();
 
@@ -359,34 +161,77 @@ public class addNumbers1Activity extends AppCompatActivity {
         integrator.initiateScan();
     }
 
+
     public void Save_data() {
+
+        List<String> lista = mAdapter.getmData();
+
         SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
         SharedPreferences.Editor obj_editor = preferencias.edit();
-        obj_editor.putString("et_number_one", et1.getText().toString());
-        obj_editor.putString("et_number_two", et2.getText().toString());
-        obj_editor.putString("et_number_three", et3.getText().toString());
-        obj_editor.putString("et_number_four", et4.getText().toString());
-        obj_editor.putString("et_number_five", et5.getText().toString());
-        obj_editor.putString("et_number_six", et6.getText().toString());
-        obj_editor.putString("et_number_seven", et7.getText().toString());
-        obj_editor.putString("et_number_eight", et8.getText().toString());
+
+        for (int i = 0; i < lista.size(); i++) {
+
+            obj_editor.putString("et_number_" + i, lista.get(i));
+
+        }
         obj_editor.commit();
     }
 
-    // para simular venida de numeros desde broadsoft
-   /* private void GetNumbers(){
+    private void GetNumbersFirebase() {
 
-        et1.setText("999999999");
-        et2.setText("999999999");
-        et3.setText("999999999");
-        et4.setText("999999999");
-        et5.setText("999999999");
-        et6.setText("999999999");
-        et7.setText("999999999");
-        et8.setText("999999999");
-    }*/
+        firestoredb = FirebaseFirestore.getInstance();
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user != null) {
+
+            DocumentReference docRef = firestoredb.collection("numbers").document("group1");
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+
+                            String num1 = document.getString("num1");
+                            String num2 = document.getString("num2");
+                            String num3 = document.getString("num3");
+                            String num4 = document.getString("num4");
+                            String num5 = document.getString("num5");
+                            String num6 = document.getString("num6");
+                            String num7 = document.getString("num7");
+                            String num8 = document.getString("num8");
 
 
+                            List<String> data = new ArrayList<>();
+                            //  for (int i = 0; i < 7; i++) {
+                            //data.add("Android " + i);
+
+                            data.add(num1);
+                            data.add(num2);
+                            data.add(num3);
+                            data.add(num4);
+                            data.add(num5);
+                            data.add(num6);
+                            data.add(num7);
+                            data.add(num8);
+
+                            initReyclerView(data);
+
+                            Enable_btn();
+
+                            //Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        } else {
+                            Log.d(TAG, "No such document");
+                        }
+                    } else {
+                        Log.d(TAG, "get failed with ", task.getException());
+                    }
+                }
+            });
+        }
+    }
 
     //method back of the toolbar
     @Override
@@ -434,21 +279,11 @@ public class addNumbers1Activity extends AppCompatActivity {
     }
 
 
+    private void initReyclerView(List<String> data) {
 
+        mAdapter.addData(data);
 
-    private void initReyclerView() {
-
-        RecyclerView recyclerView = findViewById(R.id.recycler_sample);
-
-        mAdapter = new MainAdapter();
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        recyclerView.setAdapter(mAdapter);
-
-        mAdapter.addData(getData());
-
-        addItemTouchCallback(recyclerView);
+        addItemTouchCallback(mRecyclerView);
     }
 
     private void addItemTouchCallback(RecyclerView recyclerView) {
@@ -467,20 +302,4 @@ public class addNumbers1Activity extends AppCompatActivity {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
-
-    private void GetNumbersFirebase() {
-
-
-    }
-
-
-    private List getData() {
-        List<String> data = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-
-            data.add("Android " + i);
-        }
-        return data;
-    }
-
 }

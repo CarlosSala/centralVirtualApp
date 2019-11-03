@@ -18,10 +18,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     private List<String> mData;
 
+    // constructor
     public MainAdapter() {
+
         mData = new ArrayList();
     }
 
+    // method add data
     public void addData(List<String> data) {
         if (data == null) {
             return;
@@ -85,5 +88,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             }
             mTextTitle.setText(data);
         }
+    }
+
+    public List<String> getmData() {
+        return mData;
     }
 }

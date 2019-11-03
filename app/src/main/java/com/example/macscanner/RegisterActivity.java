@@ -233,7 +233,7 @@ public class RegisterActivity extends AppCompatActivity {
         user.put("email", et_email.getText().toString());
         user.put("timestampUser", FieldValue.serverTimestamp());
 
-        db.collection("users").document(et_email.getText().toString())
+        db.collection("users").document(et_email.getText().toString()).collection("info").document("user_info")
 
                 .set(user, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

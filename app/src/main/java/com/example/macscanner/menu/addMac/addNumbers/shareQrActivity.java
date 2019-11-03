@@ -229,33 +229,6 @@ public class shareQrActivity extends AppCompatActivity {
         startActivity(Intent.createChooser(shareIntent, "send"));
     }
 
-
-    public void Delete_data() {
-        SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
-        SharedPreferences.Editor obj_editor = preferencias.edit();
-        obj_editor.putString("et_client_rut", "");
-        obj_editor.putString("et_community_id", "");
-        obj_editor.putString("mac_scanned1", "");
-        obj_editor.putString("mac_scanned2", "");
-        obj_editor.putString("et_number_one", "");
-        obj_editor.putString("et_number_two", "");
-        obj_editor.putString("et_number_three", "");
-        obj_editor.putString("et_number_four", "");
-        obj_editor.putString("et_number_five", "");
-        obj_editor.putString("et_number_six", "");
-        obj_editor.putString("et_number_seven", "");
-        obj_editor.putString("et_number_eight", "");
-        obj_editor.putString("et_number_nine", "");
-        obj_editor.putString("et_number_ten", "");
-        obj_editor.putString("et_number_eleven", "");
-        obj_editor.putString("et_number_twelve", "");
-        obj_editor.putString("et_number_thirteen", "");
-        obj_editor.putString("et_number_fourteen", "");
-        obj_editor.putString("et_number_fifteen", "");
-        obj_editor.putString("et_number_sixteen", "");
-        obj_editor.commit();
-    }
-
     @Override
     public void onBackPressed() {
 

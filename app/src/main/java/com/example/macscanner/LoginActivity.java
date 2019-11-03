@@ -117,7 +117,9 @@ public class LoginActivity extends AppCompatActivity {
 
                                 if (emailVerified) {
 
-                                    DocumentReference docRef = firestoredb.collection("users").document(email);
+                                    DocumentReference docRef = firestoredb.collection("users")
+                                            .document(email).collection("info")
+                                            .document("user_info");
                                     docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                         @Override
                                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
