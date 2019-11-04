@@ -1,10 +1,6 @@
 package com.example.macscanner;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,7 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,7 +31,6 @@ public class RecoverPasswordActivity extends AppCompatActivity {
 
     private TextInputEditText et_recover;
     private TextInputLayout til_recover;
-    private Button btn_recover;
 
     private LinearLayout linearLayout;
 
@@ -51,7 +48,7 @@ public class RecoverPasswordActivity extends AppCompatActivity {
         progressBarRecover = findViewById(R.id.progressBar_recover);
         progressBarRecover.setVisibility(View.INVISIBLE);
 
-        btn_recover = findViewById(R.id.btn_recover_password);
+        Button btn_recover = findViewById(R.id.btn_recover_password);
 
         et_recover = findViewById(R.id.et_recover);
         til_recover = findViewById(R.id.til_recover);
@@ -65,39 +62,8 @@ public class RecoverPasswordActivity extends AppCompatActivity {
 
                 if (validform()) {
 
-                    firebaseAuth.sendPasswordResetEmail(et_recover.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Log.d(TAG, "Email sent.");
+                    RecoveryPassword();
 
-                                showProgressBar(false);
-
-                                Snackbar.make(linearLayout, "Se ha enviado un mensaje al correo electrónico proporcionado", Snackbar.LENGTH_INDEFINITE)
-                                        .setAction("Volver", new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-
-                                                onBackPressed();
-
-                                                // onDestroy();
-
-                                              /*  Intent intent = new Intent(RecoverPasswordActivity.this, LoginActivity.class);
-                                                startActivity(intent);
-                                                finish();*/
-                                            }
-                                        })
-                                        .setActionTextColor(getResources().getColor(R.color.white))
-                                        .show();
-                            } else {
-
-                                Log.d(TAG, "Email has not been sent.");
-                                Snackbar.make(linearLayout, task.getException().getMessage().toString(), Snackbar.LENGTH_LONG).show();
-                                showProgressBar(false);
-                            }
-
-                        }
-                    });
                 } else {
                     showProgressBar(false);
                 }
@@ -123,7 +89,38 @@ public class RecoverPasswordActivity extends AppCompatActivity {
         clearFocus();
 
         return resp;
+    }
 
+    private void RecoveryPassword (){
+
+        firebaseAuth.sendPasswordResetEmail(et_recover.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "Email sent.");
+
+                    showProgressBar(false);
+
+                    Snackbar.make(linearLayout, "Se ha enviado un mensaje al correo electrónico proporcionado", Snackbar.LENGTH_INDEFINITE)
+                            .setAction("Volver", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    onBackPressed();
+
+                                }
+                            })
+                            .setActionTextColor(getResources().getColor(R.color.white))
+                            .show();
+                } else {
+
+                    Log.d(TAG, "Email has not been sent.");
+                    Snackbar.make(linearLayout, task.getException().getMessage().toString(), Snackbar.LENGTH_LONG).show();
+                    showProgressBar(false);
+                }
+
+            }
+        });
     }
 
     private static void toggleTextInputLayoutError(@NonNull TextInputLayout textInputLayout,
@@ -135,7 +132,6 @@ public class RecoverPasswordActivity extends AppCompatActivity {
             textInputLayout.setErrorEnabled(true);
         }
     }
-
 
     private void clearFocus() {
         View view = this.getCurrentFocus();
@@ -167,16 +163,4 @@ public class RecoverPasswordActivity extends AppCompatActivity {
         onBackPressed();
         return false;
     }
-
-
-   /* @Override
-    public void onBackPressed() {
-
-        Toast.makeText(this, "hola", Toast.LENGTH_SHORT).show();
-
-        *//* Intent intent = new Intent(RecoverPasswordActivity.this, LoginActivity.class);
-        startActivity(intent);
-        finish();*//*
-    }*/
-
 }

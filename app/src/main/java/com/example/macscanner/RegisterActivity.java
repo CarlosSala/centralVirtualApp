@@ -1,6 +1,7 @@
 package com.example.macscanner;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -39,7 +40,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     private TextInputEditText et_name, et_lastName, et_email, et_password, et_passwordAgain;
     private TextInputLayout til_name, til_lastName, til_email, til_password, til_passwordAgain;
-    private Button btn_register;
     private LinearLayout linearLayout;
     private ProgressBar progressBarRegister;
 
@@ -54,6 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        // for Snack bar
         linearLayout = findViewById(R.id.linearLayout_register);
 
         progressBarRegister = findViewById(R.id.progressBar);
@@ -71,84 +72,19 @@ public class RegisterActivity extends AppCompatActivity {
         til_password = findViewById(R.id.text_input_layout_password1);
         til_passwordAgain = findViewById(R.id.text_input_layout_password2);
 
-        btn_register = findViewById(R.id.btn_register);
+        Button btn_register = findViewById(R.id.btn_register);
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (Valid_form()) {
-                    User_register();
+                if (ValidForm()) {
+                    UserRegister();
                 }
             }
         });
     }
 
-
-    private void User_register() {
-
-        showProgressBar(true);
-
-        String email = et_email.getText().toString();
-        String password = et_password.getText().toString();
-
-        //create user
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-
-                            registerUserData();
-
-                            Toast.makeText(RegisterActivity.this, "Registro exitoso", Toast.LENGTH_LONG).show();
-
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
-
-                            user.sendEmailVerification()
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                Log.d(TAG, "Email sent.");
-                                            }
-                                        }
-                                    });
-
-                            Clean_form();
-
-                            showProgressBar(false);
-
-                            Snackbar.make(linearLayout, "Se ha enviado un mensaje a su correo electrónico para verificar su cuenta", Snackbar.LENGTH_INDEFINITE)
-                                    .setAction("Volver", new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-
-                                            onBackPressed();
-
-                                            //onDestroy();
-
-                                            /*Intent intent = new Intent(getApplication(), LoginActivity.class);
-                                            startActivity(intent);
-                                            finish();*/
-                                        }
-                                    })
-                                    .setActionTextColor(getResources().getColor(R.color.white))
-                                    .show();
-
-                        } else {
-
-                            if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                                Toast.makeText(RegisterActivity.this, "El correo electrónico se encuentra registrado en otra cuenta", Toast.LENGTH_LONG).show();
-                            } else {
-                                Toast.makeText(RegisterActivity.this, "No se pudo realizar el registro", Toast.LENGTH_LONG).show();
-                            }
-                            showProgressBar(false);
-                        }
-                    }
-                });
-    }
-
-    private boolean Valid_form() {
+    private boolean ValidForm() {
 
         boolean resp = true;
 
@@ -212,6 +148,38 @@ public class RegisterActivity extends AppCompatActivity {
         return resp;
     }
 
+    private void UserRegister() {
+
+        showProgressBar(true);
+
+        String email = et_email.getText().toString();
+        String password = et_password.getText().toString();
+
+        //create user
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+
+                            registerUserData();
+
+                        } else {
+
+                            if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                Toast.makeText(RegisterActivity.this,
+                                        "El correo electrónico se encuentra registrado en otra cuenta",
+                                        Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(RegisterActivity.this, "No se pudo realizar el registro", Toast.LENGTH_LONG).show();
+                            }
+                            showProgressBar(false);
+                        }
+                    }
+                });
+    }
+
+
     private static void toggleTextInputLayoutError(@NonNull TextInputLayout til, String msg) {
         til.setError(msg);
         if (msg == null) {
@@ -233,12 +201,16 @@ public class RegisterActivity extends AppCompatActivity {
         user.put("email", et_email.getText().toString());
         user.put("timestampUser", FieldValue.serverTimestamp());
 
-        db.collection("users").document(et_email.getText().toString()).collection("info").document("user_info")
+        db.collection("users").document(et_email.getText().toString())
+                .collection("info").document("user_info")
 
-                .set(user, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                .set(user, SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d(TAG, "Additional data saved");
+                // call to the method when this have completed  his task
+                registerDevice();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -246,6 +218,68 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.w(TAG, "Error additional data was not saved", e);
             }
         });
+    }
+
+
+    private void registerDevice() {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        //String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+
+        Map<String, Object> device = new HashMap<>();
+
+        device.put("manufacturer", Build.MANUFACTURER);
+        device.put("model", Build.MODEL);
+        device.put("timestampToken", FieldValue.serverTimestamp());
+        //  device.put("serial",serial );
+        // device.put("tokenFCM", refreshedToken);
+
+        db.collection("users").document(et_email.getText().toString())
+                .collection("info").document(Build.MODEL)
+
+                .set(device, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "Additional data saved");
+                SendVerificationEmail();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "Error additional data was not saved", e);
+            }
+        });
+    }
+
+
+    private void SendVerificationEmail(){
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+
+        user.sendEmailVerification()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+
+                            Clean_form();
+
+                            showProgressBar(false);
+
+                            Snackbar.make(linearLayout, "Se ha enviado un mensaje a su correo electrónico para verificar su cuenta", Snackbar.LENGTH_INDEFINITE)
+                                    .setAction("Volver", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+
+                                            onBackPressed();
+
+                                        }
+                                    })
+                                    .setActionTextColor(getResources().getColor(R.color.white))
+                                    .show();
+                            Log.d(TAG, "Email sent.");
+                        }
+                    }
+                });
     }
 
     private void clearFocus() {
@@ -258,7 +292,6 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-
     private void showProgressBar(boolean status) {
 
         if (status) {
@@ -268,7 +301,6 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
             progressBarRegister.setVisibility(View.INVISIBLE);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-
         }
     }
 
@@ -279,7 +311,16 @@ public class RegisterActivity extends AppCompatActivity {
         return false;
     }
 
-    /*try {
+    private void Clean_form() {
+
+        et_email.setText("");
+        et_lastName.setText("");
+        et_name.setText("");
+        et_password.setText("");
+        et_passwordAgain.setText("");
+    }
+
+ /*try {
                                 Thread.currentThread().sleep(10000);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
@@ -293,16 +334,5 @@ public class RegisterActivity extends AppCompatActivity {
                                     buttons[inew][jnew].setBackgroundColor(Color.BLACK);
                                 }
                             }, 5000);*/
-
-    private void Clean_form() {
-
-        et_email.setText("");
-        et_lastName.setText("");
-        et_name.setText("");
-        et_password.setText("");
-        et_passwordAgain.setText("");
-
-    }
-
 
 }

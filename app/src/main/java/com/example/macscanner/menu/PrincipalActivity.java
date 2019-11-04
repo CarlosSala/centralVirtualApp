@@ -1,14 +1,12 @@
 package com.example.macscanner.menu;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -21,21 +19,13 @@ import com.example.macscanner.LoginActivity;
 import com.example.macscanner.R;
 import com.example.macscanner.menu.addMac.addMacActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
-import com.google.firebase.iid.FirebaseInstanceId;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class PrincipalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -43,15 +33,9 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
 
     private FirebaseAuth firebaseAuth;
 
-    private FirebaseFirestore firestoredb;
-
     private DrawerLayout drawerLayout;
 
-    private Button btn_add_mac, btn_logout;
     private TextView tv_user_name, tv_user_email;
-
-    //private String serial = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? Build.getSerial():Build.SERIAL;
-    private DocumentReference mDocRef = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +56,7 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-        btn_add_mac = findViewById(R.id.btn_add_mac);
-
+        Button btn_add_mac = findViewById(R.id.btn_add_mac);
         btn_add_mac.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,8 +65,7 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
             }
         });
 
-        btn_logout = findViewById(R.id.btn_logout);
-
+        Button btn_logout = findViewById(R.id.btn_logout);
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,42 +78,47 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         tv_user_email = header.findViewById(R.id.tv_user_email);
 
         GetUserData();
-        registerDevice();
     }
+
 
     private void GetUserData() {
 
-        firestoredb = FirebaseFirestore.getInstance();
-
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user != null) {
 
-            String email = user.getEmail();
+            if (user.getEmail() != null) {
 
-            DocumentReference docRef = firestoredb.collection("users").document(email).collection("info").document("user_info");
-            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
+                String email = user.getEmail();
 
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
+                DocumentReference docRef = firebaseFirestore.collection("users").document(email)
+                        .collection("info").document("user_info");
 
-                            String name = document.getString("nombre");
-                            String email = document.getString("email");
+                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
 
-                            tv_user_name.setText(name);
-                            tv_user_email.setText(email);
-                            //Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+
+                                String name = document.getString("nombre");
+                                String email = document.getString("email");
+
+                                tv_user_name.setText(name);
+                                tv_user_email.setText(email);
+
+                                //Toast.makeText(PrincipalActivity.this, "Bienvenido " + name, Toast.LENGTH_LONG).show();
+                            } else {
+                                Log.d(TAG, "No such document");
+                            }
                         } else {
-                            Log.d(TAG, "No such document");
+                            Log.d(TAG, "get failed with ", task.getException());
                         }
-                    } else {
-                        Log.d(TAG, "get failed with ", task.getException());
                     }
-                }
-            });
+                });
+            }
         }
     }
 
@@ -167,44 +153,9 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
 
         } else if (id == R.id.nav_close_session) {
             Logout();
-
         }
 
         return false;
-    }
-
-
-    private void registerDevice() {
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-
-        //String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-
-        Map<String, Object> device = new HashMap<>();
-
-        //  device.put("serial",serial );
-        device.put("manufacturer", Build.MANUFACTURER);
-        device.put("model", Build.MODEL);
-       // device.put("tokenFCM", refreshedToken);
-        device.put("timestampToken", FieldValue.serverTimestamp());
-
-
-        db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getEmail()).collection("info").document(Build.MODEL)
-
-                .set(device, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "Additional data saved");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "Error additional data was not saved", e);
-            }
-        });
-
-
     }
 }
 

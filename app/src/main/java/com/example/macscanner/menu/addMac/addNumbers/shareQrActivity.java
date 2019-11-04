@@ -40,9 +40,6 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class shareQrActivity extends AppCompatActivity {
 
-    private Button btn_share, btn_restart;
-    private ImageView imageView;
-    private String data;
     private Bitmap bitmap;
 
     private final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 0;
@@ -56,12 +53,12 @@ public class shareQrActivity extends AppCompatActivity {
 
         constraintLayout = findViewById(R.id.constraint_layout_shareQr);
 
-        btn_share = findViewById(R.id.btn_share);
-        btn_restart = findViewById(R.id.btn_restart);
-        imageView = findViewById(R.id.imgv);
+        Button btn_share = findViewById(R.id.btn_share);
+        Button btn_restart = findViewById(R.id.btn_restart);
+        ImageView imageView = findViewById(R.id.imgv);
 
         // get data from sendDataActivity
-        data = getIntent().getExtras().getString("data", "Qr");
+        String data = getIntent().getExtras().getString("data", "Qr");
 
         if (data != null) {
             MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
@@ -72,7 +69,7 @@ public class shareQrActivity extends AppCompatActivity {
                 imageView.setImageBitmap(bitmap);
 
                 SharedPreferences settings = getSharedPreferences("datos", Context.MODE_PRIVATE);
-                settings.edit().clear().commit();
+                settings.edit().clear().apply();
 
             } catch (WriterException e) {
                 e.printStackTrace();
@@ -205,16 +202,6 @@ public class shareQrActivity extends AppCompatActivity {
         dialogo.show();
     }
 
-
-    // method to get Uri from Bitmap
-    public String getImageUri(Context inContext, Bitmap inImage) {
-
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return path;
-    }
-
     //method to Share image
     public void Share() {
 
@@ -227,6 +214,15 @@ public class shareQrActivity extends AppCompatActivity {
         shareIntent.setType("image/jpeg");
         //shareIntent.setType("image/*");
         startActivity(Intent.createChooser(shareIntent, "send"));
+    }
+
+    // method to get Uri from Bitmap
+    public String getImageUri(Context inContext, Bitmap inImage) {
+
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return path;
     }
 
     @Override
@@ -261,7 +257,7 @@ public class shareQrActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
 
                         SharedPreferences settings = getSharedPreferences("datos", Context.MODE_PRIVATE);
-                        settings.edit().clear().commit();
+                        settings.edit().clear().apply();
 
 
                         finishAffinity();
@@ -283,12 +279,11 @@ public class shareQrActivity extends AppCompatActivity {
     private void Home() {
 
         SharedPreferences settings = getSharedPreferences("datos", Context.MODE_PRIVATE);
-        settings.edit().clear().commit();
+        settings.edit().clear().apply();
 
         Intent intent = new Intent(shareQrActivity.this, PrincipalActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
-
     }
 }

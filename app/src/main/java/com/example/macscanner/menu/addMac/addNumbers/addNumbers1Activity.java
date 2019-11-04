@@ -3,7 +3,6 @@ package com.example.macscanner.menu.addMac.addNumbers;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,11 +42,7 @@ public class addNumbers1Activity extends AppCompatActivity {
 
     private final static String TAG = "addNumbers1Activity";
 
-    private FirebaseAuth firebaseAuth;
-
-    private FirebaseFirestore firestoredb;
-
-    private Button btn_scan_mac, btn_next;
+    private Button btn_next;
     private TextView tv_mac;
 
     private RecyclerView mRecyclerView;
@@ -64,13 +59,9 @@ public class addNumbers1Activity extends AppCompatActivity {
         mAdapter = new MainAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-
-        GetNumbersFirebase();
-
         tv_mac = findViewById(R.id.tv_add_mac1);
 
-        btn_scan_mac = findViewById(R.id.btn_scan_mac1);
+        Button btn_scan_mac = findViewById(R.id.btn_scan_mac1);
         btn_scan_mac.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,18 +77,94 @@ public class addNumbers1Activity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Save_data();
-
                 Intent intent = new Intent(view.getContext(), addNumbers2Activity.class);
                 startActivity(intent);
             }
         });
 
+        GetNumbersFirebase();
 
         SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
         tv_mac.setText(preferences.getString("mac_scanned1", ""));
 
-
         Enable_btn();
+    }
+
+    private void GetNumbersFirebase() {
+
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user != null) {
+
+            DocumentReference docRef = firebaseFirestore.collection("numbers").document("group1");
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+
+                            String num1 = document.getString("num1");
+                            String num2 = document.getString("num2");
+                            String num3 = document.getString("num3");
+                            String num4 = document.getString("num4");
+                            String num5 = document.getString("num5");
+                            String num6 = document.getString("num6");
+                            String num7 = document.getString("num7");
+                            String num8 = document.getString("num8");
+
+                            List<String> data = new ArrayList<>();
+
+                            data.add(num1);
+                            data.add(num2);
+                            data.add(num3);
+                            data.add(num4);
+                            data.add(num5);
+                            data.add(num6);
+                            data.add(num7);
+                            data.add(num8);
+
+                            initReyclerView(data);
+
+                            Enable_btn();
+
+                            //Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        } else {
+                            Log.d(TAG, "No such document");
+                        }
+                    } else {
+                        Log.d(TAG, "get failed with ", task.getException());
+                    }
+                }
+            });
+        }
+    }
+
+    private void initReyclerView(List<String> data) {
+
+        mAdapter.addData(data);
+
+        addItemTouchCallback(mRecyclerView);
+    }
+
+    private void addItemTouchCallback(RecyclerView recyclerView) {
+
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(new ItemTouchListenner() {
+            @Override
+            public void onMove(int oldPosition, int newPosition) {
+                mAdapter.onMove(oldPosition, newPosition);
+            }
+
+            @Override
+            public void swipe(int position, int direction) {
+                mAdapter.swipe(position, direction);
+            }
+        });
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
 
@@ -110,6 +177,20 @@ public class addNumbers1Activity extends AppCompatActivity {
             btn_next.setEnabled(false);
     }
 
+
+    public void Save_data() {
+
+        List<String> lista = mAdapter.getmData();
+
+        SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
+        SharedPreferences.Editor obj_editor = preferencias.edit();
+
+        for (int i = 0; i < lista.size(); i++) {
+
+            obj_editor.putString("et_number_" + i, lista.get(i));
+        }
+        obj_editor.apply();
+    }
 
     // Get the results:
     @Override
@@ -131,7 +212,7 @@ public class addNumbers1Activity extends AppCompatActivity {
                 SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
                 SharedPreferences.Editor obj_editor = preferencias.edit();
                 obj_editor.putString("mac_scanned1", result.getContents());
-                obj_editor.commit();
+                obj_editor.apply();
 
                 Toast.makeText(this, "Código escaneado: " + result.getContents(), Toast.LENGTH_LONG).show();
 
@@ -162,77 +243,6 @@ public class addNumbers1Activity extends AppCompatActivity {
     }
 
 
-    public void Save_data() {
-
-        List<String> lista = mAdapter.getmData();
-
-        SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
-        SharedPreferences.Editor obj_editor = preferencias.edit();
-
-        for (int i = 0; i < lista.size(); i++) {
-
-            obj_editor.putString("et_number_" + i, lista.get(i));
-
-        }
-        obj_editor.commit();
-    }
-
-    private void GetNumbersFirebase() {
-
-        firestoredb = FirebaseFirestore.getInstance();
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (user != null) {
-
-            DocumentReference docRef = firestoredb.collection("numbers").document("group1");
-            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-
-                            String num1 = document.getString("num1");
-                            String num2 = document.getString("num2");
-                            String num3 = document.getString("num3");
-                            String num4 = document.getString("num4");
-                            String num5 = document.getString("num5");
-                            String num6 = document.getString("num6");
-                            String num7 = document.getString("num7");
-                            String num8 = document.getString("num8");
-
-
-                            List<String> data = new ArrayList<>();
-                            //  for (int i = 0; i < 7; i++) {
-                            //data.add("Android " + i);
-
-                            data.add(num1);
-                            data.add(num2);
-                            data.add(num3);
-                            data.add(num4);
-                            data.add(num5);
-                            data.add(num6);
-                            data.add(num7);
-                            data.add(num8);
-
-                            initReyclerView(data);
-
-                            Enable_btn();
-
-                            //Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                        } else {
-                            Log.d(TAG, "No such document");
-                        }
-                    } else {
-                        Log.d(TAG, "get failed with ", task.getException());
-                    }
-                }
-            });
-        }
-    }
-
     //method back of the toolbar
     @Override
     public boolean onSupportNavigateUp() {
@@ -262,7 +272,7 @@ public class addNumbers1Activity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
 
                         SharedPreferences settings = getSharedPreferences("datos", Context.MODE_PRIVATE);
-                        settings.edit().clear().commit();
+                        settings.edit().clear().apply();
 
                         Intent intent = new Intent(addNumbers1Activity.this, PrincipalActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -276,30 +286,5 @@ public class addNumbers1Activity extends AppCompatActivity {
                     }
                 })
                 .create().show();
-    }
-
-
-    private void initReyclerView(List<String> data) {
-
-        mAdapter.addData(data);
-
-        addItemTouchCallback(mRecyclerView);
-    }
-
-    private void addItemTouchCallback(RecyclerView recyclerView) {
-
-        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(new ItemTouchListenner() {
-            @Override
-            public void onMove(int oldPosition, int newPosition) {
-                mAdapter.onMove(oldPosition, newPosition);
-            }
-
-            @Override
-            public void swipe(int position, int direction) {
-                mAdapter.swipe(position, direction);
-            }
-        });
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 }

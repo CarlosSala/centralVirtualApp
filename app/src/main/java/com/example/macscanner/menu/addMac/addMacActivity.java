@@ -24,7 +24,6 @@ import java.util.regex.Pattern;
 
 public class addMacActivity extends AppCompatActivity {
 
-    private int NumSolicitud;
     private boolean client_rut;
     private boolean community_id;
 
@@ -41,13 +40,6 @@ public class addMacActivity extends AppCompatActivity {
         et_client_rut = findViewById(R.id.et_client_rut);
         til_community_id = findViewById(R.id.til_community_id);
         et_community_id = findViewById(R.id.et_community_id);
-
-
-       /* SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
-        SharedPreferences.Editor obj_editor = preferencias.edit();
-        obj_editor.putString("et_client_rut", "");
-        obj_editor.putString("et_community_id", "");
-        obj_editor.commit();*/
 
         SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
         et_client_rut.setText(preferences.getString("et_client_rut", ""));
@@ -159,11 +151,11 @@ public class addMacActivity extends AppCompatActivity {
 
     public void Num_request() {
 
-        NumSolicitud = (int) (Math.random() * 1000000000) + 1;
+        int numSolicitud = (int) (Math.random() * 1000000000) + 1;
 
         SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
         SharedPreferences.Editor obj_editor = preferencias.edit();
-        obj_editor.putInt("NumSolicitud", NumSolicitud);
+        obj_editor.putInt("NumSolicitud", numSolicitud);
         obj_editor.commit();
     }
 
