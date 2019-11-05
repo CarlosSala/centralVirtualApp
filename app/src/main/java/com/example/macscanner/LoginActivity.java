@@ -2,6 +2,8 @@ package com.example.macscanner;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -78,11 +80,59 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (Valid_form()) {
-                    Login();
+
+                    if (isNetAvailable()) {
+
+                        // if (isOnlineNet()) {
+                        Login();
+                        // } else {
+                        //   Toast.makeText(LoginActivity.this, "Problemas de conectividad, intente mas tarde",
+                        //         Toast.LENGTH_SHORT).show();
+                        //}
+
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Conectese a una red wifi o habilite los datos moviles",
+                                Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             }
         });
     }
+
+    private boolean isNetAvailable() {
+
+        ConnectivityManager connectivityManager = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo actNetInfo = connectivityManager.getActiveNetworkInfo();
+
+        return (actNetInfo != null && actNetInfo.isConnected());
+    }
+
+
+    /*public Boolean isOnlineNet() {
+
+        try {
+            Process p = java.lang.Runtime.getRuntime().exec("ping -c 1 www.google.es");
+
+            int val = p.waitFor();
+            boolean reachable = (val == 0);
+
+            //showProgressBar(false);
+
+            return reachable;
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        //showProgressBar(false);
+
+        return false;
+    }*/
+
 
     private boolean Valid_form() {
 
