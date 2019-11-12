@@ -48,6 +48,8 @@
     <string name="set_number6">Ingrese N°6</string>
     <string name="set_number7">Ingrese N°7</string>
     <string name="set_number8">Ingrese N°8</string>
+    <string name="base1">Base1</string>
+    <string name="base2">Base2</string>
 
     <!-- add numbers2 activity -->
     <string name="title_add_numbers2">Dirección MAC Base Dos</string>
