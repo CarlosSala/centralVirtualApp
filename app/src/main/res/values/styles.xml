@@ -1,7 +1,6 @@
 <resources>
 
 
-
     <!-- Base application theme. -->
     <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         &lt;!&ndash; Customize your theme here. &ndash;&gt;
@@ -23,18 +22,14 @@
         <item name="android:background">#F7F7F7</item>
         <item name="buttonStyle">@style/LightButton</item>
 
-        <!--  &lt;!&ndash; Customize your theme here. &ndash;&gt;
-        <item name="colorPrimary">#2196F3</item>
-        <item name="colorPrimaryDark">#1976D2</item>
-        <item name="colorAccent">#1976D2</item>
-        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>-->
-
+        <!--<item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>&ndash;&gt;
+-->
 
         <item name="colorControlNormal">@color/darkgrey</item>
         <item name="android:textColorHint">@color/darkgrey</item>
         <item name="colorControlActivated">#00A9DF</item>
-        <!--<item name="colorError">#BF360C</item>-->
         <item name="colorError">#E9426D</item>
+        <!--<item name="colorError">#BF360C</item>-->
     </style>
 
 
@@ -53,21 +48,22 @@
         <item name="android:background">#00A9DF</item>
     </style>
 
+    <style name="LightAlertDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="android:background">#FFF</item>
+        <item name="android:textColor">#00A9DF</item>
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+    </style>
 
+    <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">#00A9DF</item>
+        <item name="android:textSize">18sp</item>
+    </style>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">#00A9DF</item>
+        <item name="android:textSize">15sp</item>
+    </style>
 
 
 

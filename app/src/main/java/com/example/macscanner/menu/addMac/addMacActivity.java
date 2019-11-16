@@ -89,16 +89,14 @@ public class addMacActivity extends AppCompatActivity {
         btn_enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Num_request();
+                ApplicationNumber();
                 Save_data();
                 Intent intent = new Intent(addMacActivity.this, addNumbers1Activity.class);
                 startActivity(intent);
             }
         });
 
-        if (et_community_id.getText().toString().isEmpty() && et_client_rut.getText().toString().isEmpty()) {
-
-        } else {
+        if (!et_community_id.getText().toString().isEmpty() && !et_client_rut.getText().toString().isEmpty()) {
             Client_rut_validate();
             Community_id_validate();
             Enable_btn();
@@ -146,17 +144,17 @@ public class addMacActivity extends AppCompatActivity {
         SharedPreferences.Editor obj_editor = preferencias.edit();
         obj_editor.putString("et_client_rut", et_client_rut.getText().toString());
         obj_editor.putString("et_community_id", et_community_id.getText().toString());
-        obj_editor.commit();
+        obj_editor.apply();
     }
 
-    public void Num_request() {
+    public void ApplicationNumber() {
 
-        int numSolicitud = (int) (Math.random() * 1000000000) + 1;
+        int applicationNumber = (int) (Math.random() * 1000000000) + 1;
 
         SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
         SharedPreferences.Editor obj_editor = preferencias.edit();
-        obj_editor.putInt("NumSolicitud", numSolicitud);
-        obj_editor.commit();
+        obj_editor.putInt("NumSolicitud", applicationNumber);
+        obj_editor.apply();
     }
 
     //method back of the toolbar
@@ -178,7 +176,7 @@ public class addMacActivity extends AppCompatActivity {
 
     private void AlertDialog() {
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this, R.style.LightAlertDialog);
 
         alertDialogBuilder
                 .setTitle("Central Virtual")
@@ -188,7 +186,7 @@ public class addMacActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
 
                         SharedPreferences settings = getSharedPreferences("datos", Context.MODE_PRIVATE);
-                        settings.edit().clear().commit();
+                        settings.edit().clear().apply();
 
                         Intent intent = new Intent(addMacActivity.this, PrincipalActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

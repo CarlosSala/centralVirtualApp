@@ -138,7 +138,7 @@ public class resumeAddNumbersActivity extends AppCompatActivity {
 
     private void AlertDialog() {
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this, R.style.LightAlertDialog);
 
         alertDialogBuilder
                 .setTitle("Central Virtual")

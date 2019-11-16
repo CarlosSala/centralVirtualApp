@@ -1,6 +1,5 @@
 package com.example.macscanner.menu.addMac.addNumbers;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -40,9 +39,11 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class shareQrActivity extends AppCompatActivity {
 
+    private String data;
+
     private Bitmap bitmap;
 
-    private final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 0;
+    private int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 0;
 
     ConstraintLayout constraintLayout;
 
@@ -58,7 +59,7 @@ public class shareQrActivity extends AppCompatActivity {
         ImageView imageView = findViewById(R.id.imgv);
 
         // get data from sendDataActivity
-        String data = getIntent().getExtras().getString("data", "Qr");
+        data = getIntent().getExtras().getString("data", "Qr");
 
         if (data != null) {
             MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
@@ -93,29 +94,24 @@ public class shareQrActivity extends AppCompatActivity {
 
                 // check SDK
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+
                     // if SDF is lower to android M, the permissions are declared in manifest
-
-                }
-                // check if permission was already granted
-                if (ContextCompat.checkSelfPermission(shareQrActivity.this,
-                        WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    Share();
-
                 } else {
+                    // check if permission was already granted
+                    if (ContextCompat.checkSelfPermission(shareQrActivity.this, WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
 
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(shareQrActivity.this,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                        Dialog();
-                        //Toast.makeText(shareQrActivity.this, "Los permisos para acceder al almacenamiento externo son necesarios para guardar el codigo qr", Toast.LENGTH_SHORT).show();
-                    }
-
-                    ActivityCompat.requestPermissions(shareQrActivity.this,
-                            new String[]{WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
-
-                    if (MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE == 0) {
+                        Share();
 
                     } else {
-                        Share();
+
+                        /*if (ActivityCompat.shouldShowRequestPermissionRationale(shareQrActivity.this,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                            //explain why permissions are necessary
+                            // Dialog();
+                        }*/
+
+                        // It is applying permissions, there is to see the result
+                        ActivityCompat.requestPermissions(shareQrActivity.this, new String[]{WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
                     }
                 }
             }
@@ -155,8 +151,10 @@ public class shareQrActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == 0) {
+
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
+                Share();
             } else {
                 Manual_permissions();
             }
@@ -187,7 +185,7 @@ public class shareQrActivity extends AppCompatActivity {
     }
 
 
-    private void Dialog() {
+    /*private void Dialog() {
 
         AlertDialog.Builder dialogo = new AlertDialog.Builder(shareQrActivity.this);
         dialogo.setTitle("Permisos Desactivados");
@@ -200,7 +198,7 @@ public class shareQrActivity extends AppCompatActivity {
             }
         });
         dialogo.show();
-    }
+    }*/
 
     //method to Share image
     public void Share() {
@@ -209,7 +207,8 @@ public class shareQrActivity extends AppCompatActivity {
         Intent shareIntent = new Intent();
 
         shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "Código Qr generado");
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Código QR generado de respaldo");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, data);
         shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
         shareIntent.setType("image/jpeg");
         //shareIntent.setType("image/*");
@@ -247,7 +246,7 @@ public class shareQrActivity extends AppCompatActivity {
 
     private void AlertDialog() {
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this, R.style.LightAlertDialog);
 
         alertDialogBuilder
                 .setTitle("Central Virtual")
