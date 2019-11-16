@@ -8,7 +8,8 @@
     android:fillViewport="true"
     tools:context=".menu.addMac.addNumbers.addNumbers1Activity"
     tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="-94dp">
+    tools:layout_editor_absoluteY="-94dp"
+    android:theme="@style/LightThemeApp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

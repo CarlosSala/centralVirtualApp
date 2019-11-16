@@ -1,24 +1,112 @@
 <resources>
 
+
+
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        &lt;!&ndash; Customize your theme here. &ndash;&gt;
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- Light/Day Mode theme. -->
+    <style name="LightThemeApp" parent="Theme.AppCompat.Light.DarkActionBar">
+
+        <item name="android:background">#F7F7F7</item>
+        <item name="buttonStyle">@style/LightButton</item>
+
+        <!--  &lt;!&ndash; Customize your theme here. &ndash;&gt;
+        <item name="colorPrimary">#2196F3</item>
+        <item name="colorPrimaryDark">#1976D2</item>
+        <item name="colorAccent">#1976D2</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>-->
 
 
-    <!--Campo de texto-->
+        <item name="colorControlNormal">@color/darkgrey</item>
+        <item name="android:textColorHint">@color/darkgrey</item>
+        <item name="colorControlActivated">#00A9DF</item>
+        <!--<item name="colorError">#BF360C</item>-->
+        <item name="colorError">#E9426D</item>
+    </style>
+
+
+    <style name="WindowAnimationTransition">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
+    <style name="LightButton" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/custom_button</item>
+        <item name="android:textColor">#FFF</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <style name="LightNavigationView">
+        <item name="android:background">#00A9DF</item>
+    </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Night / dark  Mode theme. -->
+    <style name="darktheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:background">@android:color/holo_blue_light</item>
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="android:textColorHint">@android:color/white</item>
+        <item name="colorControlActivated">@color/darkgrey</item>
+        <!--<item name="colorControlActivated">#BF360C</item>-->
+        <item name="colorError">#BF360C</item>
+        <item name="android:textColor">@color/white</item>
+
+        <!-- Customize your theme here. -->
+        <!-- <item name="colorPrimary">#212121</item>
+         <item name="colorPrimaryDark">#000000</item>
+         <item name="colorAccent">@color/colorAccent</item>-->
+        <!--  <item name="backgroundcolor">#303030</item>
+          <item name="cardbackground">#424242</item>
+          <item name="textcolor">#ffffff</item>
+          <item name="tintcolor">#ffffff</item>
+          <item name="buttoncolor">#2196F3</item>
+          <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>-->
+    </style>
+
+
+    <style name="LoginTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!--<item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>-->
+        <item name="android:background">@android:color/holo_blue_light</item>
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="android:textColorHint">@android:color/white</item>
+        <item name="colorControlActivated">@color/darkgrey</item>
+        <!--<item name="colorControlActivated">#BF360C</item>-->
+        <item name="colorError">#BF360C</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
     <style name="LoginEditText" parent="ThemeOverlay.AppCompat.Dark">
         <!-- cursor y línea normal-->
         <!--<item name="colorControlNormal">@color/indigo</item>-->
@@ -30,36 +118,12 @@
         <!--<item name="colorAccent">@color/colorAccent</item>-->
         <!--<item name="android:textColorHint">@android:color/white</item>-->
         <item name="colorControlNormal">@android:color/white</item>
-
         <item name="colorControlHighlight">@color/md_white_1000</item>
-
-    </style>
-
-    <style name="LoginTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-
-        <!--<item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>-->
-
-        <item name="android:background">@android:color/holo_blue_light</item>
-        <item name="colorControlNormal">@android:color/white</item>
-        <item name="android:textColorHint">@android:color/white</item>
-        <item name="colorControlActivated">@color/darkgrey</item>
-        <!--<item name="colorControlActivated">#BF360C</item>-->
-        <item name="colorError">#BF360C</item>
-        <item name="android:textColor">@color/white</item>
-
-
-        <!-- <item name="colorPrimary">@color/md_cyan_500</item>
-         <item name="colorPrimaryDark">@color/md_cyan_700</item>
-         <item name="colorAccent">@color/md_light_green_500</item>
- -->
-
     </style>
 
 
     <!-- google's material design colours from
         http://www.google.com/design/spec/style/color.html#color-ui-color-palette -->
-
 
     <!--reds-->
     <color name="md_red_50">#FFEBEE</color>

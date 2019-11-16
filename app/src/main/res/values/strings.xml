@@ -75,8 +75,7 @@
     <string name="image_view_description">Código QR</string>
 
 
-
-
+    <!-- navigation drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -87,10 +86,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_about">Acerca de</string>
     <string name="options">Opciones</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_tools">Tools</string>
     <string name="menu_close_session">Cerrar sesión</string>
-    <string name="menu_send">Send</string>
 
 
     <string name="atencion">Attention</string>
