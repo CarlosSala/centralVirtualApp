@@ -78,6 +78,8 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         tv_user_email = header.findViewById(R.id.tv_user_email);
 
         GetUserData();
+
+        Log.i("punto", "onCreate ocurrido");
     }
 
 
@@ -157,5 +159,34 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
 
         return false;
     }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Log.i("punto", "onStart ocurrido");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("punto", "onResume ocurrido");
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i("punto", "onStop ocurrido");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i("punto", "onDestroy ocurrido");
+    }
+
+
 }
 

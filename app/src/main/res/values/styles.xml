@@ -65,6 +65,9 @@
         <item name="android:textSize">15sp</item>
     </style>
 
+    <style name="LightCardView" parent="CardView.Light">
+        <item name="cardElevation">5dp</item>
+    </style>
 
 
     <!-- Night / dark  Mode theme. -->

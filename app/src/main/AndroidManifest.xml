@@ -52,11 +52,13 @@
             android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".menu.addMac.addNumbers.addNumbers1Activity"
+            android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize"
             android:parentActivityName=".menu.addMac.addMacActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".menu.addMac.addNumbers.addNumbers2Activity"
+            android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize"
             android:parentActivityName=".menu.addMac.addNumbers.addNumbers1Activity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
