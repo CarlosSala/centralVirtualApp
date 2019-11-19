@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,6 +34,10 @@ public class sendDataActivity extends AppCompatActivity {
 
     private String data;
 
+    private Button btn_send;
+    private TextView tv_msg, tv_loading;
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,21 +45,61 @@ public class sendDataActivity extends AppCompatActivity {
 
         data = getIntent().getExtras().getString("data", "QR");
 
-        Button btn_send = findViewById(R.id.btn_send);
+        btn_send = findViewById(R.id.btn_send);
+        tv_msg = findViewById(R.id.tv_msg);
+        tv_loading = findViewById(R.id.tv_loading);
+        progressBar = findViewById(R.id.progressBar_SendData);
+
+        btn_send.setVisibility(View.VISIBLE);
+        tv_msg.setVisibility(View.VISIBLE);
+        tv_loading.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
+
+        btn_send.setEnabled(true);
+        tv_msg.setEnabled(true);
+        tv_loading.setEnabled(false);
+        progressBar.setEnabled(false);
+
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(sendDataActivity.this, shareQrActivity.class);
-                intent.putExtra("data", data);
-
+                OccultControls(false);
                 SendData();
-
-                Toast.makeText(sendDataActivity.this, "Se envió la información", Toast.LENGTH_LONG).show();
-                startActivity(intent);
             }
         });
     }
+
+
+    private void OccultControls(boolean status) {
+
+        if (status) {
+
+            btn_send.setEnabled(true);
+            tv_msg.setEnabled(true);
+            tv_loading.setEnabled(false);
+            progressBar.setEnabled(false);
+
+            btn_send.setVisibility(View.VISIBLE);
+            tv_msg.setVisibility(View.VISIBLE);
+            tv_loading.setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(View.INVISIBLE);
+
+
+        } else {
+
+            btn_send.setEnabled(false);
+            tv_msg.setEnabled(false);
+            tv_loading.setEnabled(true);
+            progressBar.setEnabled(true);
+
+            btn_send.setVisibility(View.INVISIBLE);
+            tv_msg.setVisibility(View.INVISIBLE);
+            tv_loading.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
+        }
+    }
+
 
     //method back of the toolbar
     @Override
@@ -127,12 +173,22 @@ public class sendDataActivity extends AppCompatActivity {
                         .set(device, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+
+                        Intent intent = new Intent(sendDataActivity.this, shareQrActivity.class);
+                        intent.putExtra("data", data);
+
+                        Toast.makeText(sendDataActivity.this, "Se envió la información", Toast.LENGTH_LONG).show();
+
+                        startActivity(intent);
+
                         Log.d(TAG, "Additional data saved");
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+
                         Log.w(TAG, "Error additional data was not saved", e);
+                        OccultControls(true);
                     }
                 });
             }

@@ -68,6 +68,7 @@
     <!-- send data activity -->
     <string name="confirm_send_data">Todo listo para enviar la información</string>
     <string name="btn_confirm_send_data">Confirme el envío</string>
+    <string name="wait_please">Espere por favor...</string>
 
     <!-- share qr activity -->
     <string name="btn_share">Compartir</string>

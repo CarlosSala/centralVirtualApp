@@ -14,10 +14,10 @@
         tools:context=".menu.addMac.addNumbers.sendDataActivity">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/Title"
+            android:id="@+id/tv_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="84dp"
+            android:layout_marginTop="60dp"
             android:text="@string/confirm_send_data"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +34,31 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/Title" />
+            app:layout_constraintTop_toBottomOf="@id/tv_msg" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+
+            android:id="@+id/tv_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wait_please"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_send" />
+
+        <ProgressBar
+            android:id="@+id/progressBar_SendData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_loading" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

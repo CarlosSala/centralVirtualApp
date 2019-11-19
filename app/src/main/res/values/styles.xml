@@ -69,6 +69,12 @@
         <item name="cardElevation">5dp</item>
     </style>
 
+    <style name="LightLoadingLayout" parent="Theme.AppCompat.Light.DialogWhenLarge">
+        <item name="android:indeterminateTint">@android:color/holo_blue_light</item>
+        <item name="windowNoTitle">true</item>
+
+    </style>
+
 
     <!-- Night / dark  Mode theme. -->
     <style name="darktheme" parent="Theme.AppCompat.Light.DarkActionBar">

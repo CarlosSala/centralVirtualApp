@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -43,22 +43,24 @@
 
         <activity
             android:name=".menu.PrincipalActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize|fontScale|keyboard|locale|screenLayout|uiMode"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".menu.addMac.addMacActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize|fontScale|keyboard|locale|screenLayout|uiMode"
             android:parentActivityName=".menu.PrincipalActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".menu.addMac.addNumbers.addNumbers1Activity"
-            android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize"
+            android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize|fontScale|keyboard|locale|screenLayout|uiMode"
             android:parentActivityName=".menu.addMac.addMacActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".menu.addMac.addNumbers.addNumbers2Activity"
-            android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize"
+            android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize|fontScale|keyboard|locale|screenLayout|uiMode"
             android:parentActivityName=".menu.addMac.addNumbers.addNumbers1Activity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
@@ -68,10 +70,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".menu.addMac.addNumbers.sendDataActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize|fontScale|keyboard|locale|screenLayout|uiMode"
             android:parentActivityName=".menu.addMac.addNumbers.resumeAddNumbersActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".menu.addMac.addNumbers.shareQrActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize|fontScale|keyboard|locale|screenLayout|uiMode"
             android:screenOrientation="portrait" />
         <activity
             android:name=".CustomScannerActivity"
