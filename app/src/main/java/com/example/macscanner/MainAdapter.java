@@ -15,7 +15,6 @@ import java.util.List;
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     private LayoutInflater mInflater;
-
     private List<String> mData;
 
     // constructor

@@ -1,12 +1,5 @@
 package com.example.macscanner.menu.addMac.addNumbers;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,25 +11,32 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.macscanner.CustomScannerActivity;
+import com.example.macscanner.InterfaceApi;
 import com.example.macscanner.ItemTouchListenner;
 import com.example.macscanner.MainAdapter;
 import com.example.macscanner.R;
 import com.example.macscanner.SimpleItemTouchHelperCallback;
 import com.example.macscanner.menu.PrincipalActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.example.macscanner.responseServiceNumber;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class addNumbers1Activity extends AppCompatActivity {
 
@@ -82,7 +82,8 @@ public class addNumbers1Activity extends AppCompatActivity {
             }
         });
 
-        GetNumbersFirebase();
+
+        GetPosts();
 
         SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
         tv_mac.setText(preferences.getString("mac_scanned1", ""));
@@ -90,58 +91,68 @@ public class addNumbers1Activity extends AppCompatActivity {
         Enable_btn();
     }
 
-    private void GetNumbersFirebase() {
+    private void GetPosts() {
 
-        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        final String url = "https://api.myjson.com/bins/";
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Retrofit retrofit = new Retrofit.Builder()
 
-        if (user != null) {
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-            DocumentReference docRef = firebaseFirestore.collection("numbers").document("group1");
-            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
+        InterfaceApi interfaceApi = retrofit.create(InterfaceApi.class);
+        Call<List<responseServiceNumber>> call = interfaceApi.getNumbers();
 
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
+        call.enqueue(new Callback<List<responseServiceNumber>>() {
+            @Override
+            public void onResponse(Call<List<responseServiceNumber>> call, Response<List<responseServiceNumber>> response) {
 
-                            String num1 = document.getString("num1");
-                            String num2 = document.getString("num2");
-                            String num3 = document.getString("num3");
-                            String num4 = document.getString("num4");
-                            String num5 = document.getString("num5");
-                            String num6 = document.getString("num6");
-                            String num7 = document.getString("num7");
-                            String num8 = document.getString("num8");
+                if (response.isSuccessful()) {
 
-                            List<String> data = new ArrayList<>();
+                    int code = response.code();
 
-                            data.add(num1);
-                            data.add(num2);
-                            data.add(num3);
-                            data.add(num4);
-                            data.add(num5);
-                            data.add(num6);
-                            data.add(num7);
-                            data.add(num8);
+                    List<responseServiceNumber> postsList = response.body();
 
-                            initReyclerView(data);
+                    for (responseServiceNumber res : postsList) {
 
-                            Enable_btn();
+                        String num1 = res.getNum1();
+                        String num2 = res.getNum2();
+                        String num3 = res.getNum3();
+                        String num4 = res.getNum4();
+                        String num5 = res.getNum5();
+                        String num6 = res.getNum6();
+                        String num7 = res.getNum7();
+                        String num8 = res.getNum8();
 
-                            //Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                        } else {
-                            Log.d(TAG, "No such document");
-                        }
-                    } else {
-                        Log.d(TAG, "get failed with ", task.getException());
+
+                        List<String> data = new ArrayList<>();
+
+                        data.add(num1);
+                        data.add(num2);
+                        data.add(num3);
+                        data.add(num4);
+                        data.add(num5);
+                        data.add(num6);
+                        data.add(num7);
+                        data.add(num8);
+
+                        initReyclerView(data);
+
+                        Enable_btn();
                     }
                 }
-            });
-        }
+            }
+
+            @Override
+            public void onFailure(Call<List<responseServiceNumber>> call, Throwable t) {
+
+                Log.e(TAG, t.getMessage());
+
+            }
+        });
     }
+
 
     private void initReyclerView(List<String> data) {
 
@@ -187,7 +198,7 @@ public class addNumbers1Activity extends AppCompatActivity {
 
         for (int i = 0; i < lista.size(); i++) {
 
-            obj_editor.putString("et_number_" + i, lista.get(i));
+            obj_editor.putString("et_number_" + i, String.valueOf(lista.get(i)));
         }
         obj_editor.apply();
     }
