@@ -93,7 +93,7 @@ public class addNumbers1Activity extends AppCompatActivity {
 
     private void GetPosts() {
 
-        final String url = "https://api.myjson.com/bins/";
+        final String url = "https://my-json-server.typicode.com/CarlosSala/response-json/";
 
         Retrofit retrofit = new Retrofit.Builder()
 

@@ -9,7 +9,7 @@ import retrofit2.http.GET;
 public interface InterfaceApi {
 
     // endpoints "n6s16"
-    @GET("n6s16")
+    @GET("posts")
     Call<List<responseServiceNumber>> getNumbers();
 
 }
