@@ -89,7 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/darkgrey">
+            app:passwordToggleTint="@color/dark_grey">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_password"
@@ -112,8 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/darkgrey">
-
+            app:passwordToggleTint="@color/dark_grey">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_passwordAgain"

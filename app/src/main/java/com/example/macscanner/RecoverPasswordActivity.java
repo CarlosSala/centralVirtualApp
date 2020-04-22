@@ -58,40 +58,36 @@ public class RecoverPasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                showProgressBar(true);
-
-                if (validform()) {
+                if (ValidForm()) {
 
                     RecoveryPassword();
-
-                } else {
-                    showProgressBar(false);
                 }
             }
         });
     }
 
-    private boolean validform() {
+    private boolean ValidForm() {
 
-        boolean resp = true;
-        String mailError = null;
+        boolean status = true;
+        String emailError = null;
 
         if (TextUtils.isEmpty(et_recover.getText())) {
-            mailError = "Este campo no puede estar vacío";
-            resp = false;
+            emailError = "Este campo no puede estar vacío";
+            status = false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(et_recover.getText()).matches()) {
+            emailError = "El correo no es válido";
+            status = false;
         }
-        if ((!Patterns.EMAIL_ADDRESS.matcher(et_recover.getText()).matches()) && (!TextUtils.isEmpty(et_recover.getText()))) {
-            mailError = "El correo no es válido";
-            resp = false;
-        }
+        toggleTextInputLayoutError(til_recover, emailError);
 
-        toggleTextInputLayoutError(til_recover, mailError);
         clearFocus();
 
-        return resp;
+        return status;
     }
 
-    private void RecoveryPassword (){
+    private void RecoveryPassword() {
+
+        showProgressBar(true);
 
         firebaseAuth.sendPasswordResetEmail(et_recover.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -123,22 +119,19 @@ public class RecoverPasswordActivity extends AppCompatActivity {
         });
     }
 
-    private static void toggleTextInputLayoutError(@NonNull TextInputLayout textInputLayout,
-                                                   String msg) {
-        textInputLayout.setError(msg);
+    private static void toggleTextInputLayoutError(@NonNull TextInputLayout textInputLayout, String msg) {
+
         if (msg == null) {
             textInputLayout.setErrorEnabled(false);
         } else {
+            textInputLayout.setError(msg);
             textInputLayout.setErrorEnabled(true);
         }
     }
 
     private void clearFocus() {
         View view = this.getCurrentFocus();
-        if (view != null && view instanceof EditText) {
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context
-                    .INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        if (view instanceof EditText) {
             view.clearFocus();
         }
     }

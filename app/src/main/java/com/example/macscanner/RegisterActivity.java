@@ -78,6 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (ValidForm()) {
+
                     UserRegister();
                 }
             }
@@ -86,66 +87,76 @@ public class RegisterActivity extends AppCompatActivity {
 
     private boolean ValidForm() {
 
-        boolean resp = true;
+        boolean status = true;
 
         String nameError = null;
-        String lastnameError = null;
-        String mailError = null;
+        String lastNameError = null;
+        String emailError = null;
         String password1Error = null;
         String password2Error = null;
 
         if (TextUtils.isEmpty(et_name.getText())) {
             nameError = "Este campo no puede estar vacío";
-            resp = false;
+            status = false;
         }
-
         toggleTextInputLayoutError(til_name, nameError);
 
         if (TextUtils.isEmpty(et_lastName.getText())) {
-            lastnameError = "Este campo no puede estar vacío";
-            resp = false;
+            lastNameError = "Este campo no puede estar vacío";
+            status = false;
         }
-        toggleTextInputLayoutError(til_lastName, lastnameError);
+        toggleTextInputLayoutError(til_lastName, lastNameError);
 
         if (TextUtils.isEmpty(et_email.getText())) {
-            mailError = "Este campo no puede estar vacío";
-            resp = false;
+            emailError = "Este campo no puede estar vacío";
+            status = false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(et_email.getText()).matches()) {
+            emailError = "El correo no es válido";
+            status = false;
         }
-        if ((!Patterns.EMAIL_ADDRESS.matcher(et_email.getText()).matches()) && (!TextUtils.isEmpty(et_email.getText()))) {
-            mailError = "El correo no es válido";
-            resp = false;
-        }
-        toggleTextInputLayoutError(til_email, mailError);
+        toggleTextInputLayoutError(til_email, emailError);
 
         if (TextUtils.isEmpty(et_password.getText())) {
             password1Error = "Este campo no puede estar vacío";
-            resp = false;
-        }
-        if ((et_password.length() < 6) && (!TextUtils.isEmpty(et_password.getText()))) {
+            status = false;
+        } else if (et_password.length() < 6) {
             password1Error = "La contraseña debe tener 6 o mas caracteres ";
-            resp = false;
+            status = false;
         }
-
         toggleTextInputLayoutError(til_password, password1Error);
 
         if (TextUtils.isEmpty(et_passwordAgain.getText())) {
             password2Error = "Este campo no puede estar vacío";
-            resp = false;
-        }
-        if ((et_passwordAgain.length() < 6) && (!TextUtils.isEmpty(et_passwordAgain.getText()))) {
+            status = false;
+        } else if (et_passwordAgain.length() < 6) {
             password2Error = "La contraseña debe tener 6 o mas caracteres";
-            resp = false;
-        }
-        if (!et_passwordAgain.getText().toString().equals(et_password.getText().toString())) {
+            status = false;
+        } else if (!et_passwordAgain.getText().toString().equals(et_password.getText().toString())) {
             password2Error = "Las contraseñas no coinciden";
-            resp = false;
+            status = false;
         }
-
         toggleTextInputLayoutError(til_passwordAgain, password2Error);
 
         clearFocus();
 
-        return resp;
+        return status;
+    }
+
+    private static void toggleTextInputLayoutError(@NonNull TextInputLayout til, String msg) {
+
+        if (msg == null) {
+            til.setErrorEnabled(false);
+        } else {
+            til.setError(msg);
+            til.setErrorEnabled(true);
+        }
+    }
+
+    private void clearFocus() {
+        View view = this.getCurrentFocus();
+        if (view instanceof EditText) {
+            view.clearFocus();
+        }
     }
 
     private void UserRegister() {
@@ -167,8 +178,7 @@ public class RegisterActivity extends AppCompatActivity {
                         } else {
 
                             if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                                Toast.makeText(RegisterActivity.this,
-                                        "El correo electrónico se encuentra registrado en otra cuenta",
+                                Toast.makeText(RegisterActivity.this, "El correo electrónico ya esta registrado en otra cuenta",
                                         Toast.LENGTH_LONG).show();
                             } else {
                                 Toast.makeText(RegisterActivity.this, "No se pudo realizar el registro", Toast.LENGTH_LONG).show();
@@ -180,15 +190,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-    private static void toggleTextInputLayoutError(@NonNull TextInputLayout til, String msg) {
-        til.setError(msg);
-        if (msg == null) {
-            til.setErrorEnabled(false);
-        } else {
-            til.setErrorEnabled(true);
-        }
-    }
-
     // register additional user data
     private void registerUserData() {
 
@@ -196,8 +197,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         Map<String, Object> user = new HashMap<>();
 
-        user.put("nombre", et_name.getText().toString());
-        user.put("apellido", et_lastName.getText().toString());
+        user.put("name", et_name.getText().toString());
+        user.put("surname", et_lastName.getText().toString());
         user.put("email", et_email.getText().toString());
         user.put("timestampUser", FieldValue.serverTimestamp());
 
@@ -206,13 +207,13 @@ public class RegisterActivity extends AppCompatActivity {
 
                 .set(user, SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "Additional data saved");
-                // call to the method when this have completed  his task
-                registerDevice();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "Additional data saved");
+                        // call to the method when this have completed  his task
+                        registerDevice();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.w(TAG, "Error additional data was not saved", e);
@@ -252,7 +253,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-    private void SendVerificationEmail(){
+    private void SendVerificationEmail() {
+
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
         user.sendEmailVerification()
@@ -265,7 +267,8 @@ public class RegisterActivity extends AppCompatActivity {
 
                             showProgressBar(false);
 
-                            Snackbar.make(linearLayout, "Se ha enviado un mensaje a su correo electrónico para verificar su cuenta", Snackbar.LENGTH_INDEFINITE)
+                            Snackbar.make(linearLayout, "Se ha enviado un mensaje a su correo electrónico para verificar su cuenta",
+                                    Snackbar.LENGTH_INDEFINITE)
                                     .setAction("Volver", new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
@@ -282,14 +285,13 @@ public class RegisterActivity extends AppCompatActivity {
                 });
     }
 
-    private void clearFocus() {
-        View view = this.getCurrentFocus();
-        if (view != null && view instanceof EditText) {
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context
-                    .INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-            view.clearFocus();
-        }
+    private void Clean_form() {
+
+        et_email.setText("");
+        et_lastName.setText("");
+        et_name.setText("");
+        et_password.setText("");
+        et_passwordAgain.setText("");
     }
 
     private void showProgressBar(boolean status) {
@@ -311,14 +313,7 @@ public class RegisterActivity extends AppCompatActivity {
         return false;
     }
 
-    private void Clean_form() {
 
-        et_email.setText("");
-        et_lastName.setText("");
-        et_name.setText("");
-        et_password.setText("");
-        et_passwordAgain.setText("");
-    }
 
  /*try {
                                 Thread.currentThread().sleep(10000);
