@@ -47,17 +47,26 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // drawerLayout is the principal layout that contains everything
         drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        // sidebar that appears and hides
+        NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Button btn_add_mac = findViewById(R.id.btn_add_mac);
-        btn_add_mac.setOnClickListener(new View.OnClickListener() {
+        // get access to elements of sidebar
+        View header = navigationView.getHeaderView(0);
+        tv_user_name = header.findViewById(R.id.tv_user_name);
+        tv_user_email = header.findViewById(R.id.tv_user_email);
+
+        GetUserData();
+
+        Button btn_start = findViewById(R.id.btn_start);
+        btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(PrincipalActivity.this, addMacActivity.class);
@@ -73,20 +82,14 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
             }
         });
 
-        View header = navigationView.getHeaderView(0);
-        tv_user_name = header.findViewById(R.id.tv_user_name);
-        tv_user_email = header.findViewById(R.id.tv_user_email);
-
-        GetUserData();
-
         Log.i("punto", "onCreate ocurrido");
     }
 
 
     private void GetUserData() {
 
+        FirebaseUser user = firebaseAuth.getCurrentUser();
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user != null) {
 
@@ -103,9 +106,10 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
                         if (task.isSuccessful()) {
 
                             DocumentSnapshot document = task.getResult();
+
                             if (document.exists()) {
 
-                                String name = document.getString("nombre");
+                                String name = document.getString("name");
                                 String email = document.getString("email");
 
                                 tv_user_name.setText(name);
@@ -144,14 +148,13 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         }
     }
 
-
+    // Allow select an element of activity_menu_drawer
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         int id = menuItem.getItemId();
 
         if (id == R.id.nav_about) {
-
 
         } else if (id == R.id.nav_close_session) {
             Logout();
@@ -160,7 +163,7 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         return false;
     }
 
-
+    // Lifecycle activity
     @Override
     protected void onStart() {
         super.onStart();
@@ -174,7 +177,6 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         Log.i("punto", "onResume ocurrido");
     }
 
-
     @Override
     protected void onStop() {
         super.onStop();
@@ -186,7 +188,6 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         super.onDestroy();
         Log.i("punto", "onDestroy ocurrido");
     }
-
 
 }
 

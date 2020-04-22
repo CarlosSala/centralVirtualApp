@@ -170,26 +170,26 @@ public class LoginActivity extends AppCompatActivity {
 
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                            // if (user != null) {
+                            if (user != null) {
 
-                            String email = user.getEmail();
+                                String email = user.getEmail();
 
-                            // Check if user's email is verified
-                            if (email != null && user.isEmailVerified()) {
+                                // Check if user's email is verified
+                                if (email != null && user.isEmailVerified()) {
 
-                                showProgressBar(false);
+                                    showProgressBar(false);
 
-                                //Log.i(TAG, "Mi log de prueba");
-                                Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
-                                startActivity(intent);
-                                finish();
+                                    //Log.i(TAG, "Mi log de prueba");
+                                    Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
+                                    startActivity(intent);
+                                    finish();
 
-                            } else {
+                                } else {
 
-                                Toast.makeText(LoginActivity.this, "Debe verificar su correo", Toast.LENGTH_LONG).show();
-                                showProgressBar(false);
+                                    Toast.makeText(LoginActivity.this, "Debe verificar su correo", Toast.LENGTH_LONG).show();
+                                    showProgressBar(false);
+                                }
                             }
-                            // }
 
                         } else {
                             Toast.makeText(LoginActivity.this, "No se pudo ingresar", Toast.LENGTH_LONG).show();

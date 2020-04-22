@@ -40,16 +40,7 @@
     <string name="title_add_numbers1">Dirección MAC Base Uno</string>
     <string name="address_mac">Dirección MAC</string>
     <string name="btn_scanner_mac">SCAN MAC</string>
-    <string name="set_number1">Ingrese N°1</string>
-    <string name="set_number2">Ingrese N°2</string>
-    <string name="set_number3">Ingrese N°3</string>
-    <string name="set_number4">Ingrese N°4</string>
-    <string name="set_number5">Ingrese N°5</string>
-    <string name="set_number6">Ingrese N°6</string>
-    <string name="set_number7">Ingrese N°7</string>
-    <string name="set_number8">Ingrese N°8</string>
     <string name="base1">Base1</string>
-    <string name="base2">Base2</string>
 
     <!-- add numbers2 activity -->
     <string name="title_add_numbers2">Dirección MAC Base Dos</string>
@@ -79,19 +70,12 @@
     <!-- navigation drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
     <string name="menu_about">Acerca de</string>
     <string name="options">Opciones</string>
     <string name="menu_close_session">Cerrar sesión</string>
 
 
-    <string name="atencion">Attention</string>
-    <string name="deseacerrarsesion">Do you want to close the session?</string>
     <string name="user_name">Nombre de usuario</string>
     <string name="user_email">Correo electrónico de usuario</string>
 </resources>
