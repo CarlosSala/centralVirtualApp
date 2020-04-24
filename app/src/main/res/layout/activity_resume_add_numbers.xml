@@ -15,9 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
         <TextView
-            android:id="@+id/tv_resumen"
+            android:id="@+id/tv_resume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
@@ -29,14 +28,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_label_numSolicitud"
+            android:id="@+id/tv_label_applicationNumber"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/number_request"
             app:layout_constraintBottom_toTopOf="@+id/tv_label_client_rut"
             app:layout_constraintStart_toStartOf="@+id/tv_label_client_rut"
-            app:layout_constraintTop_toBottomOf="@+id/tv_resumen" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_resume" />
 
         <TextView
             android:id="@+id/tv_numberEight"
@@ -156,18 +155,18 @@
             android:text="@string/client_rut"
             app:layout_constraintBottom_toTopOf="@+id/tv_label_community_id"
             app:layout_constraintStart_toStartOf="@+id/tv_label_community_id"
-            app:layout_constraintTop_toBottomOf="@+id/tv_label_numSolicitud" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_label_applicationNumber" />
 
         <TextView
-            android:id="@+id/tv_numSolicitud"
+            android:id="@+id/tv_applicationNumber"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/empty"
             app:layout_constraintBottom_toTopOf="@+id/tv_client_rut"
-            app:layout_constraintStart_toEndOf="@+id/tv_label_numSolicitud"
+            app:layout_constraintStart_toEndOf="@+id/tv_label_applicationNumber"
             app:layout_constraintStart_toStartOf="@+id/tv_client_rut"
-            app:layout_constraintTop_toBottomOf="@+id/tv_resumen" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_resume" />
 
         <Button
             android:id="@+id/btn_next"
@@ -190,7 +189,7 @@
             app:layout_constraintBottom_toTopOf="@+id/tv_community_id"
             app:layout_constraintStart_toEndOf="@+id/tv_label_client_rut"
             app:layout_constraintStart_toStartOf="@+id/tv_community_id"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numSolicitud" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_applicationNumber" />
 
         <TextView
             android:id="@+id/tv_numberTen"

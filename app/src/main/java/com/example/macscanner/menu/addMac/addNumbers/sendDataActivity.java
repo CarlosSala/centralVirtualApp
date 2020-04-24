@@ -43,7 +43,7 @@ public class sendDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_data);
 
-        data = getIntent().getExtras().getString("data", "QR");
+        data = getIntent().getExtras().getString("data", "no data");
 
         btn_send = findViewById(R.id.btn_send);
         tv_msg = findViewById(R.id.tv_msg);
@@ -101,6 +101,55 @@ public class sendDataActivity extends AppCompatActivity {
     }
 
 
+    private void SendData() {
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        if (user != null) {
+
+            String email = user.getEmail();
+
+            if (email != null) {
+
+                //FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+                Map<String, Object> device = new HashMap<>();
+
+                device.put("stringData", data);
+
+                SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
+                String num_solicitude = String.valueOf(preferences.getInt("applicationNumber", 0));
+
+                db.collection("users").document(email).collection("broadsoft")
+                        .document(num_solicitude).set(device, SetOptions.merge())
+
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                        // the accumulated data is sent for generate the qr code
+                        Intent intent = new Intent(sendDataActivity.this, shareQrActivity.class);
+                        intent.putExtra("data", data);
+
+                        Toast.makeText(sendDataActivity.this, "Se envió la información", Toast.LENGTH_LONG).show();
+
+                        startActivity(intent);
+
+                        Log.d(TAG, "Additional data saved");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                        Log.w(TAG, "Error additional data was not saved", e);
+                        OccultControls(true);
+                    }
+                });
+            }
+        }
+    }
+
     //method back of the toolbar
     @Override
     public boolean onSupportNavigateUp() {
@@ -110,7 +159,6 @@ public class sendDataActivity extends AppCompatActivity {
 
         return false;
     }
-
 
     @Override
     public void onBackPressed() {
@@ -144,54 +192,5 @@ public class sendDataActivity extends AppCompatActivity {
                     }
                 })
                 .create().show();
-    }
-
-    private void SendData() {
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (user != null) {
-
-            String email = user.getEmail();
-
-            if (email != null) {
-
-                //FirebaseAuth.getInstance().getCurrentUser().getEmail();
-
-                Map<String, Object> device = new HashMap<>();
-
-                device.put("stringData", data);
-
-                SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
-                String num_solicitude = String.valueOf(preferences.getInt("NumSolicitud", 0));
-
-                db.collection("users").document(email).collection("broadsoft")
-                        .document(num_solicitude)
-
-                        .set(device, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-
-                        Intent intent = new Intent(sendDataActivity.this, shareQrActivity.class);
-                        intent.putExtra("data", data);
-
-                        Toast.makeText(sendDataActivity.this, "Se envió la información", Toast.LENGTH_LONG).show();
-
-                        startActivity(intent);
-
-                        Log.d(TAG, "Additional data saved");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                        Log.w(TAG, "Error additional data was not saved", e);
-                        OccultControls(true);
-                    }
-                });
-            }
-        }
     }
 }

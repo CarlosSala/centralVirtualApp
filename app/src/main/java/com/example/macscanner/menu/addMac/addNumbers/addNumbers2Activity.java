@@ -40,7 +40,7 @@ import java.util.regex.Pattern;
 
 public class addNumbers2Activity extends AppCompatActivity {
 
-    private final static String TAG = "addNumbers1Activity";
+    private final static String TAG = "addNumbers2Activity";
 
     private Button btn_next;
     private TextView tv_mac;
@@ -60,6 +60,9 @@ public class addNumbers2Activity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
         tv_mac = findViewById(R.id.tv_add_mac2);
+
+        SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
+        tv_mac.setText(preferences.getString("mac_scanned2", ""));
 
         Button btn_scan_mac = findViewById(R.id.btn_scan_mac2);
         btn_scan_mac.setOnClickListener(new View.OnClickListener() {
@@ -84,19 +87,12 @@ public class addNumbers2Activity extends AppCompatActivity {
 
         GetNumbersFirebase();
 
-        SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
-        tv_mac.setText(preferences.getString("mac_scanned2", ""));
-
         Enable_btn();
     }
 
     private void GetNumbersFirebase() {
 
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (user != null) {
 
             DocumentReference docRef = firebaseFirestore.collection("numbers").document("group2");
             docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -127,7 +123,7 @@ public class addNumbers2Activity extends AppCompatActivity {
                             data.add(num7);
                             data.add(num8);
 
-                            initReyclerView(data);
+                            InitRecyclerView(data);
 
                             Enable_btn();
 
@@ -141,10 +137,9 @@ public class addNumbers2Activity extends AppCompatActivity {
                 }
             });
         }
-    }
 
 
-    private void initReyclerView(List<String> data) {
+    private void InitRecyclerView(List<String> data) {
 
         mAdapter.addData(data);
 
@@ -181,15 +176,14 @@ public class addNumbers2Activity extends AppCompatActivity {
 
     public void Save_data() {
 
-        List<String> lista = mAdapter.getmData();
+        List<String> list = mAdapter.getmData();
 
-        SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
-        SharedPreferences.Editor obj_editor = preferencias.edit();
+        SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
+        SharedPreferences.Editor obj_editor = preferences.edit();
 
-        for (int i = 0; i < lista.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
 
-            obj_editor.putString("et_number_" + (i + 8), lista.get(i));
-
+            obj_editor.putString("et_number_" + (i + 8), list.get(i));
         }
         obj_editor.apply();
     }
@@ -211,8 +205,8 @@ public class addNumbers2Activity extends AppCompatActivity {
 
                 tv_mac.setText(result.getContents());
 
-                SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
-                SharedPreferences.Editor obj_editor = preferencias.edit();
+                SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
+                SharedPreferences.Editor obj_editor = preferences.edit();
                 obj_editor.putString("mac_scanned2", result.getContents());
                 obj_editor.apply();
 
@@ -240,7 +234,7 @@ public class addNumbers2Activity extends AppCompatActivity {
         integrator.setBarcodeImageEnabled(true);
         integrator.setCaptureActivity(CustomScannerActivity.class);
         integrator.setTimeout(20000);
-        integrator.addExtra("title", "MAC SCANNER");
+        integrator.addExtra("title", "ESCANEE LA MAC 2");
         integrator.initiateScan();
     }
 
@@ -273,7 +267,7 @@ public class addNumbers2Activity extends AppCompatActivity {
                 .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        SharedPreferences settings = getSharedPreferences("datos", Context.MODE_PRIVATE);
+                        SharedPreferences settings = getSharedPreferences("data", Context.MODE_PRIVATE);
                         settings.edit().clear().apply();
 
                         Intent intent = new Intent(addNumbers2Activity.this, PrincipalActivity.class);

@@ -247,7 +247,7 @@ public class addNumbers1Activity extends AppCompatActivity {
         integrator.setBarcodeImageEnabled(true);
         integrator.setCaptureActivity(CustomScannerActivity.class);
         integrator.setTimeout(20000);
-        integrator.addExtra("title", "MAC SCANNER");
+        integrator.addExtra("title", "ESCANEE LA MAC 1");
         integrator.initiateScan();
     }
 

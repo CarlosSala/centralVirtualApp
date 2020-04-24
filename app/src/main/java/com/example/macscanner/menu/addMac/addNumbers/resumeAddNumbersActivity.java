@@ -27,7 +27,7 @@ public class resumeAddNumbersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resume_add_numbers);
 
-        TextView tv_num_solicitude = findViewById(R.id.tv_numSolicitud);
+        TextView tv_num_solicitude = findViewById(R.id.tv_applicationNumber);
         TextView tv_mac1 = findViewById(R.id.tv_indicator_mac1);
         TextView tv_mac2 = findViewById(R.id.tv_indicator_mac2);
         TextView tv1 = findViewById(R.id.tv_numberOne);
@@ -50,12 +50,12 @@ public class resumeAddNumbersActivity extends AppCompatActivity {
         TextView tv_client_rut = findViewById(R.id.tv_client_rut);
 
         //order fields
-        //numerosolicitud,rutcliente,idcomunidad,macbase1,numeroasociados,macbase2,numeroasoiados,
+        //applicationNumber,client_rut,community_id,mac_scanned1,associated_numbers,mac_scanned2,associated_numbers
 
-        SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
-        list.add(0, String.valueOf(preferences.getInt("NumSolicitud", 0)));
-        list.add(1, preferences.getString("et_client_rut", ""));
-        list.add(2, preferences.getString("et_community_id", ""));
+        SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
+        list.add(0, String.valueOf(preferences.getInt("applicationNumber", 0)));
+        list.add(1, preferences.getString("client_rut", ""));
+        list.add(2, preferences.getString("community_id", ""));
         list.add(3, preferences.getString("mac_scanned1", ""));
         list.add(4, preferences.getString("et_number_0", ""));
         list.add(5, preferences.getString("et_number_1", ""));
@@ -147,7 +147,7 @@ public class resumeAddNumbersActivity extends AppCompatActivity {
                 .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        SharedPreferences settings = getSharedPreferences("datos", Context.MODE_PRIVATE);
+                        SharedPreferences settings = getSharedPreferences("data", Context.MODE_PRIVATE);
                         settings.edit().clear().apply();
 
                         Intent intent = new Intent(resumeAddNumbersActivity.this, PrincipalActivity.class);
