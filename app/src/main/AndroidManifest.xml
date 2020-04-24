@@ -47,7 +47,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".menu.addMac.addMacActivity"
+            android:name=".menu.addMac.StartActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize|fontScale|keyboard|locale|screenLayout|uiMode"
             android:parentActivityName=".menu.PrincipalActivity"
             android:screenOrientation="portrait"
@@ -55,7 +55,7 @@
         <activity
             android:name=".menu.addMac.addNumbers.addNumbers1Activity"
             android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize|fontScale|keyboard|locale|screenLayout|uiMode"
-            android:parentActivityName=".menu.addMac.addMacActivity"
+            android:parentActivityName=".menu.addMac.StartActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity

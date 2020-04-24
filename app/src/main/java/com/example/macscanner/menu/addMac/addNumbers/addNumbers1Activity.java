@@ -61,6 +61,9 @@ public class addNumbers1Activity extends AppCompatActivity {
 
         tv_mac = findViewById(R.id.tv_add_mac1);
 
+        SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
+        tv_mac.setText(preferences.getString("mac_scanned1", ""));
+
         Button btn_scan_mac = findViewById(R.id.btn_scan_mac1);
         btn_scan_mac.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,17 +79,13 @@ public class addNumbers1Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Save_data();
+                SaveData();
                 Intent intent = new Intent(view.getContext(), addNumbers2Activity.class);
                 startActivity(intent);
             }
         });
 
-
         GetPosts();
-
-        SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
-        tv_mac.setText(preferences.getString("mac_scanned1", ""));
 
         Enable_btn();
     }
@@ -125,7 +124,6 @@ public class addNumbers1Activity extends AppCompatActivity {
                         String num7 = res.getNum7();
                         String num8 = res.getNum8();
 
-
                         List<String> data = new ArrayList<>();
 
                         data.add(num1);
@@ -137,7 +135,7 @@ public class addNumbers1Activity extends AppCompatActivity {
                         data.add(num7);
                         data.add(num8);
 
-                        initReyclerView(data);
+                        InitRecyclerView(data);
 
                         Enable_btn();
                     }
@@ -154,7 +152,7 @@ public class addNumbers1Activity extends AppCompatActivity {
     }
 
 
-    private void initReyclerView(List<String> data) {
+    private void InitRecyclerView(List<String> data) {
 
         mAdapter.addData(data);
 
@@ -189,16 +187,16 @@ public class addNumbers1Activity extends AppCompatActivity {
     }
 
 
-    public void Save_data() {
+    public void SaveData() {
 
-        List<String> lista = mAdapter.getmData();
+        List<String> list = mAdapter.getmData();
 
-        SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
-        SharedPreferences.Editor obj_editor = preferencias.edit();
+        SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
+        SharedPreferences.Editor obj_editor = preferences.edit();
 
-        for (int i = 0; i < lista.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
 
-            obj_editor.putString("et_number_" + i, String.valueOf(lista.get(i)));
+            obj_editor.putString("et_number_" + i, String.valueOf(list.get(i)));
         }
         obj_editor.apply();
     }
@@ -220,8 +218,8 @@ public class addNumbers1Activity extends AppCompatActivity {
 
                 tv_mac.setText(result.getContents());
 
-                SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
-                SharedPreferences.Editor obj_editor = preferencias.edit();
+                SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
+                SharedPreferences.Editor obj_editor = preferences.edit();
                 obj_editor.putString("mac_scanned1", result.getContents());
                 obj_editor.apply();
 
@@ -244,7 +242,7 @@ public class addNumbers1Activity extends AppCompatActivity {
 
         integrator.setBeepEnabled(true);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.CODE_128);
-        integrator.setPrompt("");
+        //integrator.setPrompt("");
         integrator.setCameraId(0);  // Use a specific camera of the device
         integrator.setBarcodeImageEnabled(true);
         integrator.setCaptureActivity(CustomScannerActivity.class);
@@ -282,7 +280,7 @@ public class addNumbers1Activity extends AppCompatActivity {
                 .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        SharedPreferences settings = getSharedPreferences("datos", Context.MODE_PRIVATE);
+                        SharedPreferences settings = getSharedPreferences("data", Context.MODE_PRIVATE);
                         settings.edit().clear().apply();
 
                         Intent intent = new Intent(addNumbers1Activity.this, PrincipalActivity.class);

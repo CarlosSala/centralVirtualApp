@@ -17,7 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.macscanner.LoginActivity;
 import com.example.macscanner.R;
-import com.example.macscanner.menu.addMac.addMacActivity;
+import com.example.macscanner.menu.addMac.StartActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -69,7 +69,7 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(PrincipalActivity.this, addMacActivity.class);
+                Intent intent = new Intent(PrincipalActivity.this, StartActivity.class);
                 startActivity(intent);
             }
         });

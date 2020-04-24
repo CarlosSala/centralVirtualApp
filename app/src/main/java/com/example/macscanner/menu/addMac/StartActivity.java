@@ -22,7 +22,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.regex.Pattern;
 
-public class addMacActivity extends AppCompatActivity {
+public class StartActivity extends AppCompatActivity {
 
     private boolean client_rut;
     private boolean community_id;
@@ -34,16 +34,16 @@ public class addMacActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_mac);
+        setContentView(R.layout.activity_start);
 
         til_client_rut = findViewById(R.id.til_client_rut);
         et_client_rut = findViewById(R.id.et_client_rut);
         til_community_id = findViewById(R.id.til_community_id);
         et_community_id = findViewById(R.id.et_community_id);
 
-        SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
-        et_client_rut.setText(preferences.getString("et_client_rut", ""));
-        et_community_id.setText(preferences.getString("et_community_id", ""));
+        SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
+        et_client_rut.setText(preferences.getString("client_rut", ""));
+        et_community_id.setText(preferences.getString("community_id", ""));
 
 
         et_client_rut.addTextChangedListener(new TextWatcher() {
@@ -55,7 +55,7 @@ public class addMacActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 til_client_rut.setError(null);
-                Client_rut_validate();
+                ClientRutValidate();
                 Enable_btn();
             }
 
@@ -74,7 +74,7 @@ public class addMacActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 til_community_id.setError(null);
-                Community_id_validate();
+                CommunityIdValidate();
                 Enable_btn();
             }
 
@@ -91,17 +91,17 @@ public class addMacActivity extends AppCompatActivity {
             public void onClick(View view) {
                 ApplicationNumber();
                 Save_data();
-                Intent intent = new Intent(addMacActivity.this, addNumbers1Activity.class);
+                Intent intent = new Intent(StartActivity.this, addNumbers1Activity.class);
                 startActivity(intent);
             }
         });
 
         if (!et_community_id.getText().toString().isEmpty() && !et_client_rut.getText().toString().isEmpty()) {
-            Client_rut_validate();
-            Community_id_validate();
-            Enable_btn();
-        }
 
+            if (ClientRutValidate() && CommunityIdValidate()) {
+                Enable_btn();
+            }
+        }
     }
 
     private void Enable_btn() {
@@ -113,37 +113,48 @@ public class addMacActivity extends AppCompatActivity {
         }
     }
 
-    private void Client_rut_validate() {
+    private boolean ClientRutValidate() {
+
+        boolean status = false;
 
         String rut_client = til_client_rut.getEditText().getText().toString();
-        client_rut = RutValidator.validarRut(rut_client);
+        client_rut = RutValidator.RutValidate(rut_client);
 
         if (!client_rut) {
             til_client_rut.setError("Rut inválido");
         } else {
             til_client_rut.setError(null);
+            status = true;
         }
+
+        return status;
     }
 
-    private void Community_id_validate() {
+    private boolean CommunityIdValidate() {
+
+        boolean status = false;
 
         String id = til_community_id.getEditText().getText().toString();
-
         Pattern patron = Pattern.compile("\\A[\\w]{1,19}(_cloudpbx)\\Z");
+
         if (!patron.matcher(id).matches()) {
             til_community_id.setError("'Community id' inválido");
             community_id = false;
+
         } else {
             til_community_id.setError(null);
             community_id = true;
+            status = true;
         }
+
+        return status;
     }
 
     public void Save_data() {
-        SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
-        SharedPreferences.Editor obj_editor = preferencias.edit();
-        obj_editor.putString("et_client_rut", et_client_rut.getText().toString());
-        obj_editor.putString("et_community_id", et_community_id.getText().toString());
+        SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
+        SharedPreferences.Editor obj_editor = preferences.edit();
+        obj_editor.putString("client_rut", et_client_rut.getText().toString());
+        obj_editor.putString("community_id", et_community_id.getText().toString());
         obj_editor.apply();
     }
 
@@ -151,9 +162,9 @@ public class addMacActivity extends AppCompatActivity {
 
         int applicationNumber = (int) (Math.random() * 1000000000) + 1;
 
-        SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
-        SharedPreferences.Editor obj_editor = preferencias.edit();
-        obj_editor.putInt("NumSolicitud", applicationNumber);
+        SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
+        SharedPreferences.Editor obj_editor = preferences.edit();
+        obj_editor.putInt("applicationNumber", applicationNumber);
         obj_editor.apply();
     }
 
@@ -185,10 +196,10 @@ public class addMacActivity extends AppCompatActivity {
                 .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        SharedPreferences settings = getSharedPreferences("datos", Context.MODE_PRIVATE);
+                        SharedPreferences settings = getSharedPreferences("data", Context.MODE_PRIVATE);
                         settings.edit().clear().apply();
 
-                        Intent intent = new Intent(addMacActivity.this, PrincipalActivity.class);
+                        Intent intent = new Intent(StartActivity.this, PrincipalActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                         finish();

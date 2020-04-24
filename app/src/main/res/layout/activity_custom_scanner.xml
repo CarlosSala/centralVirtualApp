@@ -21,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="50dp"
         app:zxing_scanner_layout="@layout/zxing_barcode_scanner"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="24dp" />

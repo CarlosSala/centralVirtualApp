@@ -19,12 +19,9 @@ import java.util.Random;
 
 public class CustomScannerActivity extends AppCompatActivity implements DecoratedBarcodeView.TorchListener {
 
-
     private CaptureManager capture;
     private DecoratedBarcodeView barcodeScannerView;
     private Button switchFlashlightButton;
-    private ViewfinderView viewfinderView;
-    private String CodeScanned;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +31,10 @@ public class CustomScannerActivity extends AppCompatActivity implements Decorate
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        CodeScanned = getIntent().getExtras().getString("title", "QR");
+        String codeScanned = getIntent().getExtras().getString("title", "QR");
 
         //toolbar.setTitleTextColor(Color.rgb(200,200,200));
-        setTitle(CodeScanned);
+        setTitle(codeScanned);
 
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         toolbar.setBackgroundColor(Color.rgb(45,45,45));
@@ -47,7 +44,7 @@ public class CustomScannerActivity extends AppCompatActivity implements Decorate
 
         switchFlashlightButton = findViewById(R.id.switch_flashlight);
 
-        viewfinderView = findViewById(R.id.zxing_viewfinder_view);
+        ViewfinderView viewfinderView = findViewById(R.id.zxing_viewfinder_view);
 
         Drawable img = this.getResources().getDrawable( R.drawable.ic_flash );
         img.setBounds( 0, 0, 60, 60 );
