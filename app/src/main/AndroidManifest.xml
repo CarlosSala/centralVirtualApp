@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -17,11 +17,10 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat">
-        <activity
-            android:name=".LoginActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="stateHidden">
+
+        <activity android:name=".SplashActivity"
+            android:theme="@style/SplashTheme">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,56 +29,63 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="locked"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:windowSoftInputMode="stateHidden">
+
+        </activity>
         <activity
             android:name=".RecoverPasswordActivity"
             android:parentActivityName=".LoginActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="locked"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".RegisterActivity"
             android:parentActivityName=".LoginActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="locked"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".menu.PrincipalActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize|fontScale|keyboard|locale|screenLayout|uiMode"
-            android:screenOrientation="portrait"
+            android:screenOrientation="locked"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".menu.addMac.StartActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize|fontScale|keyboard|locale|screenLayout|uiMode"
             android:parentActivityName=".menu.PrincipalActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="locked"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".menu.addMac.addNumbers.addNumbers1Activity"
             android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize|fontScale|keyboard|locale|screenLayout|uiMode"
             android:parentActivityName=".menu.addMac.StartActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="locked"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".menu.addMac.addNumbers.addNumbers2Activity"
             android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize|fontScale|keyboard|locale|screenLayout|uiMode"
             android:parentActivityName=".menu.addMac.addNumbers.addNumbers1Activity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="locked"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".menu.addMac.addNumbers.resumeAddNumbersActivity"
             android:parentActivityName=".menu.addMac.addNumbers.addNumbers2Activity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="locked" />
         <activity
             android:name=".menu.addMac.addNumbers.sendDataActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize|fontScale|keyboard|locale|screenLayout|uiMode"
             android:parentActivityName=".menu.addMac.addNumbers.resumeAddNumbersActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="locked" />
         <activity
             android:name=".menu.addMac.addNumbers.shareQrActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize|fontScale|keyboard|locale|screenLayout|uiMode"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="locked" />
         <activity
             android:name=".CustomScannerActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="locked"
             android:stateNotNeeded="true"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
     </application>
