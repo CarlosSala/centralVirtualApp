@@ -1,4 +1,4 @@
-package com.example.macscanner.menu;
+package com.example.centralvirtual.menu;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,9 +15,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.macscanner.LoginActivity;
-import com.example.macscanner.R;
-import com.example.macscanner.menu.addMac.StartActivity;
+import com.example.centralvirtual.LoginActivity;
+import com.example.centralvirtual.R;
+import com.example.centralvirtual.menu.addMac.StartActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;

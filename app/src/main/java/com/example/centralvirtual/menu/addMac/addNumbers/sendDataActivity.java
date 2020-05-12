@@ -1,4 +1,4 @@
-package com.example.macscanner.menu.addMac.addNumbers;
+package com.example.centralvirtual.menu.addMac.addNumbers;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,8 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.macscanner.R;
-import com.example.macscanner.menu.PrincipalActivity;
+import com.example.centralvirtual.R;
+import com.example.centralvirtual.menu.PrincipalActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;

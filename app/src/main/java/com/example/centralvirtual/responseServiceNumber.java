@@ -1,4 +1,4 @@
-package com.example.macscanner;
+package com.example.centralvirtual;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.macscanner">
+    package="com.example.centralvirtual">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat">
 
-        <activity android:name=".SplashActivity"
+        <activity android:name="com.example.centralvirtual.SplashActivity"
             android:theme="@style/SplashTheme">
 
             <intent-filter>
@@ -31,60 +31,60 @@
         </activity>
 
         <activity
-            android:name=".LoginActivity"
+            android:name="com.example.centralvirtual.LoginActivity"
             android:screenOrientation="locked"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:windowSoftInputMode="stateHidden">
 
         </activity>
         <activity
-            android:name=".RecoverPasswordActivity"
-            android:parentActivityName=".LoginActivity"
+            android:name="com.example.centralvirtual.RecoverPasswordActivity"
+            android:parentActivityName="com.example.centralvirtual.LoginActivity"
             android:screenOrientation="locked"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".RegisterActivity"
-            android:parentActivityName=".LoginActivity"
+            android:name="com.example.centralvirtual.RegisterActivity"
+            android:parentActivityName="com.example.centralvirtual.LoginActivity"
             android:screenOrientation="locked"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".menu.PrincipalActivity"
+            android:name="com.example.centralvirtual.menu.PrincipalActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize|fontScale|keyboard|locale|screenLayout|uiMode"
             android:screenOrientation="locked"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".menu.addMac.StartActivity"
+            android:name="com.example.centralvirtual.menu.addMac.StartActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize|fontScale|keyboard|locale|screenLayout|uiMode"
-            android:parentActivityName=".menu.PrincipalActivity"
+            android:parentActivityName="com.example.centralvirtual.menu.PrincipalActivity"
             android:screenOrientation="locked"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".menu.addMac.addNumbers.addNumbers1Activity"
+            android:name="com.example.centralvirtual.menu.addMac.addNumbers.addNumbers1Activity"
             android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize|fontScale|keyboard|locale|screenLayout|uiMode"
-            android:parentActivityName=".menu.addMac.StartActivity"
+            android:parentActivityName="com.example.centralvirtual.menu.addMac.StartActivity"
             android:screenOrientation="locked"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".menu.addMac.addNumbers.addNumbers2Activity"
+            android:name="com.example.centralvirtual.menu.addMac.addNumbers.addNumbers2Activity"
             android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize|fontScale|keyboard|locale|screenLayout|uiMode"
-            android:parentActivityName=".menu.addMac.addNumbers.addNumbers1Activity"
+            android:parentActivityName="com.example.centralvirtual.menu.addMac.addNumbers.addNumbers1Activity"
             android:screenOrientation="locked"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".menu.addMac.addNumbers.resumeAddNumbersActivity"
-            android:parentActivityName=".menu.addMac.addNumbers.addNumbers2Activity"
+            android:name="com.example.centralvirtual.menu.addMac.addNumbers.resumeAddNumbersActivity"
+            android:parentActivityName="com.example.centralvirtual.menu.addMac.addNumbers.addNumbers2Activity"
             android:screenOrientation="locked" />
         <activity
-            android:name=".menu.addMac.addNumbers.sendDataActivity"
+            android:name="com.example.centralvirtual.menu.addMac.addNumbers.sendDataActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize|fontScale|keyboard|locale|screenLayout|uiMode"
-            android:parentActivityName=".menu.addMac.addNumbers.resumeAddNumbersActivity"
+            android:parentActivityName="com.example.centralvirtual.menu.addMac.addNumbers.resumeAddNumbersActivity"
             android:screenOrientation="locked" />
         <activity
-            android:name=".menu.addMac.addNumbers.shareQrActivity"
+            android:name="com.example.centralvirtual.menu.addMac.addNumbers.shareQrActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize|fontScale|keyboard|locale|screenLayout|uiMode"
             android:screenOrientation="locked" />
         <activity
-            android:name=".CustomScannerActivity"
+            android:name="com.example.centralvirtual.CustomScannerActivity"
             android:screenOrientation="locked"
             android:stateNotNeeded="true"
             android:theme="@style/Theme.AppCompat.NoActionBar" />

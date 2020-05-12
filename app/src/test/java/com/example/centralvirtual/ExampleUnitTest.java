@@ -1,4 +1,4 @@
-package com.example.macscanner;
+package com.example.centralvirtual;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.example.macscanner;
+package com.example.centralvirtual;
 
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;

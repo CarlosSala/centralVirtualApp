@@ -1,4 +1,4 @@
-package com.example.macscanner.menu.addMac;
+package com.example.centralvirtual.menu.addMac;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,10 +14,10 @@ import android.widget.EditText;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.macscanner.R;
-import com.example.macscanner.RutValidator;
-import com.example.macscanner.menu.PrincipalActivity;
-import com.example.macscanner.menu.addMac.addNumbers.addNumbers1Activity;
+import com.example.centralvirtual.R;
+import com.example.centralvirtual.RutValidator;
+import com.example.centralvirtual.menu.PrincipalActivity;
+import com.example.centralvirtual.menu.addMac.addNumbers.addNumbers1Activity;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.regex.Pattern;

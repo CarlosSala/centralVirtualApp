@@ -1,4 +1,4 @@
-package com.example.macscanner.menu.addMac.addNumbers;
+package com.example.centralvirtual.menu.addMac.addNumbers;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,14 +17,14 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.macscanner.CustomScannerActivity;
-import com.example.macscanner.InterfaceApi;
-import com.example.macscanner.ItemTouchListenner;
-import com.example.macscanner.MainAdapter;
-import com.example.macscanner.R;
-import com.example.macscanner.SimpleItemTouchHelperCallback;
-import com.example.macscanner.menu.PrincipalActivity;
-import com.example.macscanner.responseServiceNumber;
+import com.example.centralvirtual.CustomScannerActivity;
+import com.example.centralvirtual.InterfaceApi;
+import com.example.centralvirtual.ItemTouchListenner;
+import com.example.centralvirtual.MainAdapter;
+import com.example.centralvirtual.R;
+import com.example.centralvirtual.SimpleItemTouchHelperCallback;
+import com.example.centralvirtual.menu.PrincipalActivity;
+import com.example.centralvirtual.responseServiceNumber;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 

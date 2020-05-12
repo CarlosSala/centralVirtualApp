@@ -1,4 +1,4 @@
-package com.example.macscanner.menu.addMac.addNumbers;
+package com.example.centralvirtual.menu.addMac.addNumbers;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,16 +18,14 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.macscanner.CustomScannerActivity;
-import com.example.macscanner.ItemTouchListenner;
-import com.example.macscanner.MainAdapter;
-import com.example.macscanner.R;
-import com.example.macscanner.SimpleItemTouchHelperCallback;
-import com.example.macscanner.menu.PrincipalActivity;
+import com.example.centralvirtual.CustomScannerActivity;
+import com.example.centralvirtual.ItemTouchListenner;
+import com.example.centralvirtual.MainAdapter;
+import com.example.centralvirtual.R;
+import com.example.centralvirtual.SimpleItemTouchHelperCallback;
+import com.example.centralvirtual.menu.PrincipalActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;

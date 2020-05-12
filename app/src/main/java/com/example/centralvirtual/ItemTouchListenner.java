@@ -1,4 +1,4 @@
-package com.example.macscanner;
+package com.example.centralvirtual;
 
 public interface ItemTouchListenner {
     void onMove(int oldPosition, int newPosition);

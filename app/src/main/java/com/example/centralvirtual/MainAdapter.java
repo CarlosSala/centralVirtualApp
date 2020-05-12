@@ -1,4 +1,4 @@
-package com.example.macscanner;
+package com.example.centralvirtual;
 
 import android.view.LayoutInflater;
 import android.view.View;

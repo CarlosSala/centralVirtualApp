@@ -1,4 +1,4 @@
-package com.example.macscanner.menu.addMac.addNumbers;
+package com.example.centralvirtual.menu.addMac.addNumbers;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -24,8 +24,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.macscanner.R;
-import com.example.macscanner.menu.PrincipalActivity;
+import com.example.centralvirtual.R;
+import com.example.centralvirtual.menu.PrincipalActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
