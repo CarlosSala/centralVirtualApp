@@ -177,7 +177,7 @@ public class sendDataActivity extends AppCompatActivity {
                 .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        SharedPreferences settings = getSharedPreferences("datos", Context.MODE_PRIVATE);
+                        SharedPreferences settings = getSharedPreferences("data", Context.MODE_PRIVATE);
                         settings.edit().clear().apply();
 
                         Intent intent = new Intent(sendDataActivity.this, PrincipalActivity.class);
