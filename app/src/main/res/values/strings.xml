@@ -11,4 +11,8 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="fetch">FETCH</string>
+    <string name="save">SAVE</string>
+    <string name="mac_scan">MAC SCAN</string>
+    <string name="compartir">compartir</string>
 </resources>

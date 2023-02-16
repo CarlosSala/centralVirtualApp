@@ -32,17 +32,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String QUOTE_KEY = "quote";
     public static final String TAG = "InspiringQuote";
 
-
-
     private DocumentReference mDocRef = FirebaseFirestore.getInstance().collection("sampleData").document("inspiration");
-
-    private Button button, button_firebase;
-    private TextView textView;
-
-
-    private TextView mQuoteTextView;
-    private Button button_firebase2;
-
+    private TextView tv_fetch;
 
     @Override
     protected void onStart() {
@@ -51,15 +42,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
 
-                if (documentSnapshot.exists()){
+                if (documentSnapshot != null) {
 
-                    String quoteText =  documentSnapshot.getString(QUOTE_KEY);
-                    String authorText =  documentSnapshot.getString(AUTHOR_KEY);
-                    mQuoteTextView.setText("\"" + quoteText + "\" -- " + authorText);
+                    String quoteText = documentSnapshot.getString(QUOTE_KEY);
+                    String authorText = documentSnapshot.getString(AUTHOR_KEY);
+                    tv_fetch.setText(quoteText + " " + authorText);
                     //InspiringQuote myQuote = documentSnapshot.toObject(InspiringQuote);
 
-            }else if (e != null){
-                Log.w(TAG, "Got an exeception", e);
+                } else if (e != null) {
+                    Log.w(TAG, "Got an exeception", e);
                 }
             }
         });
@@ -70,13 +61,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       // FirebaseApp.initializeApp(this);
-        button = findViewById(R.id.btn_scan);
-        textView = findViewById(R.id.tv1);
+        // FirebaseApp.initializeApp(this);
+        Button btn_scan = findViewById(R.id.btn_scan);
+        tv_fetch = findViewById(R.id.tv2);
 
-        mQuoteTextView = (TextView)findViewById(R.id.tv2);
-
-        button.setOnClickListener(new View.OnClickListener() {
+        btn_scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 customScanner(view);
@@ -84,24 +73,25 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        button_firebase = findViewById(R.id.btn_firebase);
-
-        button_firebase.setOnClickListener(new View.OnClickListener() {
+        Button btn_firebase = findViewById(R.id.btn_firebase);
+        btn_firebase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 saveQuote(view);
             }
         });
 
-        button_firebase2 = findViewById(R.id.btn_firebase2);
-
-        button_firebase2.setOnClickListener(new View.OnClickListener() {
+        Button btn_firebase2 = findViewById(R.id.btn_firebase2);
+        btn_firebase2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fetchQuote(view);
+
+                // el botón fetch es reemplazo por addSnapshotListener
+                // que esta a la escucha de cambios en los datos para mostrarlos
+                // dentro del metodo onStart()
+                // fetchQuote(view);
             }
         });
-
     }
 
     // Get the results:
@@ -123,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private void customScanner(View view) {
 
         IntentIntegrator integrator = new IntentIntegrator(this);
@@ -139,18 +128,16 @@ public class MainActivity extends AppCompatActivity {
         integrator.initiateScan();
     }
 
+    // save data
+    public void saveQuote(View view) {
 
+        EditText et_quote = findViewById(R.id.editTextQuote);
+        EditText et_author = findViewById(R.id.editTextAuthor);
 
-    public void saveQuote(View view){
+        String quoteText = et_quote.getText().toString();
+        String authorText = et_author.getText().toString();
 
-        EditText quoteView = (EditText)findViewById(R.id.editTextQuote);
-        EditText authorView = (EditText)findViewById(R.id.editTextAuthor);
-
-        String quoteText = quoteView.getText().toString();
-        String authorText = authorView.getText().toString();
-
-
-        if (quoteText.isEmpty() || authorText.isEmpty()){
+        if (quoteText.isEmpty() || authorText.isEmpty()) {
             return;
         }
 
@@ -167,29 +154,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.w(TAG, "Document was not saved!", e);
-
             }
         });
-
     }
 
-    public void fetchQuote(View view){
+    public void fetchQuote(View view) {
 
         mDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot.exists()){
+                if (documentSnapshot.exists()) {
 
-                    String quoteText =  documentSnapshot.getString(QUOTE_KEY);
-                    String authorText =  documentSnapshot.getString(AUTHOR_KEY);
-                    mQuoteTextView.setText("\"" + quoteText + "\" -- " + authorText);
+                    String quoteText = documentSnapshot.getString(QUOTE_KEY);
+                    String authorText = documentSnapshot.getString(AUTHOR_KEY);
+                    tv_fetch.setText(quoteText + " " + authorText);
                     //InspiringQuote myQuote = documentSnapshot.toObject(InspiringQuote);
                 }
             }
         });
     }
-
-
-
-
 }

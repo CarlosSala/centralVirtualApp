@@ -28,9 +28,6 @@ import java.io.ByteArrayOutputStream;
 
 public class QrActivity extends AppCompatActivity {
 
-    private Button button;
-    private ImageView imageView;
-    private String codeScanned;
     private Bitmap bitmap;
     private final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
 
@@ -39,10 +36,10 @@ public class QrActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr);
 
-        button = findViewById(R.id.btn);
-        imageView = findViewById(R.id.imgv);
+        Button button = findViewById(R.id.btn);
+        ImageView imageView = findViewById(R.id.imgv);
 
-        codeScanned = getIntent().getExtras().getString("codeScanned", "QR");
+        String codeScanned = getIntent().getExtras().getString("codeScanned", "QR");
 
         if (codeScanned != null) {
             MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
@@ -59,8 +56,6 @@ public class QrActivity extends AppCompatActivity {
 
             }
         }
-
-
 
         button.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
@@ -101,9 +96,6 @@ public class QrActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
     }
 
     // method to get Uri from Bitmap

@@ -18,7 +18,8 @@
         app:layout_constraintHorizontal_bias="0.568"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:contentDescription="TODO" />
 
     <Button
         android:id="@+id/btn"
@@ -26,9 +27,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="76dp"
 
-        android:text="compartir"
+        android:text="@string/compartir"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgv"></Button>
+        app:layout_constraintTop_toBottomOf="@+id/imgv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
