@@ -30,9 +30,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextInputEditText et_email, et_password;
     private TextInputLayout til_email, til_password;
-
     private ProgressBar progressBarLogin;
-
     private FirebaseAuth firebaseAuth;
 
     //public final static String TAG = "Seguimiento";
