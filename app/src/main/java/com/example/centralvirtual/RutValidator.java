@@ -30,8 +30,6 @@ public class RutValidator {
                 System.err.println(e.getLocalizedMessage());
             }
         }
-
         return status;
     }
-
 }

@@ -178,7 +178,6 @@ public class StartActivity extends AppCompatActivity {
         return false;
     }
 
-
     @Override
     public void onBackPressed() {
 

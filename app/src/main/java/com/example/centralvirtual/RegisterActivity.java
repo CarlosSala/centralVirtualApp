@@ -40,9 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout til_name, til_lastName, til_email, til_password, til_passwordAgain;
     private LinearLayout linearLayout;
     private ProgressBar progressBarRegister;
-
     private FirebaseAuth firebaseAuth;
-
     private final static String TAG = "RegisterActivity";
 
     @Override

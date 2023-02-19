@@ -31,9 +31,7 @@ import java.util.Map;
 public class sendDataActivity extends AppCompatActivity {
 
     private final static String TAG = "sendDataActivity";
-
     private String data;
-
     private Button btn_send;
     private TextView tv_msg, tv_loading;
     private ProgressBar progressBar;
@@ -84,7 +82,6 @@ public class sendDataActivity extends AppCompatActivity {
             tv_msg.setVisibility(View.VISIBLE);
             tv_loading.setVisibility(View.INVISIBLE);
             progressBar.setVisibility(View.INVISIBLE);
-
 
         } else {
 

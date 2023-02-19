@@ -1,316 +1,245 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    tools:context=".menu.addMac.addNumbers.addNumbers1Activity"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="-94dp"
-    android:theme="@style/LightThemeApp">
+    android:theme="@style/LightThemeApp"
+    tools:context=".menu.addMac.addNumbers.resumeAddNumbersActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
+        android:id="@+id/tv_resume_add_numbers"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/title_resumen"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_resume"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:text="@string/title_resumen"
-            android:textSize="22sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.468"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TableLayout
+        android:id="@+id/tl_resume_add_numbers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:stretchColumns="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_resume_add_numbers">
 
-        <TextView
-            android:id="@+id/tv_label_applicationNumber"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/number_request"
-            app:layout_constraintBottom_toTopOf="@+id/tv_label_client_rut"
-            app:layout_constraintStart_toStartOf="@+id/tv_label_client_rut"
-            app:layout_constraintTop_toBottomOf="@+id/tv_resume" />
+        <TableRow>
 
-        <TextView
-            android:id="@+id/tv_numberEight"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="8dp"
-            android:hint="@string/empty"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberSeven" />
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/number_request"
+                android:textAlignment="center" />
 
-        <TextView
-            android:id="@+id/tv_numberFour"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/empty"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberFive"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberFive"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberThree" />
+            <TextView
+                android:id="@+id/tv_applicationNumber"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/number_request"
+                android:textAlignment="center" />
+        </TableRow>
 
-        <TextView
-            android:id="@+id/tv_label_community_id"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/id_community_resumen"
-            app:layout_constraintBottom_toTopOf="@+id/tv_mac1"
-            app:layout_constraintStart_toStartOf="@+id/tv_mac1"
-            app:layout_constraintTop_toBottomOf="@+id/tv_label_client_rut" />
+        <TableRow>
 
-        <TextView
-            android:id="@+id/tv_numberTwo"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/empty"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberThree"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberThree"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberOne" />
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/client_rut"
+                android:textAlignment="center" />
 
-        <TextView
-            android:id="@+id/tv_numberSeven"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/empty"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberEight"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberEight"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberSix" />
+            <TextView
+                android:id="@+id/tv_client_rut"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/rut_client"
+                android:textAlignment="center" />
+        </TableRow>
 
-        <TextView
-            android:id="@+id/tv_numberSix"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/empty"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberSeven"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberSeven"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberFive" />
+        <TableRow>
 
-        <TextView
-            android:id="@+id/tv_numberFive"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/empty"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberSix"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberSix"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberFour" />
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/id_community_resumen"
+                android:textAlignment="center" />
 
-        <TextView
-            android:id="@+id/tv_numberOne"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/empty"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberTwo"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberTwo"
-            app:layout_constraintTop_toBottomOf="@+id/tv_indicator_mac1" />
+            <TextView
+                android:id="@+id/tv_community_id"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/id_community_resumen"
+                android:textAlignment="center" />
+        </TableRow>
 
-        <TextView
-            android:id="@+id/tv_mac1"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/address_mac1_resumen"
-            app:layout_constraintBottom_toTopOf="@+id/tv_indicator_mac1"
-            app:layout_constraintStart_toStartOf="@+id/tv_indicator_mac1"
-            app:layout_constraintTop_toBottomOf="@+id/tv_label_community_id" />
+        <TableRow>
 
-        <TextView
-            android:id="@+id/tv_numberThree"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/empty"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberFour"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberFour"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberTwo" />
+            <TextView
+                android:id="@+id/tv_indicator_mac1"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/address_mac1_resumen"
+                android:textAlignment="center" />
 
-        <TextView
-            android:id="@+id/tv_indicator_mac1"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/empty"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberOne"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberOne"
-            app:layout_constraintTop_toBottomOf="@+id/tv_mac1" />
+            <TextView
+                android:id="@+id/tv_indicator_mac2"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/address_mac2_resumen"
+                android:textAlignment="center" />
+        </TableRow>
 
-        <TextView
-            android:id="@+id/tv_label_client_rut"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/client_rut"
-            app:layout_constraintBottom_toTopOf="@+id/tv_label_community_id"
-            app:layout_constraintStart_toStartOf="@+id/tv_label_community_id"
-            app:layout_constraintTop_toBottomOf="@+id/tv_label_applicationNumber" />
+        <TableRow>
 
-        <TextView
-            android:id="@+id/tv_applicationNumber"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="@string/empty"
-            app:layout_constraintBottom_toTopOf="@+id/tv_client_rut"
-            app:layout_constraintStart_toEndOf="@+id/tv_label_applicationNumber"
-            app:layout_constraintStart_toStartOf="@+id/tv_client_rut"
-            app:layout_constraintTop_toBottomOf="@+id/tv_resume" />
+            <TextView
+                android:id="@+id/tv_numberOne"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/number_request"
+                android:textAlignment="center" />
 
-        <Button
-            android:id="@+id/btn_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:layout_marginBottom="40dp"
-            android:text="@string/btn_send_config"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberEight" />
+            <TextView
+                android:id="@+id/tv_numberNine"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/number_request"
+                android:textAlignment="center" />
+        </TableRow>
 
-        <TextView
-            android:id="@+id/tv_client_rut"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/empty"
-            app:layout_constraintBottom_toTopOf="@+id/tv_community_id"
-            app:layout_constraintStart_toEndOf="@+id/tv_label_client_rut"
-            app:layout_constraintStart_toStartOf="@+id/tv_community_id"
-            app:layout_constraintTop_toBottomOf="@+id/tv_applicationNumber" />
+        <TableRow>
 
-        <TextView
-            android:id="@+id/tv_numberTen"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/empty"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberEleven"
-            app:layout_constraintStart_toEndOf="@+id/tv_numberTwo"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberEleven"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberNine" />
+            <TextView
+                android:id="@+id/tv_numberTwo"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/number_request"
+                android:textAlignment="center" />
 
-        <TextView
-            android:id="@+id/tv_numberEleven"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/empty"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberTwelve"
-            app:layout_constraintStart_toEndOf="@+id/tv_numberThree"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberTwelve"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberTen" />
+            <TextView
+                android:id="@+id/tv_numberTen"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/number_request"
+                android:textAlignment="center" />
+        </TableRow>
 
-        <TextView
-            android:id="@+id/tv_numberFourteen"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/empty"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberFifteen"
-            app:layout_constraintStart_toEndOf="@+id/tv_numberSix"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberFifteen"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberThirteen" />
+        <TableRow>
 
-        <TextView
-            android:id="@+id/tv_mac2"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/address_mac2_resumen"
-            app:layout_constraintBottom_toTopOf="@+id/tv_indicator_mac2"
-            app:layout_constraintStart_toEndOf="@+id/tv_mac1"
-            app:layout_constraintStart_toStartOf="@+id/tv_indicator_mac2"
-            app:layout_constraintTop_toBottomOf="@+id/tv_community_id" />
+            <TextView
+                android:id="@+id/tv_numberThree"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/number_request"
+                android:textAlignment="center" />
 
-        <TextView
-            android:id="@+id/tv_numberSixteen"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/empty"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tv_numberEight"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberFifteen" />
+            <TextView
+                android:id="@+id/tv_numberEleven"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/number_request"
+                android:textAlignment="center" />
+        </TableRow>
 
-        <TextView
-            android:id="@+id/tv_indicator_mac2"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/empty"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberNine"
-            app:layout_constraintStart_toEndOf="@+id/tv_indicator_mac1"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberNine"
-            app:layout_constraintTop_toBottomOf="@+id/tv_mac2" />
+        <TableRow>
 
-        <TextView
-            android:id="@+id/tv_numberNine"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/empty"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberTen"
-            app:layout_constraintStart_toEndOf="@+id/tv_numberOne"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberTen"
-            app:layout_constraintTop_toBottomOf="@+id/tv_indicator_mac2" />
+            <TextView
+                android:id="@+id/tv_numberFour"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/number_request"
+                android:textAlignment="center" />
 
-        <TextView
-            android:id="@+id/tv_numberFifteen"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/empty"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberSixteen"
-            app:layout_constraintStart_toEndOf="@+id/tv_numberSeven"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberSixteen"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberFourteen" />
+            <TextView
+                android:id="@+id/tv_numberTwelve"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/number_request"
+                android:textAlignment="center" />
+        </TableRow>
 
-        <TextView
-            android:id="@+id/tv_numberTwelve"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/empty"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberThirteen"
-            app:layout_constraintStart_toEndOf="@+id/tv_numberFour"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberThirteen"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberEleven" />
+        <TableRow>
 
-        <TextView
-            android:id="@+id/tv_numberThirteen"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/empty"
-            app:layout_constraintBottom_toTopOf="@+id/tv_numberFourteen"
-            app:layout_constraintStart_toEndOf="@+id/tv_numberFive"
-            app:layout_constraintStart_toStartOf="@+id/tv_numberFourteen"
-            app:layout_constraintTop_toBottomOf="@+id/tv_numberTwelve" />
+            <TextView
+                android:id="@+id/tv_numberFive"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/number_request"
+                android:textAlignment="center" />
 
-        <TextView
-            android:id="@+id/tv_community_id"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/empty"
-            app:layout_constraintBottom_toTopOf="@+id/tv_mac2"
-            app:layout_constraintStart_toEndOf="@+id/tv_label_community_id"
-            app:layout_constraintStart_toStartOf="@+id/tv_mac2"
-            app:layout_constraintTop_toBottomOf="@+id/tv_client_rut" />
+            <TextView
+                android:id="@+id/tv_numberThirteen"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/number_request"
+                android:textAlignment="center" />
+        </TableRow>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TableRow>
 
-</ScrollView>
+            <TextView
+                android:id="@+id/tv_numberSix"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/number_request"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/tv_numberFourteen"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/number_request"
+                android:textAlignment="center" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/tv_numberSeven"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/number_request"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/tv_numberFifteen"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/number_request"
+                android:textAlignment="center" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/tv_numberEight"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/number_request"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/tv_numberSixteen"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/number_request"
+                android:textAlignment="center" />
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+        android:text="@string/btn_send_config"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tl_resume_add_numbers" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

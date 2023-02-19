@@ -26,12 +26,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:paddingHorizontal="8dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tv_add_mac1"
                 android:layout_width="150dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:hint="@string/address_mac" />
@@ -40,6 +42,7 @@
                 android:id="@+id/btn_scan_mac1"
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
+                android:layout_weight="0.25"
                 android:text="@string/btn_scanner_mac" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -47,18 +50,15 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_sample1"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp" />
+            android:layout_height="400dp"
+            android:layout_margin="8dp"
+             />
 
         <Button
             android:id="@+id/btn_next1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginBottom="60dp"
             android:layout_margin="8dp"
             android:text="@string/btn_save_and_continue" />
 

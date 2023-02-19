@@ -39,10 +39,8 @@ import java.util.regex.Pattern;
 public class addNumbers2Activity extends AppCompatActivity {
 
     private final static String TAG = "addNumbers2Activity";
-
     private Button btn_next;
     private TextView tv_mac;
-
     private RecyclerView mRecyclerView;
     private MainAdapter mAdapter;
 

@@ -41,10 +41,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class addNumbers1Activity extends AppCompatActivity {
 
     private final static String TAG = "addNumbers1Activity";
-
     private Button btn_next;
     private TextView tv_mac;
-
     private RecyclerView mRecyclerView;
     private MainAdapter mAdapter;
 

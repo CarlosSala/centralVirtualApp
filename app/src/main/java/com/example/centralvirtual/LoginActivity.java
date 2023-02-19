@@ -90,7 +90,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-
     private boolean ValidForm() {
 
         boolean status = true;

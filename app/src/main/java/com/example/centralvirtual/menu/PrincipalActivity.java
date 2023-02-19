@@ -30,11 +30,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class PrincipalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private final static String TAG = "PrincipalActivity";
-
     private FirebaseAuth firebaseAuth;
-
     private DrawerLayout drawerLayout;
-
     private TextView tv_user_name, tv_user_email;
 
     @Override

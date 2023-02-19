@@ -23,15 +23,11 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class RecoverPasswordActivity extends AppCompatActivity {
 
-    private static String TAG = "RecoverPasswordActivity";
-
+    private static final String TAG = "RecoverPasswordActivity";
     private FirebaseAuth firebaseAuth;
-
     private TextInputEditText et_recover;
     private TextInputLayout til_recover;
-
     private LinearLayout linearLayout;
-
     private ProgressBar progressBarRecover;
 
     @Override
