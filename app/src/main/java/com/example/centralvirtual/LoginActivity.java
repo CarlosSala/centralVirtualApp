@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.centralvirtual.databinding.ActivityLoginBinding;
 import com.example.centralvirtual.menu.PrincipalActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,31 +29,22 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private TextInputEditText et_email, et_password;
-    private TextInputLayout til_email, til_password;
-    private ProgressBar progressBarLogin;
+    private ActivityLoginBinding binding;
     private FirebaseAuth firebaseAuth;
-
-    //public final static String TAG = "Seguimiento";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        progressBarLogin = findViewById(R.id.progressBar);
-        progressBarLogin.setVisibility(View.INVISIBLE);
+        binding.progressBar.setVisibility(View.INVISIBLE);
 
-        et_email = findViewById(R.id.et_email);
-        til_email = findViewById(R.id.til_email);
-
-        et_password = findViewById(R.id.et_password);
-        til_password = findViewById(R.id.til_password);
-
-        Button btn_register = findViewById(R.id.btn_register);
-        btn_register.setOnClickListener(new View.OnClickListener() {
+        binding.btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -61,8 +53,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        Button btn_recovery_password = findViewById(R.id.btn_recovery_password);
-        btn_recovery_password.setOnClickListener(new View.OnClickListener() {
+        binding.btnRecoveryPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, RecoverPasswordActivity.class);
@@ -70,8 +61,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        Button btn_login = findViewById(R.id.btn_login);
-        btn_login.setOnClickListener(new View.OnClickListener() {
+        binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -82,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                         Login();
 
                     } else {
-                        Toast.makeText(LoginActivity.this, "Conectese a una red wifi o habilite los datos moviles",
+                        Toast.makeText(LoginActivity.this, "There is not network available",
                                 Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -97,23 +87,23 @@ public class LoginActivity extends AppCompatActivity {
         String emailError = null;
         String passwordError = null;
 
-        if (TextUtils.isEmpty(et_email.getText())) {
-            emailError = "Este campo no puede estar vacío";
+        if (TextUtils.isEmpty(binding.etEmail.getText())) {
+            emailError = "This field can not be empty";
             status = false;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(et_email.getText()).matches()) {
-            emailError = "El correo no es válido";
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.etEmail.getText()).matches()) {
+            emailError = "The email is not validate";
             status = false;
         }
-        toggleTextInputLayoutError(til_email, emailError);
+        toggleTextInputLayoutError(binding.tilEmail, emailError);
 
-        if (TextUtils.isEmpty(et_password.getText())) {
-            passwordError = "Este campo no puede estar vacío";
+        if (TextUtils.isEmpty(binding.etPassword.getText())) {
+            passwordError = "This field can not be empty";
             status = false;
-        } else if ((et_password.length() < 6)) {
-            passwordError = "La contraseña debe tener 6 o mas caracteres";
+        } else if ((binding.etPassword.length() < 6)) {
+            passwordError = "The password must be at least 6 or more characters";
             status = false;
         }
-        toggleTextInputLayoutError(til_password, passwordError);
+        toggleTextInputLayoutError(binding.tilPassword, passwordError);
 
         clearFocus();
 
@@ -156,8 +146,8 @@ public class LoginActivity extends AppCompatActivity {
 
         showProgressBar(true);
 
-        String email = et_email.getText().toString();
-        String password = et_password.getText().toString();
+        String email = binding.etEmail.getText().toString();
+        String password = binding.etPassword.getText().toString();
 
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -176,20 +166,19 @@ public class LoginActivity extends AppCompatActivity {
 
                                     showProgressBar(false);
 
-                                    //Log.i(TAG, "Mi log de prueba");
                                     Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
                                     startActivity(intent);
                                     finish();
 
                                 } else {
 
-                                    Toast.makeText(LoginActivity.this, "Debe verificar su correo", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(LoginActivity.this, "You must verify your email", Toast.LENGTH_LONG).show();
                                     showProgressBar(false);
                                 }
                             }
 
                         } else {
-                            Toast.makeText(LoginActivity.this, "No se pudo ingresar", Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this, "It wasn't possible to log in", Toast.LENGTH_LONG).show();
                             showProgressBar(false);
                         }
                     }
@@ -199,11 +188,11 @@ public class LoginActivity extends AppCompatActivity {
     private void showProgressBar(boolean status) {
 
         if (status) {
-            progressBarLogin.setVisibility(View.VISIBLE);
+            binding.progressBar.setVisibility(View.VISIBLE);
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                     WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         } else {
-            progressBarLogin.setVisibility(View.INVISIBLE);
+            binding.progressBar.setVisibility(View.INVISIBLE);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
     }

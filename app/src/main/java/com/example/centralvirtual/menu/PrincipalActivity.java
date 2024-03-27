@@ -17,6 +17,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.centralvirtual.LoginActivity;
 import com.example.centralvirtual.R;
+import com.example.centralvirtual.databinding.ActivityLoginBinding;
+import com.example.centralvirtual.databinding.ActivityPrincipalBinding;
 import com.example.centralvirtual.menu.addMac.StartActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,41 +31,44 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class PrincipalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private ActivityPrincipalBinding binding;
     private final static String TAG = "PrincipalActivity";
     private FirebaseAuth firebaseAuth;
-    private DrawerLayout drawerLayout;
     private TextView tv_user_name, tv_user_email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_principal);
+        binding = ActivityPrincipalBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(binding.toolbar);
 
         // drawerLayout is the principal layout that contains everything
-        drawerLayout = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
+                this,
+                binding.drawerLayout,
+                binding.toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+
+        binding.drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
         // sidebar that appears and hides
-        NavigationView navigationView = findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        binding.navigationView.setNavigationItemSelectedListener(this);
 
         // get access to elements of sidebar
-        View header = navigationView.getHeaderView(0);
+        View header = binding.navigationView.getHeaderView(0);
         tv_user_name = header.findViewById(R.id.tv_user_name);
         tv_user_email = header.findViewById(R.id.tv_user_email);
 
         GetUserData();
 
-        Button btn_start = findViewById(R.id.btn_start);
-        btn_start.setOnClickListener(new View.OnClickListener() {
+        binding.btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(PrincipalActivity.this, StartActivity.class);
@@ -71,8 +76,7 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
             }
         });
 
-        Button btn_logout = findViewById(R.id.btn_logout);
-        btn_logout.setOnClickListener(new View.OnClickListener() {
+        binding.btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Logout();
@@ -138,8 +142,8 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
 
     @Override
     public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }

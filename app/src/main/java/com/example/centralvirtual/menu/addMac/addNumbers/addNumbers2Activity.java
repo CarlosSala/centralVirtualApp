@@ -23,6 +23,8 @@ import com.example.centralvirtual.ItemTouchListenner;
 import com.example.centralvirtual.MainAdapter;
 import com.example.centralvirtual.R;
 import com.example.centralvirtual.SimpleItemTouchHelperCallback;
+import com.example.centralvirtual.databinding.ActivityAddNumbers2Binding;
+import com.example.centralvirtual.databinding.ActivityStartBinding;
 import com.example.centralvirtual.menu.PrincipalActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -38,40 +40,36 @@ import java.util.regex.Pattern;
 
 public class addNumbers2Activity extends AppCompatActivity {
 
+    private ActivityAddNumbers2Binding binding;
     private final static String TAG = "addNumbers2Activity";
-    private Button btn_next;
-    private TextView tv_mac;
-    private RecyclerView mRecyclerView;
     private MainAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_numbers2);
 
-        mRecyclerView = findViewById(R.id.recycler_sample2);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        binding = ActivityAddNumbers2Binding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
+
+        binding.recyclerSample2.setLayoutManager(new LinearLayoutManager(this));
 
         mAdapter = new MainAdapter();
-        mRecyclerView.setAdapter(mAdapter);
-
-        tv_mac = findViewById(R.id.tv_add_mac2);
+        binding.recyclerSample2.setAdapter(mAdapter);
 
         SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
-        tv_mac.setText(preferences.getString("mac_scanned2", ""));
+        binding.tvAddMac2.setText(preferences.getString("mac_scanned2", ""));
 
-        Button btn_scan_mac = findViewById(R.id.btn_scan_mac2);
-        btn_scan_mac.setOnClickListener(new View.OnClickListener() {
+        binding.btnScanMac2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 customScanner();
             }
         });
 
-        btn_next = findViewById(R.id.btn_next2);
-        btn_next.setEnabled(false);
+        binding.btnNext2.setEnabled(false);
 
-        btn_next.setOnClickListener(new View.OnClickListener() {
+        binding.btnNext2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -90,56 +88,56 @@ public class addNumbers2Activity extends AppCompatActivity {
 
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
-            DocumentReference docRef = firebaseFirestore.collection("numbers").document("group2");
-            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
+        DocumentReference docRef = firebaseFirestore.collection("numbers").document("group2");
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
 
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
 
-                            String num1 = document.getString("num1");
-                            String num2 = document.getString("num2");
-                            String num3 = document.getString("num3");
-                            String num4 = document.getString("num4");
-                            String num5 = document.getString("num5");
-                            String num6 = document.getString("num6");
-                            String num7 = document.getString("num7");
-                            String num8 = document.getString("num8");
+                        String num1 = document.getString("num1");
+                        String num2 = document.getString("num2");
+                        String num3 = document.getString("num3");
+                        String num4 = document.getString("num4");
+                        String num5 = document.getString("num5");
+                        String num6 = document.getString("num6");
+                        String num7 = document.getString("num7");
+                        String num8 = document.getString("num8");
 
-                            List<String> data = new ArrayList<>();
+                        List<String> data = new ArrayList<>();
 
-                            data.add(num1);
-                            data.add(num2);
-                            data.add(num3);
-                            data.add(num4);
-                            data.add(num5);
-                            data.add(num6);
-                            data.add(num7);
-                            data.add(num8);
+                        data.add(num1);
+                        data.add(num2);
+                        data.add(num3);
+                        data.add(num4);
+                        data.add(num5);
+                        data.add(num6);
+                        data.add(num7);
+                        data.add(num8);
 
-                            InitRecyclerView(data);
+                        InitRecyclerView(data);
 
-                            Enable_btn();
+                        Enable_btn();
 
-                            //Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                        } else {
-                            Log.d(TAG, "No such document");
-                        }
+                        //Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                     } else {
-                        Log.d(TAG, "get failed with ", task.getException());
+                        Log.d(TAG, "No such document");
                     }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
                 }
-            });
-        }
+            }
+        });
+    }
 
 
     private void InitRecyclerView(List<String> data) {
 
         mAdapter.addData(data);
 
-        addItemTouchCallback(mRecyclerView);
+        addItemTouchCallback(binding.recyclerSample2);
     }
 
     private void addItemTouchCallback(RecyclerView recyclerView) {
@@ -163,10 +161,10 @@ public class addNumbers2Activity extends AppCompatActivity {
     // method to enable or disabled button
     private void Enable_btn() {
 
-        if (mAdapter.getItemCount() == 8 && !tv_mac.getText().toString().isEmpty()) {
-            btn_next.setEnabled(true);
+        if (mAdapter.getItemCount() == 8 && !binding.tvAddMac2.getText().toString().isEmpty()) {
+            binding.btnNext2.setEnabled(true);
         } else
-            btn_next.setEnabled(false);
+            binding.btnNext2.setEnabled(false);
     }
 
 
@@ -199,7 +197,7 @@ public class addNumbers2Activity extends AppCompatActivity {
 
             } else if (patron.matcher(result.getContents()).matches()) {
 
-                tv_mac.setText(result.getContents());
+                binding.tvAddMac2.setText(result.getContents());
 
                 SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
                 SharedPreferences.Editor obj_editor = preferences.edit();

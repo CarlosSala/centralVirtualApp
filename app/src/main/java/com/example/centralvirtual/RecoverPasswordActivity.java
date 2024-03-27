@@ -14,6 +14,8 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.centralvirtual.databinding.ActivityLoginBinding;
+import com.example.centralvirtual.databinding.ActivityRecoveryPasswordBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -23,32 +25,23 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class RecoverPasswordActivity extends AppCompatActivity {
 
+    private ActivityRecoveryPasswordBinding binding;
     private static final String TAG = "RecoverPasswordActivity";
     private FirebaseAuth firebaseAuth;
-    private TextInputEditText et_recover;
-    private TextInputLayout til_recover;
-    private LinearLayout linearLayout;
-    private ProgressBar progressBarRecover;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recovery_password);
+
+        binding = ActivityRecoveryPasswordBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        linearLayout = findViewById(R.id.linearLayout_recover);
+        binding.progressBarRecover.setVisibility(View.INVISIBLE);
 
-        progressBarRecover = findViewById(R.id.progressBar_recover);
-        progressBarRecover.setVisibility(View.INVISIBLE);
-
-        Button btn_recover = findViewById(R.id.btn_recover_password);
-
-        et_recover = findViewById(R.id.et_recover);
-        til_recover = findViewById(R.id.til_recover);
-
-
-        btn_recover.setOnClickListener(new View.OnClickListener() {
+        binding.btnRecoverPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -65,14 +58,14 @@ public class RecoverPasswordActivity extends AppCompatActivity {
         boolean status = true;
         String emailError = null;
 
-        if (TextUtils.isEmpty(et_recover.getText())) {
-            emailError = "Este campo no puede estar vacío";
+        if (TextUtils.isEmpty(binding.etRecover.getText())) {
+            emailError = "This field can not be empty";
             status = false;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(et_recover.getText()).matches()) {
-            emailError = "El correo no es válido";
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.etRecover.getText()).matches()) {
+            emailError = "The email is not validate";
             status = false;
         }
-        toggleTextInputLayoutError(til_recover, emailError);
+        toggleTextInputLayoutError(binding.tilRecover, emailError);
 
         clearFocus();
 
@@ -83,7 +76,7 @@ public class RecoverPasswordActivity extends AppCompatActivity {
 
         showProgressBar(true);
 
-        firebaseAuth.sendPasswordResetEmail(et_recover.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+        firebaseAuth.sendPasswordResetEmail(binding.etRecover.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
@@ -91,8 +84,8 @@ public class RecoverPasswordActivity extends AppCompatActivity {
 
                     showProgressBar(false);
 
-                    Snackbar.make(linearLayout, "Se ha enviado un mensaje al correo electrónico proporcionado", Snackbar.LENGTH_INDEFINITE)
-                            .setAction("Volver", new View.OnClickListener() {
+                    Snackbar.make(binding.linearLayoutRecover, "It was sent a message to the email indicated", Snackbar.LENGTH_INDEFINITE)
+                            .setAction("Back", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
 
@@ -105,7 +98,7 @@ public class RecoverPasswordActivity extends AppCompatActivity {
                 } else {
 
                     Log.d(TAG, "Email has not been sent.");
-                    Snackbar.make(linearLayout, task.getException().getMessage().toString(), Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(binding.linearLayoutRecover, task.getException().getMessage().toString(), Snackbar.LENGTH_LONG).show();
                     showProgressBar(false);
                 }
 
@@ -134,11 +127,11 @@ public class RecoverPasswordActivity extends AppCompatActivity {
     private void showProgressBar(boolean status) {
 
         if (status) {
-            progressBarRecover.setVisibility(View.VISIBLE);
+            binding.progressBarRecover.setVisibility(View.VISIBLE);
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                     WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         } else {
-            progressBarRecover.setVisibility(View.INVISIBLE);
+            binding.progressBarRecover.setVisibility(View.INVISIBLE);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
         }

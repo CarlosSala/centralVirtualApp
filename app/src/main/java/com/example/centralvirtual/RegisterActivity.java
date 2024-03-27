@@ -16,6 +16,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.centralvirtual.databinding.ActivityLoginBinding;
+import com.example.centralvirtual.databinding.ActivityRegisterBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,40 +38,23 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private TextInputEditText et_name, et_lastName, et_email, et_password, et_passwordAgain;
-    private TextInputLayout til_name, til_lastName, til_email, til_password, til_passwordAgain;
-    private LinearLayout linearLayout;
-    private ProgressBar progressBarRegister;
+    private ActivityRegisterBinding binding;
     private FirebaseAuth firebaseAuth;
     private final static String TAG = "RegisterActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+
+        binding = ActivityRegisterBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        // for Snack bar
-        linearLayout = findViewById(R.id.linearLayout_register);
+        binding.progressBar.setVisibility(View.INVISIBLE);
 
-        progressBarRegister = findViewById(R.id.progressBar);
-        progressBarRegister.setVisibility(View.INVISIBLE);
-
-        et_name = findViewById(R.id.et_name);
-        et_lastName = findViewById(R.id.et_lastName);
-        et_email = findViewById(R.id.et_email);
-        et_password = findViewById(R.id.et_password);
-        et_passwordAgain = findViewById(R.id.et_passwordAgain);
-
-        til_name = findViewById(R.id.text_input_layout_name);
-        til_lastName = findViewById(R.id.text_input_layout_lastname);
-        til_email = findViewById(R.id.text_input_layout_mail);
-        til_password = findViewById(R.id.text_input_layout_password1);
-        til_passwordAgain = findViewById(R.id.text_input_layout_password2);
-
-        Button btn_register = findViewById(R.id.btn_register);
-        btn_register.setOnClickListener(new View.OnClickListener() {
+        binding.btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -91,47 +76,47 @@ public class RegisterActivity extends AppCompatActivity {
         String password1Error = null;
         String password2Error = null;
 
-        if (TextUtils.isEmpty(et_name.getText())) {
-            nameError = "Este campo no puede estar vacío";
+        if (TextUtils.isEmpty(binding.etName.getText())) {
+            nameError = "This filed can not be empty";
             status = false;
         }
-        toggleTextInputLayoutError(til_name, nameError);
+        toggleTextInputLayoutError(binding.textInputLayoutName, nameError);
 
-        if (TextUtils.isEmpty(et_lastName.getText())) {
-            lastNameError = "Este campo no puede estar vacío";
+        if (TextUtils.isEmpty(binding.etLastName.getText())) {
+            lastNameError = "This filed can not be empty";
             status = false;
         }
-        toggleTextInputLayoutError(til_lastName, lastNameError);
+        toggleTextInputLayoutError(binding.textInputLayoutLastname, lastNameError);
 
-        if (TextUtils.isEmpty(et_email.getText())) {
-            emailError = "Este campo no puede estar vacío";
+        if (TextUtils.isEmpty(binding.etEmail.getText())) {
+            emailError = "This filed can not be empty";
             status = false;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(et_email.getText()).matches()) {
-            emailError = "El correo no es válido";
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.etEmail.getText()).matches()) {
+            emailError = "The email is not validate";
             status = false;
         }
-        toggleTextInputLayoutError(til_email, emailError);
+        toggleTextInputLayoutError(binding.textInputLayoutMail, emailError);
 
-        if (TextUtils.isEmpty(et_password.getText())) {
-            password1Error = "Este campo no puede estar vacío";
+        if (TextUtils.isEmpty(binding.etPassword.getText())) {
+            password1Error = "This filed can not be empty";
             status = false;
-        } else if (et_password.length() < 6) {
-            password1Error = "La contraseña debe tener 6 o mas caracteres ";
+        } else if (binding.etPassword.length() < 6) {
+            password1Error = "The password must has at least 6 characters or more ";
             status = false;
         }
-        toggleTextInputLayoutError(til_password, password1Error);
+        toggleTextInputLayoutError(binding.textInputLayoutPassword1, password1Error);
 
-        if (TextUtils.isEmpty(et_passwordAgain.getText())) {
-            password2Error = "Este campo no puede estar vacío";
+        if (TextUtils.isEmpty(binding.etPasswordAgain.getText())) {
+            password2Error = "This filed can not be empty";
             status = false;
-        } else if (et_passwordAgain.length() < 6) {
-            password2Error = "La contraseña debe tener 6 o mas caracteres";
+        } else if (binding.etPasswordAgain.length() < 6) {
+            password2Error = "The password must has at least 6 characters or more";
             status = false;
-        } else if (!et_passwordAgain.getText().toString().equals(et_password.getText().toString())) {
-            password2Error = "Las contraseñas no coinciden";
+        } else if (!binding.etPasswordAgain.getText().toString().equals(binding.etPassword.getText().toString())) {
+            password2Error = "The passwords are not same";
             status = false;
         }
-        toggleTextInputLayoutError(til_passwordAgain, password2Error);
+        toggleTextInputLayoutError(binding.textInputLayoutPassword2, password2Error);
 
         clearFocus();
 
@@ -159,8 +144,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         showProgressBar(true);
 
-        String email = et_email.getText().toString();
-        String password = et_password.getText().toString();
+        String email = binding.etEmail.getText().toString();
+        String password = binding.etPassword.getText().toString();
 
         //create user
         firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -174,10 +159,10 @@ public class RegisterActivity extends AppCompatActivity {
                         } else {
 
                             if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                                Toast.makeText(RegisterActivity.this, "El correo electrónico ya esta registrado en otra cuenta",
+                                Toast.makeText(RegisterActivity.this, "This email is already registered",
                                         Toast.LENGTH_LONG).show();
                             } else {
-                                Toast.makeText(RegisterActivity.this, "No se pudo realizar el registro", Toast.LENGTH_LONG).show();
+                                Toast.makeText(RegisterActivity.this, "The register was not realized", Toast.LENGTH_LONG).show();
                             }
                             showProgressBar(false);
                         }
@@ -193,12 +178,12 @@ public class RegisterActivity extends AppCompatActivity {
 
         Map<String, Object> user = new HashMap<>();
 
-        user.put("name", et_name.getText().toString());
-        user.put("surname", et_lastName.getText().toString());
-        user.put("email", et_email.getText().toString());
+        user.put("name", binding.etName.getText().toString());
+        user.put("surname", binding.etLastName.getText().toString());
+        user.put("email", binding.etEmail.getText().toString());
         user.put("timestampUser", FieldValue.serverTimestamp());
 
-        db.collection("users").document(et_email.getText().toString())
+        db.collection("users").document(binding.etEmail.getText().toString())
                 .collection("info").document("user_info")
 
                 .set(user, SetOptions.merge())
@@ -210,11 +195,11 @@ public class RegisterActivity extends AppCompatActivity {
                         registerDevice();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "Error additional data was not saved", e);
-            }
-        });
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error additional data was not saved", e);
+                    }
+                });
     }
 
 
@@ -231,21 +216,21 @@ public class RegisterActivity extends AppCompatActivity {
         //  device.put("serial",serial );
         // device.put("tokenFCM", refreshedToken);
 
-        db.collection("users").document(et_email.getText().toString())
+        db.collection("users").document(binding.etEmail.getText().toString())
                 .collection("info").document(Build.MODEL)
 
                 .set(device, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "Additional data saved");
-                SendVerificationEmail();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "Error additional data was not saved", e);
-            }
-        });
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "Additional data saved");
+                        SendVerificationEmail();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error additional data was not saved", e);
+                    }
+                });
     }
 
 
@@ -263,9 +248,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                             showProgressBar(false);
 
-                            Snackbar.make(linearLayout, "Se ha enviado un mensaje a su correo electrónico para verificar su cuenta",
-                                    Snackbar.LENGTH_INDEFINITE)
-                                    .setAction("Volver", new View.OnClickListener() {
+                            Snackbar.make(binding.linearLayoutRegister, "It was sent a message to your email",
+                                            Snackbar.LENGTH_INDEFINITE)
+                                    .setAction("Back", new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
 
@@ -283,21 +268,21 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void Clean_form() {
 
-        et_email.setText("");
-        et_lastName.setText("");
-        et_name.setText("");
-        et_password.setText("");
-        et_passwordAgain.setText("");
+        binding.etEmail.setText("");
+        binding.etLastName.setText("");
+        binding.etName.setText("");
+        binding.etPassword.setText("");
+        binding.etPasswordAgain.setText("");
     }
 
     private void showProgressBar(boolean status) {
 
         if (status) {
-            progressBarRegister.setVisibility(View.VISIBLE);
+            binding.progressBar.setVisibility(View.VISIBLE);
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                     WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         } else {
-            progressBarRegister.setVisibility(View.INVISIBLE);
+            binding.progressBar.setVisibility(View.INVISIBLE);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
     }
@@ -308,8 +293,6 @@ public class RegisterActivity extends AppCompatActivity {
         onBackPressed();
         return false;
     }
-
-
 
  /*try {
                                 Thread.currentThread().sleep(10000);

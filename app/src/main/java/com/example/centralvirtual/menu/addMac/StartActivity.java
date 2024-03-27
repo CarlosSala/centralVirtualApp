@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.centralvirtual.R;
 import com.example.centralvirtual.RutValidator;
+import com.example.centralvirtual.databinding.ActivityLoginBinding;
+import com.example.centralvirtual.databinding.ActivityStartBinding;
 import com.example.centralvirtual.menu.PrincipalActivity;
 import com.example.centralvirtual.menu.addMac.addNumbers.addNumbers1Activity;
 import com.google.android.material.textfield.TextInputLayout;
@@ -24,29 +26,23 @@ import java.util.regex.Pattern;
 
 public class StartActivity extends AppCompatActivity {
 
+    private ActivityStartBinding binding;
     private boolean client_rut;
     private boolean community_id;
-
-    private TextInputLayout til_client_rut, til_community_id;
-    private EditText et_client_rut, et_community_id;
-    private Button btn_enter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
 
-        til_client_rut = findViewById(R.id.til_client_rut);
-        et_client_rut = findViewById(R.id.et_client_rut);
-        til_community_id = findViewById(R.id.til_community_id);
-        et_community_id = findViewById(R.id.et_community_id);
+        binding = ActivityStartBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
-        et_client_rut.setText(preferences.getString("client_rut", ""));
-        et_community_id.setText(preferences.getString("community_id", ""));
+        binding.etClientRut.setText(preferences.getString("client_rut", ""));
+        binding.etCommunityId.setText(preferences.getString("community_id", ""));
 
-
-        et_client_rut.addTextChangedListener(new TextWatcher() {
+        binding.etClientRut.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -54,7 +50,7 @@ public class StartActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                til_client_rut.setError(null);
+                binding.tilClientRut.setError(null);
                 ClientRutValidate();
                 Enable_btn();
             }
@@ -65,7 +61,7 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
-        et_community_id.addTextChangedListener(new TextWatcher() {
+        binding.etCommunityId.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -73,7 +69,7 @@ public class StartActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                til_community_id.setError(null);
+                binding.tilCommunityId.setError(null);
                 CommunityIdValidate();
                 Enable_btn();
             }
@@ -84,9 +80,8 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
-        btn_enter = findViewById(R.id.btn_enter);
-        btn_enter.setEnabled(false);
-        btn_enter.setOnClickListener(new View.OnClickListener() {
+        binding.btnEnter.setEnabled(false);
+        binding.btnEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ApplicationNumber();
@@ -96,7 +91,7 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
-        if (!et_community_id.getText().toString().isEmpty() && !et_client_rut.getText().toString().isEmpty()) {
+        if (!binding.etCommunityId.getText().toString().isEmpty() && !binding.etClientRut.getText().toString().isEmpty()) {
 
             if (ClientRutValidate() && CommunityIdValidate()) {
                 Enable_btn();
@@ -107,9 +102,9 @@ public class StartActivity extends AppCompatActivity {
     private void Enable_btn() {
 
         if (client_rut && community_id) {
-            btn_enter.setEnabled(true);
+            binding.btnEnter.setEnabled(true);
         } else {
-            btn_enter.setEnabled(false);
+            binding.btnEnter.setEnabled(false);
         }
     }
 
@@ -117,13 +112,13 @@ public class StartActivity extends AppCompatActivity {
 
         boolean status = false;
 
-        String rut_client = til_client_rut.getEditText().getText().toString();
+        String rut_client = binding.tilClientRut.getEditText().getText().toString();
         client_rut = RutValidator.RutValidate(rut_client);
 
         if (!client_rut) {
-            til_client_rut.setError("Rut inválido");
+            binding.tilClientRut.setError("Rut inválido");
         } else {
-            til_client_rut.setError(null);
+            binding.tilClientRut.setError(null);
             status = true;
         }
 
@@ -134,15 +129,15 @@ public class StartActivity extends AppCompatActivity {
 
         boolean status = false;
 
-        String id = til_community_id.getEditText().getText().toString();
+        String id = binding.tilCommunityId.getEditText().getText().toString();
         Pattern patron = Pattern.compile("\\A[\\w]{1,19}(_cloudpbx)\\Z");
 
         if (!patron.matcher(id).matches()) {
-            til_community_id.setError("'Community id' inválido");
+            binding.tilCommunityId.setError("'Community id' inválido");
             community_id = false;
 
         } else {
-            til_community_id.setError(null);
+            binding.tilCommunityId.setError(null);
             community_id = true;
             status = true;
         }
@@ -153,8 +148,8 @@ public class StartActivity extends AppCompatActivity {
     public void Save_data() {
         SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
         SharedPreferences.Editor obj_editor = preferences.edit();
-        obj_editor.putString("client_rut", et_client_rut.getText().toString());
-        obj_editor.putString("community_id", et_community_id.getText().toString());
+        obj_editor.putString("client_rut", binding.etClientRut.getText().toString());
+        obj_editor.putString("community_id", binding.etCommunityId.getText().toString());
         obj_editor.apply();
     }
 

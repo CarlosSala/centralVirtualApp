@@ -17,6 +17,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.centralvirtual.R;
+import com.example.centralvirtual.databinding.ActivityAddNumbers1Binding;
+import com.example.centralvirtual.databinding.ActivitySendDataBinding;
 import com.example.centralvirtual.menu.PrincipalActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,35 +32,31 @@ import java.util.Map;
 
 public class sendDataActivity extends AppCompatActivity {
 
+    private ActivitySendDataBinding binding;
     private final static String TAG = "sendDataActivity";
     private String data;
-    private Button btn_send;
-    private TextView tv_msg, tv_loading;
-    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_send_data);
+
+        binding = ActivitySendDataBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         data = getIntent().getExtras().getString("data", "no data");
 
-        btn_send = findViewById(R.id.btn_send);
-        tv_msg = findViewById(R.id.tv_msg);
-        tv_loading = findViewById(R.id.tv_loading);
-        progressBar = findViewById(R.id.progressBar_SendData);
+        binding.btnSend.setVisibility(View.VISIBLE);
+        binding.tvMsg.setVisibility(View.VISIBLE);
+        binding.tvLoading.setVisibility(View.INVISIBLE);
+        binding.progressBarSendData.setVisibility(View.INVISIBLE);
 
-        btn_send.setVisibility(View.VISIBLE);
-        tv_msg.setVisibility(View.VISIBLE);
-        tv_loading.setVisibility(View.INVISIBLE);
-        progressBar.setVisibility(View.INVISIBLE);
+        binding.btnSend.setEnabled(true);
+        binding.tvMsg.setEnabled(true);
+        binding.tvLoading.setEnabled(false);
+        binding.progressBarSendData.setEnabled(false);
 
-        btn_send.setEnabled(true);
-        tv_msg.setEnabled(true);
-        tv_loading.setEnabled(false);
-        progressBar.setEnabled(false);
-
-        btn_send.setOnClickListener(new View.OnClickListener() {
+        binding.btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -73,27 +71,27 @@ public class sendDataActivity extends AppCompatActivity {
 
         if (status) {
 
-            btn_send.setEnabled(true);
-            tv_msg.setEnabled(true);
-            tv_loading.setEnabled(false);
-            progressBar.setEnabled(false);
+            binding.btnSend.setEnabled(true);
+            binding.tvMsg.setEnabled(true);
+            binding.tvLoading.setEnabled(false);
+            binding.progressBarSendData.setEnabled(false);
 
-            btn_send.setVisibility(View.VISIBLE);
-            tv_msg.setVisibility(View.VISIBLE);
-            tv_loading.setVisibility(View.INVISIBLE);
-            progressBar.setVisibility(View.INVISIBLE);
+            binding.btnSend.setVisibility(View.VISIBLE);
+            binding.tvMsg.setVisibility(View.VISIBLE);
+            binding.tvLoading.setVisibility(View.INVISIBLE);
+            binding.progressBarSendData.setVisibility(View.INVISIBLE);
 
         } else {
 
-            btn_send.setEnabled(false);
-            tv_msg.setEnabled(false);
-            tv_loading.setEnabled(true);
-            progressBar.setEnabled(true);
+            binding.btnSend.setEnabled(false);
+            binding.tvMsg.setEnabled(false);
+            binding.tvLoading.setEnabled(true);
+            binding.progressBarSendData.setEnabled(true);
 
-            btn_send.setVisibility(View.INVISIBLE);
-            tv_msg.setVisibility(View.INVISIBLE);
-            tv_loading.setVisibility(View.VISIBLE);
-            progressBar.setVisibility(View.VISIBLE);
+            binding.btnSend.setVisibility(View.INVISIBLE);
+            binding.tvMsg.setVisibility(View.INVISIBLE);
+            binding.tvLoading.setVisibility(View.VISIBLE);
+            binding.progressBarSendData.setVisibility(View.VISIBLE);
         }
     }
 
@@ -122,27 +120,27 @@ public class sendDataActivity extends AppCompatActivity {
                         .document(num_solicitude).set(device, SetOptions.merge())
 
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
+                            @Override
+                            public void onSuccess(Void aVoid) {
 
-                        // the accumulated data is sent for generate the qr code
-                        Intent intent = new Intent(sendDataActivity.this, shareQrActivity.class);
-                        intent.putExtra("data", data);
+                                // the accumulated data is sent for generate the qr code
+                                Intent intent = new Intent(sendDataActivity.this, shareQrActivity.class);
+                                intent.putExtra("data", data);
 
-                        Toast.makeText(sendDataActivity.this, "Se envió la información", Toast.LENGTH_LONG).show();
+                                Toast.makeText(sendDataActivity.this, "Se envió la información", Toast.LENGTH_LONG).show();
 
-                        startActivity(intent);
+                                startActivity(intent);
 
-                        Log.d(TAG, "Additional data saved");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+                                Log.d(TAG, "Additional data saved");
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
 
-                        Log.w(TAG, "Error additional data was not saved", e);
-                        OccultControls(true);
-                    }
-                });
+                                Log.w(TAG, "Error additional data was not saved", e);
+                                OccultControls(true);
+                            }
+                        });
             }
         }
     }

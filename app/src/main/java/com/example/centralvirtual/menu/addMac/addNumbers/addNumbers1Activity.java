@@ -23,6 +23,8 @@ import com.example.centralvirtual.ItemTouchListenner;
 import com.example.centralvirtual.MainAdapter;
 import com.example.centralvirtual.R;
 import com.example.centralvirtual.SimpleItemTouchHelperCallback;
+import com.example.centralvirtual.databinding.ActivityAddNumbers1Binding;
+import com.example.centralvirtual.databinding.ActivityStartBinding;
 import com.example.centralvirtual.menu.PrincipalActivity;
 import com.example.centralvirtual.responseServiceNumber;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -40,10 +42,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class addNumbers1Activity extends AppCompatActivity {
 
+    private ActivityAddNumbers1Binding binding;
     private final static String TAG = "addNumbers1Activity";
-    private Button btn_next;
-    private TextView tv_mac;
-    private RecyclerView mRecyclerView;
     private MainAdapter mAdapter;
 
     @Override
@@ -51,29 +51,28 @@ public class addNumbers1Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_numbers1);
 
-        mRecyclerView = findViewById(R.id.recycler_sample1);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        binding = ActivityAddNumbers1Binding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
+
+        binding.recyclerSample1.setLayoutManager(new LinearLayoutManager(this));
 
         mAdapter = new MainAdapter();
-        mRecyclerView.setAdapter(mAdapter);
-
-        tv_mac = findViewById(R.id.tv_add_mac1);
+        binding.recyclerSample1.setAdapter(mAdapter);
 
         SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
-        tv_mac.setText(preferences.getString("mac_scanned1", ""));
+        binding.tvAddMac1.setText(preferences.getString("mac_scanned1", ""));
 
-        Button btn_scan_mac = findViewById(R.id.btn_scan_mac1);
-        btn_scan_mac.setOnClickListener(new View.OnClickListener() {
+        binding.btnScanMac1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 customScanner();
             }
         });
 
-        btn_next = findViewById(R.id.btn_next1);
-        btn_next.setEnabled(false);
+        binding.btnNext1.setEnabled(false);
 
-        btn_next.setOnClickListener(new View.OnClickListener() {
+        binding.btnNext1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -107,8 +106,7 @@ public class addNumbers1Activity extends AppCompatActivity {
 
                 if (response.isSuccessful()) {
 
-                    int code = response.code();
-
+                    //     int code = response.code();
                     List<responseServiceNumber> postsList = response.body();
 
                     for (responseServiceNumber res : postsList) {
@@ -154,7 +152,7 @@ public class addNumbers1Activity extends AppCompatActivity {
 
         mAdapter.addData(data);
 
-        addItemTouchCallback(mRecyclerView);
+        addItemTouchCallback(binding.recyclerSample1);
     }
 
     private void addItemTouchCallback(RecyclerView recyclerView) {
@@ -178,10 +176,10 @@ public class addNumbers1Activity extends AppCompatActivity {
     // method to enable or disabled button
     private void Enable_btn() {
 
-        if (mAdapter.getItemCount() == 8 && !tv_mac.getText().toString().isEmpty()) {
-            btn_next.setEnabled(true);
+        if (mAdapter.getItemCount() == 8 && !binding.tvAddMac1.getText().toString().isEmpty()) {
+            binding.btnNext1.setEnabled(true);
         } else
-            btn_next.setEnabled(false);
+            binding.btnNext1.setEnabled(false);
     }
 
 
@@ -214,7 +212,7 @@ public class addNumbers1Activity extends AppCompatActivity {
 
             } else if (patron.matcher(result.getContents()).matches()) {
 
-                tv_mac.setText(result.getContents());
+                binding.tvAddMac1.setText(result.getContents());
 
                 SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
                 SharedPreferences.Editor obj_editor = preferences.edit();
@@ -264,6 +262,7 @@ public class addNumbers1Activity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+        super.onBackPressed();
         AlertDialog();
     }
 

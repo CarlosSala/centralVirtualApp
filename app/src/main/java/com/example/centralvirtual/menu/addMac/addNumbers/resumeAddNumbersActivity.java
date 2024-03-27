@@ -13,41 +13,25 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.centralvirtual.R;
+import com.example.centralvirtual.databinding.ActivityAddNumbers1Binding;
+import com.example.centralvirtual.databinding.ActivityResumeAddNumbersBinding;
 import com.example.centralvirtual.menu.PrincipalActivity;
 
 import java.util.ArrayList;
 
 public class resumeAddNumbersActivity extends AppCompatActivity {
 
-    private ArrayList<String> list = new ArrayList<String>();
+    private ActivityResumeAddNumbersBinding binding;
+    private final ArrayList<String> list = new ArrayList<String>();
     private String accumulation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_resume_add_numbers);
 
-        TextView tv_num_solicitude = findViewById(R.id.tv_applicationNumber);
-        TextView tv_mac1 = findViewById(R.id.tv_indicator_mac1);
-        TextView tv_mac2 = findViewById(R.id.tv_indicator_mac2);
-        TextView tv1 = findViewById(R.id.tv_numberOne);
-        TextView tv2 = findViewById(R.id.tv_numberTwo);
-        TextView tv3 = findViewById(R.id.tv_numberThree);
-        TextView tv4 = findViewById(R.id.tv_numberFour);
-        TextView tv5 = findViewById(R.id.tv_numberFive);
-        TextView tv6 = findViewById(R.id.tv_numberSix);
-        TextView tv7 = findViewById(R.id.tv_numberSeven);
-        TextView tv8 = findViewById(R.id.tv_numberEight);
-        TextView tv9 = findViewById(R.id.tv_numberNine);
-        TextView tv10 = findViewById(R.id.tv_numberTen);
-        TextView tv11 = findViewById(R.id.tv_numberEleven);
-        TextView tv12 = findViewById(R.id.tv_numberTwelve);
-        TextView tv13 = findViewById(R.id.tv_numberThirteen);
-        TextView tv14 = findViewById(R.id.tv_numberFourteen);
-        TextView tv15 = findViewById(R.id.tv_numberFifteen);
-        TextView tv16 = findViewById(R.id.tv_numberSixteen);
-        TextView tv_id_community = findViewById(R.id.tv_community_id);
-        TextView tv_client_rut = findViewById(R.id.tv_client_rut);
+        binding = ActivityResumeAddNumbersBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         //order fields
         //applicationNumber,client_rut,community_id,mac_scanned1,associated_numbers,mac_scanned2,associated_numbers
@@ -75,30 +59,30 @@ public class resumeAddNumbersActivity extends AppCompatActivity {
         list.add(19, preferences.getString("et_number_14", ""));
         list.add(20, preferences.getString("et_number_15", ""));
 
-        tv_num_solicitude.setText(list.get(0));
-        tv_mac1.setText(list.get(3));
-        tv_mac2.setText(list.get(12));
-        tv1.setText(list.get(4));
-        tv2.setText(list.get(5));
-        tv3.setText(list.get(6));
-        tv4.setText(list.get(7));
-        tv5.setText(list.get(8));
-        tv6.setText(list.get(9));
-        tv7.setText(list.get(10));
-        tv8.setText(list.get(11));
-        tv9.setText(list.get(13));
-        tv10.setText(list.get(14));
-        tv11.setText(list.get(15));
-        tv12.setText(list.get(16));
-        tv13.setText(list.get(17));
-        tv14.setText(list.get(18));
-        tv15.setText(list.get(19));
-        tv16.setText(list.get(20));
-        tv_id_community.setText(list.get(2));
-        tv_client_rut.setText(list.get(1));
+        binding.tvApplicationNumber.setText(list.get(0));
+        binding.tvIndicatorMac1.setText(list.get(3));
+        binding.tvIndicatorMac2.setText(list.get(12));
+        binding.tvNumberOne.setText(list.get(4));
+        binding.tvNumberTwo.setText(list.get(5));
+        binding.tvNumberThree.setText(list.get(6));
+        binding.tvNumberFour.setText(list.get(7));
+        binding.tvNumberFive.setText(list.get(8));
+        binding.tvNumberSix.setText(list.get(9));
+        binding.tvNumberSeven.setText(list.get(10));
+        binding.tvNumberEight.setText(list.get(11));
+        binding.tvNumberNine.setText(list.get(13));
+        binding.tvNumberTen.setText(list.get(14));
+        binding.tvNumberEleven.setText(list.get(15));
+        binding.tvNumberTwelve.setText(list.get(16));
+        binding.tvNumberThirteen.setText(list.get(17));
+        binding.tvNumberFourteen.setText(list.get(18));
+        binding.tvNumberFifteen.setText(list.get(19));
+        binding.tvNumberSixteen.setText(list.get(20));
+        binding.tvCommunityId.setText(list.get(2));
+        binding.tvClientRut.setText(list.get(1));
 
-        Button btn_next = findViewById(R.id.btn_next);
-        btn_next.setOnClickListener(new View.OnClickListener() {
+
+        binding.btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
