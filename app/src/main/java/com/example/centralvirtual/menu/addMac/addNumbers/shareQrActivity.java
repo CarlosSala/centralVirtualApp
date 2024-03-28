@@ -1,5 +1,6 @@
 package com.example.centralvirtual.menu.addMac.addNumbers;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,19 +13,18 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.centralvirtual.R;
+import com.example.centralvirtual.databinding.ActivityShareQrBinding;
 import com.example.centralvirtual.menu.PrincipalActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.BarcodeFormat;
@@ -35,26 +35,26 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.io.ByteArrayOutputStream;
 
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-
 public class shareQrActivity extends AppCompatActivity {
 
-    ConstraintLayout constraintLayout;
-    ImageView imageView;
+    private ActivityShareQrBinding binding;
     private String data;
     private Bitmap bitmap;
-    private int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 0;
+    private static final int PERMISSION_REQUEST_CODE = 100;
+
+    private static final String[] PERMISSIONS = {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_share_qr);
 
-        constraintLayout = findViewById(R.id.constraint_layout_shareQr);
-
-        Button btn_share = findViewById(R.id.btn_share);
-        Button btn_restart = findViewById(R.id.btn_restart);
-        imageView = findViewById(R.id.imgv);
+        binding = ActivityShareQrBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         // get data from sendDataActivity
         data = getIntent().getExtras().getString("data", "Qr");
@@ -66,14 +66,14 @@ public class shareQrActivity extends AppCompatActivity {
         GenerateQR();
 
         // Return to StartActivity
-        btn_restart.setOnClickListener(new View.OnClickListener() {
+        binding.btnRestart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Home();
+                backHome();
             }
         });
 
-        btn_share.setOnClickListener(new View.OnClickListener() {
+        binding.btnShare.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -90,57 +90,10 @@ public class shareQrActivity extends AppCompatActivity {
                 BitMatrix bitMatrix = multiFormatWriter.encode(data, BarcodeFormat.QR_CODE, 500, 500);
                 BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
                 bitmap = barcodeEncoder.createBitmap(bitMatrix);
-                imageView.setImageBitmap(bitmap);
+                binding.imgv.setImageBitmap(bitmap);
 
             } catch (WriterException e) {
                 e.printStackTrace();
-            }
-        }
-    }
-
-    private void Home() {
-
-        SharedPreferences settings = getSharedPreferences("data", Context.MODE_PRIVATE);
-        settings.edit().clear().apply();
-
-        Intent intent = new Intent(shareQrActivity.this, PrincipalActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
-    }
-
-    public void Share() {
-
-        // check SDK
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-
-            // if SDF is lower to android M, the permissions are declared in manifest
-        } else {
-            // check if permission was already granted
-            if (ContextCompat.checkSelfPermission(shareQrActivity.this, WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-
-                //Share image
-                Uri imageUri = Uri.parse(getImageUri(shareQrActivity.this, bitmap));
-                Intent shareIntent = new Intent();
-
-                shareIntent.setAction(Intent.ACTION_SEND);
-                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Código QR generado de respaldo");
-                shareIntent.putExtra(Intent.EXTRA_TEXT, data);
-                shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
-                shareIntent.setType("image/jpeg");
-                //shareIntent.setType("image/*");
-                startActivity(Intent.createChooser(shareIntent, "send"));
-
-            } else {
-
-                        /*if (ActivityCompat.shouldShowRequestPermissionRationale(shareQrActivity.this,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                            //explain why permissions are necessary
-                            // Dialog();
-                        }*/
-
-                // It is applying permissions, there is to see the result
-                ActivityCompat.requestPermissions(shareQrActivity.this, new String[]{WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
             }
         }
     }
@@ -153,106 +106,109 @@ public class shareQrActivity extends AppCompatActivity {
         return MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
     }
 
+    private void backHome() {
+
+        SharedPreferences settings = getSharedPreferences("data", Context.MODE_PRIVATE);
+        settings.edit().clear().apply();
+
+        Intent intent = new Intent(shareQrActivity.this, PrincipalActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    public void Share() {
+
+/*        // Verificar si la versión del SDK es mayor o igual a 23 (Android 6.0) para manejar permisos en tiempo de ejecución
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Verificar si los permisos necesarios están otorgados
+            if (!checkPermissions()) {
+                // Si no están otorgados, solicitar permisos
+                requestPermissions();
+            } else {
+
+                // if the permission is granted, realized actions
+                Log.i("test", "the permissions are granted");
+            }
+        }*/
+
+        //Share image
+        Uri imageUri = Uri.parse(getImageUri(shareQrActivity.this, bitmap));
+        Intent shareIntent = new Intent();
+
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Código QR generado de respaldo");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, data);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+        shareIntent.setType("image/jpeg");
+        //shareIntent.setType("image/*");
+        startActivity(Intent.createChooser(shareIntent, "send"));
+
+    }
+
+    // Método para verificar si los permisos están otorgados
+    private boolean checkPermissions() {
+        for (String permission : PERMISSIONS) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Método para solicitar permisos
+    private void requestPermissions() {
+        ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_REQUEST_CODE);
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == 0) {
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            boolean allPermissionsGranted = true;
 
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            for (int grantResult : grantResults) {
+                if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                    allPermissionsGranted = false;
+                    break;
+                }
+            }
+            if (allPermissionsGranted) {
+                // execute actions
 
-                Share();
 
             } else {
-                Manual_permissions();
+                // at least one permission was denied
+
             }
         }
+
     }
 
     private void Manual_permissions() {
 
-        final CharSequence[] options = {"si", "no"};
-        final AlertDialog.Builder alertOpciones = new AlertDialog.Builder(shareQrActivity.this);
-        alertOpciones.setTitle("¿Desea configurar los permisos de forma manual?");
-        alertOpciones.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (options[i].equals("si")) {
-                    Intent intent = new Intent();
-                    intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                    Uri uri = Uri.fromParts("package", getPackageName(), null);
-                    intent.setData(uri);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(getApplicationContext(), "Los permisos no fueron aceptados", Toast.LENGTH_SHORT).show();
-                    dialogInterface.dismiss();
-                }
-            }
-        });
-        alertOpciones.show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Permisos necesarios")
+                .setMessage("Para utilizar todas las funciones de la aplicación, necesitas otorgar los permisos requeridos.")
+                .setPositiveButton("Configuración", (dialog, which) -> openAppSettings())
+                .setNegativeButton("Cancelar", (dialog, which) -> finish())
+                .setCancelable(false)
+                .show();
     }
 
-    private void Done() {
-
-        final Handler handler = new Handler();
-
-        handler.postDelayed(new Runnable() {
-
-           /* @Override
-            protected void finalize() throws Throwable {
-                super.finalize();
-            }*/
-
-            @Override
-            public void run() {
-
-                Snackbar
-                        .make(constraintLayout, "La configuración se realizó correctamente", Snackbar.LENGTH_INDEFINITE)
-                        .setAction("OK", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                //return;
-                            }
-                        })
-                        .show();
-            }
-        }, 5000);
+    private void openAppSettings() {
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getPackageName(), null);
+        intent.setData(uri);
+        startActivity(intent);
     }
-
-    /*private void Dialog() {
-
-        AlertDialog.Builder dialogo = new AlertDialog.Builder(shareQrActivity.this);
-        dialogo.setTitle("Permisos Desactivados");
-        dialogo.setMessage("Debe aceptar los permisos para el correcto funcionamiento de la App");
-
-        dialogo.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                ActivityCompat.requestPermissions(shareQrActivity.this, new String[]{WRITE_EXTERNAL_STORAGE}, 100);
-            }
-        });
-        dialogo.show();
-    }*/
-
 
     @Override
     public void onBackPressed() {
 
         AlertDialog();
-        /*Log.d("CDA", "onBackPressed Called");
-        Intent setIntent = new Intent(Intent.ACTION_MAIN);
-        setIntent.addCategory(Intent.CATEGORY_HOME);
-        setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(setIntent);*/
     }
-
-/*    public void buttonPress(View v) {
-        switch (v.getId()) {
-            case R.id.btn_restart:
-
-                break;
-        }
-    }*/
 
     private void AlertDialog() {
 
